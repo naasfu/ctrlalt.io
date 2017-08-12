@@ -1,0 +1,12 @@
+if($("#edit_fulfillment_<%= @fulfillment.id %>_modal").length === 0){
+  $('body').append('<%= j render "admin/fulfillments/modal" %>');
+}
+
+// Toggle modal
+$('#edit_fulfillment_<%= @fulfillment.id %>_modal').modal('toggle');
+
+// Reset loading button once the dialog loads.
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

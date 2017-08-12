@@ -1,0 +1,7 @@
+<% cache newsletter do %>
+  <div class="list-group-item">
+    <%= link_to newsletter.subject, newsletter %>
+    <br>
+    <%= local_time newsletter.last_sent_at, format: :readable_date %>
+  </div>
+<% end %>

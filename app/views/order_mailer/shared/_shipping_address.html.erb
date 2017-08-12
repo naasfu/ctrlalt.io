@@ -1,0 +1,9 @@
+Ship to:
+
+  <%= shipping_address.full_name %>
+  <%= shipping_address.street1 %><%= ",\n#{shipping_address.street2}".html_safe if shipping_address.street2.present? %>
+  <%= shipping_address.city %>, <%= shipping_address.state %> <%= shipping_address.zip %>
+  <%= shipping_address.country %>
+  <% if shipping_address.phone.present? %>
+  P: <%= shipping_address.phone %>
+  <% end %>

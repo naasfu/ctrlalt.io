@@ -1,0 +1,4 @@
+<% if @micropost.destroyed? %>
+  $('#micropost_<%= @micropost.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

@@ -1,0 +1,4 @@
+<% if @product.destroyed? %>
+  $('#bro_product_<%= @product.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

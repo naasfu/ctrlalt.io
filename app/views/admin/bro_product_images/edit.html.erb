@@ -1,0 +1,11 @@
+<% provide :meta_title, 'Update Image' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Sales', admin_bro_sales_path %></li>
+  <li><%= link_to @bro_sale.name, admin_bro_sale_path(@bro_sale) %></li>
+  <li><%= link_to 'Products', admin_bro_sale_products_path(@bro_sale) %></li>
+  <li><%= link_to @product.name, edit_admin_bro_sale_product_path(@bro_sale, @product) %></li>
+  <li><%= link_to 'Images', admin_bro_sale_product_images_path(@bro_sale, @product) %></li>
+<% end %>
+
+<%= render 'form' %>

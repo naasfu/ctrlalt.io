@@ -1,0 +1,8 @@
+<div class="panel-body">
+  <%= workflow_label kwk_fulfillment %>
+  <small class="text-muted"><%= timeago kwk_fulfillment.created_at %></small>
+  <br>
+  <%= link_to "##{kwk_fulfillment.tracking_number}", "https://www.royalmail.com/track-your-item?trackNumber=#{kwk_fulfillment.tracking_number}", target: :_blank, class: "text-mono" %>
+  via
+  <%= kwk_fulfillment.service_name %>
+</div>

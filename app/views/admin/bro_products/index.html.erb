@@ -1,0 +1,27 @@
+<% provide :meta_title, 'Products' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Sales', admin_bro_sales_path %></li>
+  <li><%= link_to @bro_sale.name, admin_bro_sale_path(@bro_sale) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Product'), new_admin_bro_sale_product_path(@bro_sale), class: 'btn btn-primary-o' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="30%">Name</th>
+          <th width="20%">Price</th>
+          <th width="50%">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="sortable-table" data-update-url="<%= admin_sort_path(class_name: 'bro_product') %>">
+        <%= render @products %>
+      </tbody>
+    </table>
+  </div>
+</div>

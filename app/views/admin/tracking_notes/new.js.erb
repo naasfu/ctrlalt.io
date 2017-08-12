@@ -1,0 +1,5 @@
+if($("#new_tracking_note_modal").length === 0){
+  $('body').append('<%= j render "admin/tracking_notes/modal" %>');
+}
+// Toggle modal
+$('#new_tracking_note_modal').modal('toggle');

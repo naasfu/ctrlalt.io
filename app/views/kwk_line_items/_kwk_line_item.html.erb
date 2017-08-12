@@ -1,0 +1,26 @@
+<%= content_tag :div, id: dom_id(kwk_line_item), class: "list-group-item" do %>
+
+  <div class="media">
+    <div class="media-left">
+      <span class="badge">
+        <%= kwk_line_item.position %>
+      </span>
+      <%= image_tag(kwk_line_item.image_url, width: 55, class: "media-object img-rounded") %>
+    </div>
+    <div class="media-body">
+      <p class="m-y-0">
+        <strong><%= kwk_line_item.product_name %></strong>
+      </p>
+      <ul class="list-inline m-y-0">
+        <li class="price">
+          <%= number_to_currency kwk_line_item.unit_price %>
+        </li>
+        <li>
+          <%= kwk_line_item.variant_name %>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+
+<% end %>

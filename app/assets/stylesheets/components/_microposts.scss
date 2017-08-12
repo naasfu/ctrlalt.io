@@ -1,0 +1,8 @@
+// Microposts
+// 
+
+.microposts {
+  h4 { font-weight: 400; }
+  padding-bottom: $spacer;
+  p:last-child { margin: 0; }
+}

@@ -1,0 +1,26 @@
+[CTRL]ALT
+──────────────────────────────
+
+Shipment details for order <%= short_guid @order %>
+
+<%= render 'order_mailer/shared/order_link', order: @order %>
+──────────────────────────────
+<%= short_guid @fulfillment %> <%= "via #{@fulfillment.service_name}" if @fulfillment.service_name %>
+──────────────────────────────
+
+<% if @fulfillment.tracking_number.present? %>
+Tracking #: <%= @fulfillment.tracking_number %>
+<%= "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{@fulfillment.tracking_number}" %>
+<% else %>
+Tracking #: N/A
+<% end %>
+
+──────────────────────────────
+
+<%= render 'order_mailer/shared/shipping_address', shipping_address: @shipping_address %>
+──────────────────────────────
+
+<%= render 'order_mailer/shared/line_items', line_items: @line_items %>
+──────────────────────────────
+
+<%= render 'order_mailer/shared/footer' %>

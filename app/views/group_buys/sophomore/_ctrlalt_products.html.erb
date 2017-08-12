@@ -1,0 +1,47 @@
+<% cache [product.group_buy, product] do %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-7 team-product-images">
+          <p>
+            <%= link_to image_tag(product.image_url(:md), class: 'img-responsive'), product.image_url, class: 'fancybox', rel: 'product_images' if product.image? %>
+          </p>
+          <% if product.images.any? %>
+            <p>
+              <%= link_to image_tag(product.images.first.file_url(:md), class: 'img-responsive'), product.images.first.file_url, class: 'fancybox', rel: 'product_images' %>
+            </p>
+          <% end %>
+        </div>
+        
+        <div class="col-xs-12 col-sm-5 team-product-details">
+          <h4 class="m-t-0"><%= product.name %></h4>
+          <%= render_markdown product.content %>
+
+          <%= form_tag line_items_path, remote: true do |f| %>
+
+            <% if product.current_variants.any? %>
+              <% if product.current_variants.size == 1 %>
+                <p><span class="price price-md"><%= product_price_range product %></span></p>
+                <%= hidden_field_tag :variant_id, product.master_variant.id %>
+              <% else %>
+                <%= render partial: 'variants/variant', collection: product.current_variants, as: :variant %>
+              <% end %>
+            <% end %>
+
+            <% if product.available? %>
+              <p class="team-add-to-cart">
+                <div class="input-group">
+                  <%= number_field_tag :quantity, 1, class: 'form-control' %>
+                  <span class="input-group-btn">
+                    <%= submit_tag 'Add to Cart', class: 'btn btn-success-o btn-add-to-cart', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+                  </span>
+                </div>
+              </p>
+            <% else %>
+              <p><%= link_to 'Unavailable', '#/', class: 'btn btn-add-to-cart disabled' %></p>
+            <% end %>
+
+          <% end %>
+        </div>
+      </div>
+    </div> 
+<% end %>

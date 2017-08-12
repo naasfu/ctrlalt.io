@@ -1,0 +1,47 @@
+<% provide :meta_title, 'JTK Sophomore Group Buy' %>
+<% provide :body_id, 'jtk_sophomore' %>
+
+<%= render 'layouts/notifications' %>
+<%= render 'layouts/header' %>
+
+<section class="team-ctrlalt">
+  <div class="team-field">
+    <%= image_tag "sophomore/home.png", height: 40 %>
+  </div>
+  <div class="team-logo animated zoomInLeft">
+    <%= image_tag "sophomore/c.png", class: 'img-responsive' %>
+  </div>
+  <div class="team-details animated zoomInLeft">
+    <p><%= image_tag "sophomore/ctrlalt.png", height: 75 %></p>
+    <h3 class="m-b-0">
+      Representing Orange &amp; Black
+    </h3>
+  </div>
+  <div class="team-products">
+    <%= render partial: 'group_buys/sophomore/ctrlalt_products', collection: @products[0], as: :product %>
+  </div>
+</section>
+
+<div class="team-vs">
+  <div class="vs animated flip"></div>
+</div>
+
+<section class="team-jtk">
+  <div class="team-field">
+    <%= image_tag "sophomore/visitor.png", height: 40 %>
+  </div>
+  <div class="team-logo animated zoomInRight">
+    <%= image_tag "sophomore/j.png", class: 'img-responsive' %>
+  </div>
+  <div class="team-details animated zoomInRight">
+    <p><%= image_tag "sophomore/jtk.png", height: 75 %></p>
+    <h3 class="m-b-0">
+      Representing Red &amp; White
+    </h3>
+  </div>
+  <div class="team-products">
+    <%= render partial: 'group_buys/sophomore/jtk_products', collection: @products[1], as: :product %>
+  </div>
+</section>
+
+<%= render 'layouts/footer' %>

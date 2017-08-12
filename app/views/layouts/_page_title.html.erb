@@ -1,0 +1,22 @@
+<% if content_for?(:page_title) %>
+  <div class="page-title">
+    <div class="container">
+      <h3 class="m-y-0"><%= yield(:page_title) %></h3>
+      <%= content_tag(:p, yield(:page_description), class: "page-description") if content_for?(:page_description) %>
+    </div>
+  </div>
+<% end %>
+
+<% if content_for?(:hero) %>
+  <div class="hero">
+    <%= yield(:hero) %>
+  </div>
+<% end %>
+
+<% if content_for?(:page_subtitle) %>
+  <div class="page-subtitle">
+    <div class="container">
+      <%= yield(:page_subtitle) %>
+    </div>
+  </div>
+<% end %>

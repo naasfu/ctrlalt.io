@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <%= link_to image_tag(group_buy.image_url(:md), class: 'img-responsive img-rounded'), admin_group_buy_path(group_buy) %>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <h4 class="m-t-0">
+          <%= link_to group_buy.name, admin_group_buy_path(group_buy) %>
+          <small>
+            <%= link_to icon('eye'), group_buy_path(group_buy), class: "text-muted" %>
+          </small>
+        </h4>
+        <p>
+          <%= local_time group_buy.deadline %>
+        </p>
+        <ul class="list-inline">
+          <li><%= link_to icon('bar-chart', 'Stats'), admin_group_buy_path(group_buy), class: "btn btn-xs btn-success-o" %></li>
+          <li><%= link_to icon('inbox', 'Orders'), admin_group_buy_orders_path(group_buy), class: "btn btn-xs btn-blue" %></li>
+        </ul>
+        <ul class="list-inline m-y-0">
+          <li><%= link_to icon('pencil', 'Edit'), edit_admin_group_buy_path(group_buy), class: "btn btn-xs btn-default-o" %></li>
+          <li><%= link_to icon('picture-o', 'Images'), admin_group_buy_images_path(group_buy), class: "btn btn-xs btn-default-o" %></li>
+          <li><%= link_to icon('tags', 'Products'), admin_group_buy_products_path(group_buy), class: "btn btn-xs btn-default-o" %></li>
+          <li><%= link_to icon('comments', 'Microposts'), admin_group_buy_microposts_path(group_buy), class: "btn btn-xs btn-default-o" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

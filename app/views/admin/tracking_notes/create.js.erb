@@ -1,0 +1,9 @@
+<% if @tracking_note.errors.any? %>
+  $('#new_tracking_note').replaceWith('<%= j render "form" %>');
+<% else %>
+  $('.no-tracking_notes').remove();
+  $('#tracking_notes').prepend('<%= j render @tracking_note %>');
+  $('#new_tracking_note_modal').modal('toggle');
+<% end %>
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+createAutoClosingAlert(".alert", 1500);

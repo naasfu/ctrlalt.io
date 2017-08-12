@@ -1,0 +1,27 @@
+<%= simple_form_for [:admin, @bro_sale, @product, @image], url: admin_bro_sale_product_image_path(@bro_sale, @product, @image) do |f| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'Back', admin_bro_sale_products_path(@bro_sale), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-6">
+          <%= image_tag @image.file_url(:md), class: "img-responsive" %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.input :remove_thumbnail, as: :boolean if @image.thumbnail? %>
+
+          <%= f.input :thumbnail, as: :file %>
+          
+          <%= f.hidden_field :thumbnail_cache %>
+          <%= content_tag(:p, image_tag(@image.thumbnail_url, class: "img-responsive", width: 100)) if @image.thumbnail? %>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <%= link_to 'Back', admin_bro_sale_products_path(@bro_sale), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,1 @@
+EasyPost.api_key = ENV['easypost_key']

@@ -1,0 +1,30 @@
+<%= content_tag :address, id: dom_id(shipping_address) do %>
+  
+  <%= shipping_address.full_name %>
+  <br>
+  <%= shipping_address.street1 %>
+  <%= ",<br>#{shipping_address.street2}".html_safe if shipping_address.street2.present? %>
+  <br>
+  <%= shipping_address.city %>,
+  <%= shipping_address.state %>
+  <%= shipping_address.zip %>
+  <br>
+  <%= shipping_address.country %>
+
+  <% if shipping_address.phone.present? %>
+    <br>
+    <abbr title="Phone">P:</abbr> <%= shipping_address.phone %>
+  <% end %>
+  
+  <% unless shipping_address.verified? %>
+    <div class="verification-error">
+      <p>
+        <strong class="text-danger">We couldn't find your address.</strong>
+        <br>
+        Are you sure it's right?
+      </p>
+      <%= link_to "Skip verification", verify_checkouts_buys_shipping_address_path(shipping_address, verified: "1"), class: "btn btn-danger-o", method: :patch, remote: true %>
+    </div>
+  <% end %>
+
+<% end %>

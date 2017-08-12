@@ -1,0 +1,33 @@
+// List group
+//==
+
+.list-group-xl {
+  .list-group-item {
+    
+    padding: $spacer * 1.5;
+  }
+}
+
+.list-group-muted {
+  color: $text-muted;
+
+  .list-group-item-heading,
+  a {
+    color: $text-muted;
+  }
+}
+
+
+.list-group {
+  border-radius: $border-radius-base;
+}
+  .list-group-item {
+    border-width: 2px;
+  }
+  .list-group-item + .list-group-item {
+    border-top-width: 1px;
+  }
+  
+  .pull-right {
+    margin-top: -2px;
+  }

@@ -1,0 +1,43 @@
+// Page
+//==
+.page-title {
+  padding-top: $spacer * 1.5;
+  padding-bottom: $spacer * 1.5;
+  border-bottom: 2px solid $border-color;
+  
+  h3 { font-weight: 400; }
+
+  .img-icon { 
+    margin-top: -5px;
+  }
+}
+.page-border {
+  border-bottom: 2px solid $border-color;
+}
+.page-description {
+  padding-top: 5px;
+  margin: 0;
+}
+.page-subtitle {
+  padding-top: $spacer * .5;
+  padding-bottom: $spacer * .5;
+  border-bottom: 2px solid $border-color;
+
+  h4 { font-weight: 400; }
+}
+.page-banner {
+  text-align: center;
+  border-bottom: 2px solid $border-color;
+}
+
+.page-content {
+  padding: $spacer 0;
+  border-bottom: 2px solid $border-color;
+
+  h3:first-child, h4:first-child, h2:first-child { 
+    margin-top: 0;
+  }
+  .list-group:last-child {
+    margin-bottom: 0;
+  }
+}

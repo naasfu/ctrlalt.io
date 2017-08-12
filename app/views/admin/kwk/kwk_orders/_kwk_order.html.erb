@@ -1,0 +1,29 @@
+<%= content_tag :div, id: dom_id(kwk_order), class: "list-group-item" do %>
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <%= link_to "##{kwk_order.guid}", admin_kwk_order_path(kwk_order), class: "text-mono" %>
+      <span class="badge"><%= kwk_order.kap_count %></span>
+      (<%= kwk_order.email %>)
+      <%= "[#{kwk_order.geekhack_username}]" %>
+      <br>
+      <%- kwk_order.line_items.sorted.each do |kwk_line_item| -%>
+        <%= image_tag kwk_line_item.image_url, width: 20 -%>
+      <%- end -%>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <%= workflow_label(kwk_order) %>
+      <br>
+      <%= local_time(kwk_order.paid_at || kwk_order.submitted_at || kwk_order.created_at, format: :readable_time_short) %>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-1">
+      <strong class="dracula-yellow"><%= number_to_currency kwk_order.donation_amount %></strong>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-1">
+      <% if kwk_order.is_winner? %>
+        <span class="price">
+          <%= number_to_currency(kwk_order.grand_total) %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

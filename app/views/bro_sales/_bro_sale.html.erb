@@ -1,0 +1,9 @@
+<% cache ["bro_sale", bro_sale] do %>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
+    <p><%= link_to image_tag(bro_sale.logo_url(:md), class: 'img-responsive img-rounded'), bro_sale %></p>
+    <h4><%= link_to truncate(bro_sale.name, omission: '...', length: 25), bro_sale %></h4>
+    <p>
+      <%= content_tag :span, timeago(bro_sale.deadline), class: (bro_sale.ongoing? ? 'text-success' : 'text-danger') %>
+    </p>
+  </div>
+<% end %>

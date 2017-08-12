@@ -1,0 +1,42 @@
+<div>
+  <strong>Support Requests</strong>
+</div>
+<%= link_to "All", admin_help_support_requests_path, style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to "Replies", admin_help_comments_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Newsletters</strong>
+</div>
+<%= link_to "All", admin_newsletters_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Store</strong>
+</div>
+<%= link_to 'Orders', admin_group_buy_orders_path(group_buy_slug: 'store'), style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to 'Products', admin_group_buy_products_path(group_buy_slug: 'store'), style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Group Buys</strong>
+</div>
+<%= link_to "All Orders", admin_orders_path, style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to "Group Buys", admin_group_buys_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Kult Worship Kaps</strong>
+</div>
+<%= link_to "Sales", admin_kwk_sales_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Bro Caps</strong>
+</div>
+<%= link_to "All Orders", admin_bro_orders_path, style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to "Sales", admin_bro_sales_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+<div>
+  <strong>Website</strong>
+</div>
+<%= link_to "Slack", admin_slack_invites_path, style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to "Faqs", admin_faq_categories_path, style: "width: 100%; padding: 5px; display: block;" %>
+<%= link_to "Inquiries", admin_inquiries_path, style: "width: 100%; padding: 5px; display: block;" %>
+
+

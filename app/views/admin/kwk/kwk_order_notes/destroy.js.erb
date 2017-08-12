@@ -1,0 +1,4 @@
+<% if @note.destroyed? %>
+  $('#kwk_order_note_<%= @note.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

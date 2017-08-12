@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render 'layouts/ascii' %>
+    <%= render 'layouts/meta' %>
+    <%= render 'layouts/stylesheets' %>
+  </head>
+  <body id="<%= content_for?(:body_id) ? yield(:body_id) : 'empty' %>">
+    <%= yield %>
+    <%= render 'layouts/javascripts' %>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<% provide :meta_title, 'Support' %>
+<% provide :page_title do %>
+  <div class="cai-bouy dracula-red"></div>
+  Support
+<% end %>
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to Support"), account_help_support_requests_path) %>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    
+    <div class="row">
+      <div class="col-xs-12 col-sm-5">
+        <h4 class="m-t-0">Open a new support request</h4>
+        <strong>Group buy support</strong>
+        <p>If you have an outstanding order, please include your order id number and current shipping address.</p>
+
+        <strong>Shipping address changes</strong>
+        <p>If you need to change your shipping address, you may be refunded or charged an additonal fee depending on your new shipping rate. We are not responsible for paying this difference.</p>
+      </div>
+      <div class="col-xs-12 col-sm-7">
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>

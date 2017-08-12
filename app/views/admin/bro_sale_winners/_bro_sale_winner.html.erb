@@ -1,0 +1,67 @@
+<tbody class='bro-sale-winner'>
+   <tr>
+    <td rowspan="20">
+      <%= bro_order_counter+1 %>
+    </td>
+    <td rowspan="20">
+      <%= link_to short_guid(bro_order), admin_bro_order_path(bro_order), class: 'text-mono' %>
+      <%= workflow_label bro_order %>
+      <%= local_time_ago bro_order.submitted_at %>
+      <br>
+      <small class="price" style="opacity: .7"><%= number_to_currency bro_order.donation_amount %></small>
+
+    </td>
+    
+    <td rowspan="20">
+      <%= bro_order.email %>
+    </td>
+
+
+    <td rowspan="20">
+      <%= pluralize bro_order.fulfillments.size, 'fulfillment' %>
+    </td>
+
+    <td rowspan="20">
+      <%= bro_order.geekhack_username %>
+    </td>
+
+    <td rowspan="20">
+      <%= render "addresses/shipping_address", shipping_address: bro_order.shipping_address %>
+    </td>
+
+    <td>
+      <strong><%= bro_order.winnings.first.product_name %></strong>
+      <br>
+      <small>&mdash; <%= bro_order.winnings.first.variant_name %></small>
+      <% if bro_order.winnings.first.color.present? %>
+        <br>
+        <small>&mdash; <%= bro_order.winnings.first.color %></small>
+      <% end %>
+    </td>
+    <%= content_tag_for :td, bro_order.winnings.first do %>
+      <%= simple_form_for [:admin, bro_order.winnings.first], remote: true do |f| %> 
+        <%= f.input :tru_bro_id, label: false, placeholder: 'N/A' %>
+      <% end %>
+    <% end %>
+  </tr>
+  <% if bro_order.winnings.offset(1).any? %>
+    <% bro_order.winnings.offset(1).each do |li| %>
+      <tr>
+        <td>
+          <strong><%= li.product_name %></strong>
+          <br>
+          <small>&mdash; <%= li.variant_name %></small>
+          <% if li.color.present? %>
+            <br>
+            <small>&mdash; <%= li.color %></small>
+          <% end %>
+        </td>
+        <%= content_tag_for :td, li do %>
+          <%= simple_form_for [:admin, li], remote: true do |f| %> 
+            <%= f.input :tru_bro_id, label: false, placeholder: 'N/A' %>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>

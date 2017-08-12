@@ -1,0 +1,94 @@
+<% provide :meta_title, 'Orders' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Sales', admin_bro_sales_path %></li>
+  <li><%= link_to @bro_sale.name, admin_bro_sale_path(@bro_sale) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <ul class="list-inline">
+      <li data-toggle="tooltip" data-original-title="Clear search"><%= link_to icon('times fa-lg') %></li>
+      <li data-toggle="tooltip" data-original-title="Search for anything">
+        <%= form_tag admin_bro_sale_orders_path, method: :get, class: 'form-inline' do %>
+          <%= hidden_field_tag :workflow_state, params[:workflow_state] if params[:workflow_state].present? %>
+          <%= hidden_field_tag :product_id, params[:product_id] if params[:product_id].present? %>
+          <%= hidden_field_tag :variant_id, params[:variant_id] if params[:variant_id].present? %>
+          
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><%= icon 'search' %></div>
+              <%= text_field_tag :keyword, params[:keyword], class: 'form-control input-sm', placeholder: 'Search for anything' %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+      <li data-toggle="tooltip" data-original-title="Filter by order status"><%= icon 'filter text-muted' %></li>
+      <li>
+        <div class="dropdown">
+          <a href="#/" class="dropdown-toggle" data-toggle="dropdown">
+            <% if params[:workflow_state].present? %>
+              <%= params[:workflow_state].titleize %>
+            <% else %>
+              All
+            <% end %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><%= link_to 'All', admin_bro_sale_orders_path(order_search_url_options(workflow_state: nil)) %></li>
+            <li class="divider"></li>
+            <% BroOrder.workflow_spec.state_names.map do |state| %>
+              <li><%= link_to state.to_s.titleize, admin_bro_sale_orders_path(order_search_url_options(workflow_state: state.to_s)) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+      <li class="text-muted" data-toggle="tooltip" data-original-title="Filter by variants">
+        <%= icon 'cubes' %>
+
+        <% if @found_product %>
+          <%= @found_product.name %>
+        <% end %>
+
+        <% if @found_variant %>
+          <%= @found_variant.product.name %>
+          (<%= @found_variant.name %>)
+        <% end %>
+      </li>
+      <% @products.each do |product| %>
+        <li>
+          <div class="dropdown">
+            <a href="#/" class="dropdown-toggle" data-toggle="dropdown">
+              <%= product.name %>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><%= link_to 'All', admin_bro_sale_orders_path(order_search_url_options(product_id: product.id, variant_id: nil)) %></li>
+              <li class="divider"></li>
+              <% product.variants.sorted.each do |variant| %>
+                <li><%= link_to variant.name, admin_bro_sale_orders_path(order_search_url_options(variant_id: variant.id, product_id: nil)) %></li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="40%">Details</th>
+          <th width="20%">Total</th>
+          <th width="40%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @bro_orders, bro_sale: @bro_sale %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= paginate @bro_orders %>

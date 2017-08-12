@@ -1,0 +1,14 @@
+<%= content_tag :div, id: dom_id(slack_invite), class: "list-group-item" do %>
+  <%= slack_invite.email %> (<%= slack_invite.username %>)
+  <%= link_to icon('times'), admin_slack_invite_path(slack_invite), class: 'text-danger', remote: true, method: :delete %>
+  <br>
+  <small class="text-muted">
+    <% if slack_invite.on_geekhack? && slack_invite.on_reddit? %>
+      geekhack.org/reddit
+    <% elsif slack_invite.on_geekhack? %>
+      geekhack.org
+    <% elsif slack_invite.on_reddit? %>
+      reddit
+    <% end %>
+    </small>
+<% end %>

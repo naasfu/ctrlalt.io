@@ -1,0 +1,11 @@
+<% cache ["kwk_variants/partial", kwk_sale, kwk_variant] do %>
+  <%= content_tag :div, class: ("radio" if kwk_sale.ongoing?) do %>
+    <label>
+      <%= radio_button_tag :variant_id, kwk_variant.id, (kwk_variant_counter == 0 ? true : false), class: "radio-md" if kwk_sale.ongoing? %>
+      <span class="price price-md"><%= number_to_currency kwk_variant.unit_price %></span>
+      <br>
+      <%= kwk_variant.name %>
+      
+    </label>
+  <% end %>
+<% end %>

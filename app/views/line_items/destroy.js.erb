@@ -1,0 +1,9 @@
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+
+// Render empty cart page if on checkout page
+$('#current_cart').html('<%= j render "checkout/carts/current_cart" %>');
+
+// Render dropdown contents
+$('.dropdown-cart-menu').replaceWith('<%= j render "layouts/dropdown_cart_menu" %>');
+
+$('.cart-total').html('<%= j number_to_currency current_cart.line_items_total %>');

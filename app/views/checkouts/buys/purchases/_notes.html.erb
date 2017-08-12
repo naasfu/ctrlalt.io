@@ -1,0 +1,4 @@
+<%= simple_form_for current_cart, url: checkouts_buys_notes_path, method: :patch, remote: true, html: { id: "checkout_notes" } do |f| %>
+  <%= f.input :user_notes, label: false, input_html: { rows: 3 }, placeholder: 'Anything else? We will do our best to accommodate all special requests.' %>
+  <%= f.input :geekhack_username, placeholder: 'ripster', hint: 'Let us know if you are on geekhack.org!' %>
+<% end %>

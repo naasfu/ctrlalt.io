@@ -1,0 +1,5 @@
+if($("#new_bro_order_note_modal").length === 0){
+  $('body').append('<%= j render "admin/bro_order_notes/modal" %>');
+}
+// Toggle modal
+$('#new_bro_order_note_modal').modal('toggle');

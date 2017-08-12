@@ -1,0 +1,4 @@
+<% if @carousel.destroyed? %>
+  $('#carousel_<%= @carousel.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

@@ -1,0 +1,62 @@
+<% cache ["layouts/footer"] do %>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <p>
+            <strong>&copy; 2016 [CTRL]ALT</strong>
+          </p>
+          <p>
+            <%= link_to 'Privacy', privacy_path %>
+            &amp; 
+            <%= link_to 'Terms', terms_path %>
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+          <p>
+            <strong>Get to know us</strong>
+          </p>
+          <p>
+            <%= link_to 'Krew', krew_path %>
+            <br>
+            <%= link_to 'Blog', 'http://blog.ctrlalt.io/' %>
+            <br>
+            <%= link_to 'About', about_path %>
+            <br>
+            <%= link_to 'Donate', donations_path %>
+          </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-3">
+          <p>
+            <strong>Help</strong>
+          </p>
+          <p>
+            <%= link_to 'FAQ', help_faqs_path %>
+            <br>
+            <%= link_to 'Returns & Exchanges', returns_exchanges_path %>
+            <br>
+            <%= link_to 'Shipping', shipping_path %>
+            <br>
+            <%= link_to 'Newsletters', newsletters_path %>
+          </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-3">
+          <p>
+            <strong>Join us on</strong>
+          </p>
+          <p>
+            <%= link_to icon("twitter fa-fw", 'Twitter'), 'https://twitter.com/ctrlaltio' %>
+            <br>
+            <%= link_to icon("instagram fa-fw", 'Instagram'), 'https://instagram.com/ctrlalt.io' %>
+            <br>
+            <%= link_to icon("slack fa-fw", "Slack"), slack_join_path %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+<% end %>
+
+<%= debug(params) if Rails.env.development? %>

@@ -1,0 +1,15 @@
+// Prices
+//==
+.price {
+  font-weight: 600;
+  color: $brand-success;
+  
+  &.price-md { font-size: $font-size-h4; }
+  &.price-lg { font-size: $font-size-h3; }
+  &.price-xl { font-size: $font-size-h2; }
+}
+.price-btn { padding: $padding-base-vertical $padding-base-horizontal; }
+
+.text-muted .price {
+  color: $text-muted;
+}

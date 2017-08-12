@@ -1,0 +1,13 @@
+<% provide :meta_title, 'Kult Worship Kaps' %>
+
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Sale'), new_admin_kwk_sale_path, class: 'btn btn-success-o' %>
+  </div>
+
+  <div class="list-group list-group-xl">
+    <%= render @kwk_sales %>
+  </div>
+
+</div>

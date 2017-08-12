@@ -1,0 +1,60 @@
+body.invasion {
+  background: image-url('invasion/bg.jpg') #000;
+  background-position: center top;
+  background-repeat: no-repeat;
+  font-family: Georgia, Times, 'Times New Roman', serif;
+  padding-top: 50px;
+}
+
+.bebas {
+  font-family: "bebas-neue", sans-serif;
+}
+
+.btn {
+  border-radius: 5px;
+  padding: 20px 50px;
+  background: #1c1c1c;
+  font-size: 28px;
+  font-family: "bebas-neue", sans-serif;
+
+  &:hover {
+    color: lighten(#0afe1b, 8%);
+  }
+}
+.logo {
+  margin: 50px 0;
+}
+body.nightstalker {
+  .page-content, .hero {
+    border: none;
+  }
+}
+.nightstalker-photos,
+.reaper-photos {
+  margin: 20px 0;
+  height: 100px;
+
+  img:focus,
+  .photo,
+  .slick-current {outline:0;}
+
+}
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 0;
+  line-height: 60px;
+}
+.slick-next {
+  right: 0;
+  margin-right: -20px;
+  padding-right: 10px
+}
+.slick-prev {
+  left: 0;
+  margin-left: -20px;
+  padding-left: 10px
+}
+.slick-current img {
+  border: 1px solid #0afe1b;
+}

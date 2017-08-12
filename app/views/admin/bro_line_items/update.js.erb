@@ -1,0 +1,5 @@
+<% if @bro_line_item.errors.any? %>
+  $('#bro_line_item_<%= @bro_line_item.id %>').addClass('error');
+<% else %>
+  $('#bro_line_item_<%= @bro_line_item.id %>').addClass('success');
+<% end %>

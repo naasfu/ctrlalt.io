@@ -1,0 +1,10 @@
+<% cache ["group_buy_cart", current_user, current_cart] do %>
+  <li>
+    <%= link_to checkouts_buys_path do %>
+      <div class="cai-cart"></div>
+      <span class="line-items-total">
+        <%= number_to_currency(current_cart.line_items_total) %>
+      </span>
+    <% end %>
+  </li>
+<% end %>

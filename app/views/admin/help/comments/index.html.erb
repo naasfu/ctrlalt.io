@@ -1,0 +1,30 @@
+<% provide :meta_title, "Comments" %>
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Support Requests', admin_help_support_requests_path %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    
+    <ul class="list-inline m-y-0">
+      <li data-toggle="tooltip" data-original-title="Clear search"><%= link_to icon('times fa-lg'), admin_help_comments_path %></li>
+      <li data-toggle="tooltip">
+        <%= form_tag admin_help_comments_path, method: :get, class: 'form-inline' do %>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><%= icon 'search' %></div>
+              <%= text_field_tag :keyword, params[:keyword], class: 'form-control input-sm', placeholder: 'Search for anything' %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="list-group list-group-xl">
+  <%= render @results %>
+</div>
+
+<%= paginate @results %>

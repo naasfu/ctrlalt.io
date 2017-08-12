@@ -1,0 +1,20 @@
+// Backdrop
+//==
+.backdrop {
+  padding: ($spacer * 2) 0;
+
+  .keyboard {
+    margin-bottom: $spacer * 2;
+    @include box-shadow(0 15px 25px -10px rgba(#000, .4));
+
+    img {
+      border-radius: $border-radius-base;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .backdrop {
+    padding: $spacer 0;
+  }
+}

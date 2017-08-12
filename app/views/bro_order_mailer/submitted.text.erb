@@ -1,0 +1,26 @@
+Bro Caps
+──────────────────────────────
+
+Confirmation for ticket #<%= @bro_order.guid %>
+
+You will notified with details and further instructions upon winning.
+
+──────────────────────────────
+
+<%= render partial: 'bro_order_mailer/shared/bro_line_item', collection: @line_items, as: :bro_line_item %>
+You can view this ticket in further detail in your account bro history.
+<%= account_history_bro_order_url(@bro_order) %>
+
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

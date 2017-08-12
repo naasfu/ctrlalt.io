@@ -1,0 +1,17 @@
+<ul class="dropdown-menu dropdown-menu-right dropdown-list-group dropdown-cart-menu">
+  <div class="panel panel-default m-y-0">
+    <% if current_cart.is_empty? %>
+      <div class="panel-body">
+        <h5 class="m-y-0 text-center">Your cart is empty!</h5>
+      </div>
+    <% else %>
+      <div class="list-group">
+        <%= render partial: 'line_items/cart_line_item', collection: current_cart.line_items, as: :line_item %>
+      </div>
+      <div class="panel-footer text-right">
+        <span class="price price-btn cart-total"><%= number_to_currency current_cart.line_items_total %></span>
+        <%= link_to 'Checkout', checkout_cart_path, class: 'btn btn-success-o' %>
+      </div>
+    <% end %>
+  </div>
+</ul>

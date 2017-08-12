@@ -1,0 +1,5 @@
+<% if @tracking_note.destroyed? %>
+  $('#tracking_note_<%= @tracking_note.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');
+createAutoClosingAlert(".alert", 1500);

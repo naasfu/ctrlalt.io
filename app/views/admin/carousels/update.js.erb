@@ -1,0 +1,6 @@
+<% if @carousel.errors.any? %>
+  $('#edit_carousel_<%= @carousel.id %>').replaceWith("<%= j render 'form', carousel: @carousel %>");
+<% else %>
+  $('#carousel_<%= @carousel.id %>').replaceWith("<%= j render @carousel %>");
+  $('#edit_carousel_<%= @carousel.id %>_modal').modal('toggle');
+<% end %>

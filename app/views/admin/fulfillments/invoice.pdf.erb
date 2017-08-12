@@ -1,0 +1,109 @@
+<header class="invoice-header">
+  <table class="table table-condensed m-y-0">
+    <tbody>
+      <tr>
+        <td rowspan="3" width="50%">
+          <h4 class="m-y-0"><%= ENV['app_name'] %></h4>
+        </td>
+        <td width="15%" class="text-right"><strong>Placed</strong></td>
+        <td width="35%"><%= local_time @order.placed_at %></td>
+      </tr>
+      <tr>
+        <td class="text-right"><strong>Order</strong></td>
+        <td><%= short_guid @order %></td>
+      </tr>
+      <tr>
+        <td class="text-right"><strong>Fulfillment</strong></td>
+        <td><%= short_guid @fulfillment %></td>
+      </tr>
+    </tbody>
+  </table>
+</header>
+
+<div class="row">
+  <div class="col-xs-5">
+    <strong>Ship to</strong>
+    <address>
+      <%= @shipping_address.full_name %>
+      <br>
+      <%= @shipping_address.street1 %>
+      <%= ",<br>#{@shipping_address.street2}".html_safe if @shipping_address.street2.present? %>
+      <br>
+      <%= @shipping_address.city %>,
+      <%= @shipping_address.state %>
+      <%= @shipping_address.zip %>
+      <br>
+      <%= @shipping_address.country %>
+
+      <% if @shipping_address.phone.present? %>
+        <br>
+        <abbr title="Phone">P:</abbr> <%= @shipping_address.phone %>
+      <% end %>
+    </address>
+  </div>
+  <div class="col-xs-7">
+    <strong>Notes</strong>
+    <%= simple_format @order.notes %>
+    <%= simple_format @fulfillment.notes %>
+
+  </div>
+</div>
+
+
+
+<table class="table table-condensed m-y-0">
+  <thead>
+    <th width="30%">Item</th>
+    <th width="10%" class="text-center">Quantity</th>
+    <th width="15%" class="text-center">Price</th>
+    <th width="15%" class="text-center">Total</th>
+  </thead>
+  <tbody>
+    <% @line_items.each do |line_item| %>
+      <tr>
+        <td>
+          <%= "#{line_item.product_name} (#{line_item.group_buy_name})" %>
+          <br>
+          &mdash;
+          <%= line_item.variant_name %>
+        </td>
+        <td class="text-center"><%= line_item.quantity %></td>
+        <td class="text-center"><%= number_to_currency line_item.unit_price %></td>
+        <td class="text-center"><%= number_to_currency line_item.total_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-xs-5 col-xs-offset-7">
+    <table class="table table-condensed">
+      <tbody>
+        <tr>
+          <td class="text-right"><strong>Shipping</strong></td>
+          <td><%= number_to_currency @order.shipping_total %></td>
+        </tr>
+        <tr>
+          <td class="text-right"><strong>Subtotal</strong></td>
+          <td><%= number_to_currency @order.line_items_total %></td>
+        </tr>
+        <tr>
+          <td class="text-right"><strong>Fees</strong></td>
+          <td><%= number_to_currency @order.fee_total %></td>
+        </tr>
+        <tr>
+          <td class="text-right"><strong>Donation</strong></td>
+          <td><%= number_to_currency @order.donation_amount %></td>
+        </tr>
+        <tr>
+          <td class="text-right"><strong>Grand Total</strong></td>
+          <td><%= number_to_currency @order.grand_total %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="text-center">
+  <strong>Questions about your order?</strong>
+  <br>
+  Please visit our website to contact us. (<%= contact_url %>)
+</div>

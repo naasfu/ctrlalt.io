@@ -1,0 +1,4 @@
+<% if @faq_category.destroyed? %>
+  $('#faq_category_<%= @faq_category.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

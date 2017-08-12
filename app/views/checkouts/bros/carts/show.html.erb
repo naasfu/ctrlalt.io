@@ -1,0 +1,76 @@
+<% provide :meta_title, 'Your Bros' %>
+
+<% provide :page_title do %>
+  <div class="cai-fist dracula-purple"></div>
+  Your Bro Cart
+<% end %>
+
+<% provide :page_description do %>
+  Remove bros or use <%= sortable_handle %> to specify priority
+<% end %>
+
+<% if current_bros.is_empty? %>
+  <%= render 'checkouts/bros/carts/empty_cart' %>
+<% else %>
+  <div id="cart">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-lg-7">
+        <div class="panel panel-default">
+          <div class="list-group sortable" data-update-url="<%= checkouts_bros_sort_path %>">
+            <%= render partial: 'bro_line_items/cart_line_item', collection: current_bros.line_items.sorted, as: :bro_line_item %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-lg-5">
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <label for="bro_count">Please select the maximum amount of bro's you would like to win.</label>
+            <%= select_tag :bro_count, options_for_select([*(1..9)], current_bros.bro_count), class: 'form-control', data: { remote: true, url: checkouts_bros_update_count_path, method: :put } %>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">How it works</h4>
+          </div>
+
+          <div class="list-group">
+            <div class="list-group-item">
+              <p class="m-y-0">
+                <b>1.</b> Add as many bro's as you would like to your cart.
+              </p>
+            </div>
+            <div class="list-group-item">
+              <p class="m-y-0">
+                <b>2.</b> Use <%= sortable_handle %> to specify the priority of your bros. (Bro's at the top take priority.)
+              </p>
+
+            </div>
+            <div class="list-group-item">
+              <p class="m-y-0">
+                <b>3.</b> Select the maximum amount of bro's you would like to win. (Each sale has a different maximum.)
+              </p>
+            </div>
+            <div class="list-group-item">
+              <p class="m-y-0">
+                <b>4.</b> Read the sale rules and confirm your details. You will be notified with payment instructions if you win any bros.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel-footer text-right">
+            <%= link_to 'Next', checkouts_bros_submit_path, class: 'btn btn-success-o' %>
+          </div>
+        </div>
+
+        <p class="text-center">
+          <strong>Need help?</strong>
+          <br>
+          <%= link_to 'Send us a message', contact_path %> or check out our <%= link_to 'FAQ', help_faqs_path %>.
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

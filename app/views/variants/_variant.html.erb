@@ -1,0 +1,22 @@
+<% cache ["group_buy_product_variant", variant, group_buy] do %>
+  <%= content_tag :div, class: ("radio" if group_buy.ongoing?) do %>
+    <label>
+      <%= radio_button_tag :variant_id, variant.id, (variant_counter == 0 ? true : false), class: "radio-md" if group_buy.ongoing? %>
+      <span class="price price-md"><%= number_to_currency variant.current_price %></span>
+      <br>
+      <%= variant.name %>
+
+      <% if variant.stock.present? %>
+        <br>
+        <em class="text-muted"><%= variant.stock %> in stock</em>
+      <% end %>
+
+      <% if variant.limit.present? %>
+        <em class="text-muted">
+          <%= raw("&mdash;") if variant.stock.present? %>
+          Limit <%= variant.limit %> per order
+        </em>
+      <% end %>
+    </label>
+  <% end %>
+<% end %>

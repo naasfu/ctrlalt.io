@@ -1,0 +1,45 @@
+<% cache ["group_buy_product", product, group_buy] do %>
+  <div class="page-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <%= link_to image_tag(product.image_url(:md), class: 'img-responsive'), product.image_url, class: 'fluidbox' if product.image? %>
+
+          <div class="row">
+            <%= render product.sorted_images %>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+          <h4><%= product.name %></h4>
+          <%= render_markdown product.content %>
+
+          <%= form_tag line_items_path, remote: true do |f| %>
+
+            <%= render product.sorted_variants, group_buy: group_buy %>
+
+            <div class="row">
+              <div class="col-xs-10">
+                <% if group_buy.ongoing? %>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <%= number_field_tag :quantity, 1, class: "form-control" %>
+                    </div>
+                    <div class="col-xs-8">
+                      <div class="form-group">
+                        <%= submit_tag 'Add to Cart', class: 'btn btn-success-o btn-add-to-cart', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+                      </div>
+                    </div>
+                  </div>
+                <% else %>
+                  <a href="#/" class="btn btn-success-o disabled">Unavailable</a>
+                <% end %>
+              </div>
+            </div>
+            <%= content_tag :span, nil, id: dom_id(product, :notifications) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

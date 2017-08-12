@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<%= render 'layouts/ascii' %>
+<html lang="en">
+  <head>
+    <%= render 'layouts/meta' %>
+    <%= render 'layouts/stylesheets' %>
+  </head>
+  <body id="home">
+    <%= render 'layouts/notifications' %>
+    <%= render 'layouts/header' %>
+    
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+    <%= render 'layouts/javascripts' %>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<div class="list-group-item">
+  <div class="row">
+    <div class="col-xs-5 col-sm-6 col-md-4">
+      <%= link_to "##{kwk_order.guid}", account_history_kwk_order_path(kwk_order) %>
+    </div>
+    <div class="col-xs-7 col-sm-6 col-md-3">
+      <%= local_time(kwk_order.paid_at || kwk_order.submitted_at || kwk_order.created_at, format: :readable_date) %>
+    </div>
+    <div class="col-xs-5 col-sm-6 col-md-2">
+      <%= workflow_label(kwk_order) %>
+    </div>
+    <div class="col-xs-7 col-sm-6 col-md-3">
+      <% if kwk_order.is_winner? %>
+        <span class="price">
+          <%= number_to_currency(kwk_order.grand_total) %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

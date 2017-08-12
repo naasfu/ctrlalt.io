@@ -1,0 +1,15 @@
+if($("#edit_fulfillment_<%= @fulfillment.id %>_modal").length === 0){
+  $('body').append('<%= j render "admin/bro_fulfillments/modal" %>');
+}
+
+// Toggle modal
+$('#edit_fulfillment_<%= @fulfillment.id %>_modal').modal('toggle');
+
+// Render fulfilment
+$('#fulfillments').prepend('<%= j render @fulfillment %>');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

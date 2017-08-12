@@ -1,0 +1,28 @@
+Shipment details for order <%= link_to "##{@order.guid}", account_history_order_url(@order) %>.
+
+──────────────────────────────
+
+Your order has been shipped via Royal Mail.
+
+Tracking <%= link_to "##{@tracking_note.tracking_number}", "https://www.royalmail.com/track-your-item?trackNumber=#{@tracking_note.tracking_number}" %>
+
+<%= @tracking_note.notes if @tracking_note.notes.present? %>
+
+──────────────────────────────
+
+<%= render 'order_mailer/shared/shipping_address', shipping_address: @shipping_address %>
+──────────────────────────────
+
+<%= render 'order_mailer/shared/line_items', line_items: @line_items %>
+──────────────────────────────
+
+Shipping: <%= number_to_currency @order.shipping_total %>
+Subtotal: <%= number_to_currency @order.line_items_total %>
+    Fees: <%= number_to_currency @order.fee_total %>
+Donation: <%= number_to_currency @order.donation_amount %>
+          ────────────────────
+   Total: <%= number_to_currency @order.grand_total %>
+
+──────────────────────────────
+
+<%= render 'order_mailer/shared/footer' %>

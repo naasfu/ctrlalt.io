@@ -1,0 +1,216 @@
+<% provide :meta_title, "Ticket ##{@order.guid}" %>
+
+<% provide :page_title do %>
+  Ticket #<%= @order.guid %>
+<% end %>
+
+<% provide :page_description do %>
+  <%= workflow_label(@order) %>
+  <%= local_time(@order.submitted_at || @order.created_at) %>
+<% end %>
+
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to Kult Worship Kaps"), account_history_kwk_orders_path) %>
+
+
+<% provide :page_scripts do %>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.js'></script>
+  <style>
+    #map { 
+      height: 250px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    $(function() {
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY29keWVhdHdvcmxkIiwiYSI6ImNpamE3Zms2YzAwNWZ1bWx4bjJpZHhvZG0ifQ.alYL4sUGvCwHzyAQXB8RYQ';
+
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/dark-v8', //hosted style id
+        center: [<%= @shipping_address.longitude %>, <%= @shipping_address.latitude.to_f + 0.00100 %>], // starting position
+        zoom: 12, // starting zoom,
+        zoomControl: false,
+        interactive: false
+      });
+
+      var tooltip = new mapboxgl.Popup({closeOnClick: false})
+        .setLngLat([<%= @shipping_address.longitude %>, <%= @shipping_address.latitude %>])
+        .setHTML('<h6 class="m-y-0">Shipping address</h6><strong><%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>')
+        .addTo(map);
+
+      // Disable tap handler, if present.
+      if (map.tap) map.tap.disable();
+    });
+  </script>
+<% end %>
+
+
+<% if @order.winner? %>
+  <div class="alert alert-success">
+    Congratulations! You've won <%= pluralize @approved_line_items.size, 'kap' %>! 
+    Your payment is due within 24 hours.
+  </div>
+<% elsif @order.payment_failed? %>
+  <div class="alert alert-danger">
+    There was a problem with your payment, it has been flagged for manual review!
+    <br>  
+    Please <%= link_to 'contact us', contact_path, class: 'alert-link' %> to resolve this issue.
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-7">
+
+    <% if @line_items.any? %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+         <a href="#submitted_bros" class="pull-right" data-toggle="collapse">
+           <i class="fa fa-chevron-down fa-lg" data-toggle="tooltip" data-original-title="Show/hide submitted kaps" data-placement="left"></i>
+         </a>
+          <h4 class="panel-title">
+            Submitted Kaps
+          </h4>
+        </div>
+        <div class="list-group collapse <%= "in" unless @approved_line_items.any? %>" id="submitted_bros">
+          <%= render partial: "kwk_line_items/kwk_line_item", collection: @line_items, as: :kwk_line_item %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div id="map"></div>
+      <%= render @fulfillments %>
+      
+      
+      <% if @order.user_notes.present? && @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <strong>Notes</strong>
+              <%= simple_format @order.user_notes %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <strong>geekhack.org</strong>
+              <p><%= @order.geekhack_username %></p>
+            </div>
+          </div>
+        </div>
+
+      <% elsif @order.user_notes.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @order.user_notes %>
+        </div>
+
+      <% elsif @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>geekhack.org</strong>
+          <p><%= @order.geekhack_username %></p>
+        </div>
+
+      <% end %>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Ship to</strong>
+            <%= render "addresses/shipping_address", shipping_address: @order.shipping_address %>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <% if @order.winner? %>
+              <strong>Shipping service</strong>
+              <p>Royal Mail Tracked</p>
+              <strong>Payment method</strong>
+              <p><%= icon "paypal", "PayPal" %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="col-xs-12 col-sm-5">
+    <div class="panel panel-default">
+        
+      <div class="panel-heading text-center">
+        <h4 class="panel-title">You would like up to <%= pluralize @order.kap_count, 'kap' %></h4>
+      </div>
+
+      <% if @approved_line_items.any? %>
+        <div class="list-group">
+          <%= render partial: "kwk_line_items/kwk_line_item", collection: @approved_line_items, as: :kwk_line_item %>
+        </div>
+      <% end %>
+
+      <div class="panel-body text-center">
+        <% if @approved_line_items.any? %>
+          <span class="text-muted">Total amount due</span>
+          <br>
+          <span id="order_grand_total" class="price price-xl">
+            <%= number_to_currency (@order.is_winner? ? @order.grand_total : 0) %>
+          </span>
+        <% else %>
+          <span class="text-muted">You only pay for the kaps you win.</span>
+        <% end %>
+      </div>
+      <% if @order.is_winner? %>
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <tr>
+              <td class="text-right" width="60%">Shipping</td>
+              <td class="shipping-total" width="40%">
+                <%= number_to_currency @order.shipping_total %>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">Subtotal</td>
+              <td class="line-items-total">
+                <%= number_to_currency @order.line_items_total %>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">
+                Fees
+                <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+              </td>
+              <td class="fee-total">
+                <%= number_to_currency @order.fee_total %>
+              </td>
+            </tr>
+
+            <% if @order.donated? %>
+              <tr>
+                <td class="text-right">
+                  Donation
+                  <% if @order.donation_total >= 3 %>
+                    <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!'} %>
+                  <% end %>
+                </td>
+                <td class="donation-total">
+                  <%= number_to_currency @order.donation_total %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+
+      <% if @order.workflow_state == "winner" %>
+        <div class="panel-footer text-right">
+          <%= link_to "Pay with PayPal", pay_account_history_kwk_order_path(@order), class: "btn btn-success-o btn-block" %>
+        </div>
+      <% end %>
+    </div>
+    <p class="text-center">
+      <strong><%= icon("question-circle", "Need help?") %></strong>
+      <br>
+      Check out our <%= link_to "FAQ", help_faqs_path %> page or <%= link_to "open a support request", account_help_support_requests_path %>.
+    </p>
+  </div>
+</div>

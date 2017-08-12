@@ -1,0 +1,15 @@
+<div class="ubuntu invasion-green">
+  <%= render_markdown @sale.content %>
+</div>
+
+<div class="row invasion-product-list">
+  <% @products.each do |product| %>
+    <div class="col-xs-12 col-md-6">
+      <%= content_tag :div, product, id: dom_id(product), class: "invasion-product" do %>
+        <h2 class="dirty-ego m-y-0 fs-32"><%= product.caption %></h2>
+        <h1 class="dirty-ego m-y-0 fs-64" style="color: <%= product.primary_color %>"><%= product.name %></h1>
+        <%= link_to image_tag(product.banner_url(:md), class: "img-responsive"), invasion_pt_ii_product_path(product) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

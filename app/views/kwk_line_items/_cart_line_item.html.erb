@@ -1,0 +1,33 @@
+<%= content_tag :div, id: dom_id(kwk_line_item, :cart), class: "list-group-item" do %>
+
+  <div class="media">
+    <div class="media-left">
+      <%= image_tag(kwk_line_item.image_url, width: 55, class: "media-object img-rounded") %>
+    </div>
+    <div class="media-body">
+      <p class="m-y-0">
+        <strong><%= kwk_line_item.product_name %></strong>
+      </p>
+      <ul class="list-inline m-y-0">
+        <li class="hidden-xs"><%= sortable_handle %></li>
+        <li><%= link_to icon("chevron-circle-up"), move_up_kwk_line_item_path(kwk_line_item), remote: true, class: "text-body" %></li>
+        <li><%= link_to icon("chevron-circle-down"), move_down_kwk_line_item_path(kwk_line_item), remote: true, class: "text-body" %></li>
+
+        <li class="price">
+          <%= number_to_currency kwk_line_item.unit_price %>
+        </li>
+        <li>
+          <%= kwk_line_item.variant_name %>
+        </li>
+        <li class="pull-right">
+          <small>
+            <%= link_to icon("times fa-fw"), checkouts_kwk_line_item_path(kwk_line_item), class: "text-danger", method: :delete, remote: true %>
+          </small>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+
+<% end %>
+

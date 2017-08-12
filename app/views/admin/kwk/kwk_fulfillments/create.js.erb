@@ -1,0 +1,7 @@
+<% if @fulfillment.errors.any? %>
+  $('#new_kwk_fulfillment').replaceWith('<%= j render "form" %>');
+<% else %>
+  $('#fulfillments').prepend('<%= j render @fulfillment %>');
+  $('#new_kwk_fulfillment_modal').modal('toggle');
+<% end %>
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');

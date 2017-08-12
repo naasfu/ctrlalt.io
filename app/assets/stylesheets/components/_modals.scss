@@ -1,0 +1,20 @@
+// Modals
+//==
+
+.modal-content {
+  border: 2px solid $border-color;
+  .modal-header,
+  .modal-footer {
+    border-width: 2px;
+  }
+
+  @include box-shadow(0 10px 25px 0 rgba(black, .1));
+}
+.modal.modal-error {
+  .modal-dialog > .modal-content,
+  .modal-dialog > .modal-header,
+  .modal-dialog > .modal-header > .modal-title,
+  .modal-dialog > .modal-footer {
+    border-color: $brand-danger;
+  }
+}

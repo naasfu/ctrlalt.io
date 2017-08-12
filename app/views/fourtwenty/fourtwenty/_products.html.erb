@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <div class="product-thumbnail">
+      <%= link_to image_tag(featured_product.image_url, class: "img-responsive"), featured_product.image_url, class: "fluidbox" %>
+      <div class="thumbnail-label">
+        <%= featured_product.name %>
+        (<%= featured_product.content %>)
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-8">
+    <h4 class="m-t-0"><%= image_tag "fourtwenty/#{title.parameterize('_')}.png", height: 36, alt: title %></h4>
+
+    <div class="product-images">
+      <% products.each_with_index do |product, i| %>
+        <a href="#/"<%= i == 0 ? ' class=active' : '' %> data-product-id="<%= product.id %>" data-preview-image="<%= product.image_url %>" data-preview-label="<%= product.name %> (<%= product.content %>)">
+          <%= image_tag product.thumbnail_url, class: "img-responsive", width: 64 %>
+          <span class="text-condensed text-center text-md">
+            <%= number_to_currency product.master_variant.unit_price, precision: 4, strip_insignificant_zeros: true %>
+          </span>
+        </a>
+      <% end %>
+    </div>
+
+    <div class="row spacer-top">
+      <div class="col-xs-12 col-md-7">
+        <h4 class="m-t-0 text-condensed">
+          SWITCH TYPE
+        </h4>
+        <div class="switch-type-list">
+          <% if is_mx %>
+            <a href="#/" class="switch-type active" data-switch-type="MX">MX</a>
+          <% end %>
+          <% if is_topre %>
+            <a href="#/" class="switch-type" data-switch-type="Topre">TOPRE</a>
+          <% end %>
+          <% if is_ibm %>
+            <a href="#/" class="switch-type" data-switch-type="IBM">IBM</a>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-5">
+        <% if featured_product.available? %>
+          <%= form_tag bro_line_items_path, remote: true do |f| %>
+            <%= hidden_field_tag :color, featured_product.content %>
+            <%= hidden_field_tag :switch_type, "MX" %>
+            <%= hidden_field_tag :product_id, featured_product.id %>
+            <%= submit_tag 'ADD TO CART', class: 'btn btn-lg btn-block btn-add-to-cart', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+          <% end %>
+        <% else %>
+          <%= link_to 'Unavailable', '#/', class: 'btn btn-lg btn-block btn-add-to-cart disabled' %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

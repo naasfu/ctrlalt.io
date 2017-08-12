@@ -1,0 +1,65 @@
+<div class="panel panel-default" id="winnings_panel">
+  <div class="panel-heading">
+    <h4 class="panel-title">Winnings</h4>
+  </div>
+  <% if @approved_line_items.any? %>
+    <div class="list-group">
+      <%= render partial: "kwk_line_items/kwk_line_item", collection: @approved_line_items, as: :kwk_line_item %>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <tr>
+          <td class="text-right" width="60%">Shipping</td>
+          <td class="shipping-total" width="40%">
+            <%= number_to_currency @order.shipping_total %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Subtotal</td>
+          <td class="line-items-total">
+            <%= number_to_currency @order.line_items_total %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">
+            Fees
+            <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+          </td>
+          <td class="fee-total">
+            <%= number_to_currency @order.fee_total %>
+          </td>
+        </tr>
+
+        <% if @order.donated? %>
+          <tr>
+            <td class="text-right">
+              Donation
+              <% if @order.donation_total >= 3 %>
+                <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!'} %>
+              <% end %>
+            </td>
+            <td class="donation-total">
+              <%= number_to_currency @order.donation_total %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="text-right">
+            Total
+          </td>
+          <td class="grand-total price">
+            <%= number_to_currency @order.grand_total %>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <div class="panel-footer text-right">
+      <%= link_to icon("plus", "New Fulfillment"), new_admin_kwk_order_fulfillment_path(@order), class: "btn btn-primary-o", remote: true %>
+    </div>
+  <% else %>
+    <div class="panel-body text-center">
+      There are no approved kaps for this ticket.
+    </div>
+  <% end %>
+</div>

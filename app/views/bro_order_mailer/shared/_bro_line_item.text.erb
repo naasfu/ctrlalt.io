@@ -1,0 +1,6 @@
+<%= number_to_currency bro_line_item.unit_price %> ─ <%= "#{bro_line_item.product_name} (#{bro_line_item.bro_sale_name})" %>
+<% if bro_line_item.color.present? %>
+  <% unless bro_line_item.variant_name == bro_line_item.product_name %>─ <%= bro_line_item.variant_name %><% end %>
+  ─ <%= bro_line_item.color %>
+<% end %>
+

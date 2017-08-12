@@ -1,0 +1,10 @@
+<% cache bro_variant do %>
+  <div class="radio">
+    <label>
+      <%= radio_button_tag :variant_id, bro_variant.id, (bro_variant_counter == 0 ? true : false) %>
+      <span class="price price-md"><%= number_to_currency bro_variant.unit_price %></span>
+      <br>
+      <%= bro_variant.name %>
+    </label>
+  </div>
+<% end %>

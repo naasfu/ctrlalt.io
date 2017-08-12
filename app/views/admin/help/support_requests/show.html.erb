@@ -1,0 +1,192 @@
+<% provide :meta_title, @support_request.subject %>
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Support Requests', admin_help_support_requests_path %></li>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-7">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <% if @support_request.open? %>
+          <%= link_to "Hold", transition_workflow_admin_help_support_request_path(@support_request, event: "hold"), class: "btn btn-info-o pull-right" %>
+          <%= link_to "Resolve", transition_workflow_admin_help_support_request_path(@support_request, event: "resolve"), class: "btn btn-success-o" %>
+          <%= link_to "Close", transition_workflow_admin_help_support_request_path(@support_request, event: "close"), class: "btn btn-default-o" %>
+        <% elsif @support_request.closed? %>
+          This support was closed <%= local_time @support_request.closed_at %>
+        <% elsif @support_request.resolved? %>
+          This support was resolved <%= local_time @support_request.resolved_at %>
+        <% elsif @support_request.on_hold? %>
+          <p>
+            This support was put on hold <%= local_time @support_request.on_hold_at %>
+          </p>
+
+          <%= link_to "Resume", transition_workflow_admin_help_support_request_path(@support_request, event: "resume"), class: "btn btn-blue pull-right" %>
+          <%= link_to "Resolve", transition_workflow_admin_help_support_request_path(@support_request, event: "resolve"), class: "btn btn-success-o" %>
+          <%= link_to "Close", transition_workflow_admin_help_support_request_path(@support_request, event: "close"), class: "btn btn-default-o" %>
+        <% else %>
+          <em>No actions available</em>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <h4 class="m-y-0"><%= @support_request.subject %></h4>
+
+        <p class="text-muted">
+          Support request #<%= @support_request.guid %>
+          <%= workflow_label @support_request %>
+        </p>
+
+        <%= form_tag admin_help_support_request_tags_path(@support_request), remote: true, method: :post, class: "form-inline spacer-p" do %>
+            <%= text_field_tag :tag_list, nil, placeholder: "Tags (to-ship, hyperfuse, on-hold, etc)", class: "form-control input-sm" %>
+            <%= submit_tag "Add tags", class: "btn btn-sm btn-default-o", data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+        <% end %>
+
+        <%= render 'tags' %>
+
+      </div>
+
+      <div class="panel-body">
+      
+        <p>
+          <%= image_tag @support_request.user.avatar_url(:sm), height: 25, class: "img-rounded" %>
+          <strong><%= @support_request.user.username || @support_request.user.email %></strong>
+          <small class="text-muted">
+            <%= timeago @support_request.created_at %>
+          </small>
+        </p>
+
+        <%= render_markdown @support_request.content %>
+
+
+      </div>
+    </div>
+    
+    <div class="list-group">
+      <%= render partial: 'admin/help/support_requests/comment', collection: @comments, as: :comment %>
+
+      <div class="list-group-item">
+        <%= simple_form_for [:admin, :help, @support_request, @comment] do |f| %>
+          <%= f.input :content, label: "Respond to this request", input_html: { rows: 6 } %>
+
+          <div class="text-right">
+            <%= f.submit "Post comment", class: "btn btn-success-o" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-xs-12 col-sm-5">
+
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <%= @user.email %>
+        </h4>
+      </div>
+
+      <div class="panel-body">
+        <dl class="dl-horizontal m-y-0">
+          <dt>#</dt>
+          <dd><%= @user.id %></dd>
+          
+          <dt>Username</dt>
+          <dd><%= @user.username %></dd>
+
+          <dt>Joined</dt>
+          <dd><%= local_time @user.created_at, format: :readable_date %></dd>
+
+          <dt>Avatar</dt>
+          <dd><%= image_tag @user.avatar_url(:md), class: "img-rounded", height: 50 %></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <% if @recent_orders.any? %>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th width="70%">Order</th>
+                <th width="30%">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <% @recent_orders.each do |order| %>
+                <tr>
+                  <td>
+                    <%= link_to "##{order.guid}", admin_order_path(order), class: "text-mono" %>
+                    <%= workflow_label order %>
+                    <br>
+                    <%= local_time (order.placed_at || order.paid_at), format: :readable_date %>
+                  </td>
+                  <td>
+                    <span class="price"><%= number_to_currency order.grand_total %></span>
+                  </td>
+                </tr>
+              <% end %>
+
+            </tbody>
+          </table>
+        </div>
+
+      <% else %>
+
+        <div class="panel-body">
+          No orders placed yet.
+        </div>
+
+      <% end %>
+    </div>
+    <div class="panel panel-default">
+      <% if @recent_bro_orders.any? %>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th width="70%">Bro Ticket</th>
+                <th width="30%">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <% @recent_bro_orders.each do |bro_order| %>
+                <tr>
+                  <td>
+                    <%= link_to "##{bro_order.guid}", admin_bro_order_path(bro_order), class: "text-mono" %>
+                    <%= workflow_label bro_order %>
+                    <br>
+                    <%= local_time (bro_order.submitted_at || bro_order.created_at), format: :readable_date %>
+                  </td>
+                  <td>
+                    <span class="price"><%= number_to_currency bro_order.grand_total %></span>
+                  </td>
+                </tr>
+              <% end %>
+
+            </tbody>
+          </table>
+        </div>
+
+      <% else %>
+
+        <div class="panel-body">
+          No bro orders placed yet.
+        </div>
+
+      <% end %>
+
+    </div>
+
+    <div class="list-group">
+      <%= render partial: "support_request_preview", collection: @recent_support_requests, as: :support_request %>
+    </div>
+
+
+  </div>
+</div>

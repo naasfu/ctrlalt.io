@@ -1,0 +1,8 @@
+<% provide :meta_title, 'Group Buys' %>
+<% provide :page_title, 'Group Buys' %>
+
+<% cache [@group_buys] do %>
+  <div class="row">
+    <%= render @group_buys, cached: true %>
+  </div>
+<% end %>

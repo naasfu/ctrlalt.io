@@ -1,0 +1,22 @@
+// Block grid
+//==
+.block-grid {
+  margin: 0 -5px;
+
+  .block-grid-image {
+    position: relative;
+    display: inline-block;
+    height: 200px;
+    padding: 5px;
+
+    img { 
+      max-width: 200px; 
+      max-height: 200px; 
+    }
+  }
+}
+.block-controls {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}

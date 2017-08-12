@@ -1,0 +1,7 @@
+<% cache faq do %>
+  <li>
+    <strong><%= link_to faq.q, help_faq_path(faq) %></strong>
+    <br>
+    <%= truncate faq.a, omission: "...", length: 150 %>
+  </li>
+<% end %>

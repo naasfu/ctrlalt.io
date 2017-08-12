@@ -1,0 +1,18 @@
+<div class="list-group-item">
+  <div class="row">
+    <div class="col-xs-5 col-sm-6 col-md-4">
+      <%= link_to "##{order.guid}", account_history_order_path(order) %>
+    </div>
+    <div class="col-xs-7 col-sm-6 col-md-3">
+      <%= local_time(order.paid_at || order.placed_at || order.created_at, format: :readable_date) %>
+    </div>
+    <div class="col-xs-5 col-sm-6 col-md-2">
+      <%= workflow_label(order) %>
+    </div>
+    <div class="col-xs-7 col-sm-6 col-md-3">
+      <span class="price">
+        <%= number_to_currency(order.grand_total) %>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<% provide :meta_title, 'Group Buys' %>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= link_to icon('plus', 'New Group Buy'), new_admin_group_buy_path, class: 'btn btn-success-o' %>
+  </div>
+</div>
+
+<%= render @group_buys %>

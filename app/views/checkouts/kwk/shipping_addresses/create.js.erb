@@ -1,0 +1,23 @@
+<% if @shipping_address.errors.any? %>
+
+  // Replace form (show errors)
+  $('#new_shipping_address').replaceWith('<%= j render "form" %>');
+
+<% else %>
+
+  // Close modal
+  $('#new_shipping_address_modal').modal('toggle');
+
+  // Update shipping address
+  $('#checkout_shipping_address').html('<%= j render "checkouts/bros/submissions/shipping_address" %>');
+
+<% end %>
+
+// Render notifications
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

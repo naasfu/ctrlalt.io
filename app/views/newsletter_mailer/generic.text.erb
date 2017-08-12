@@ -1,0 +1,20 @@
+<%= @newsletter.subject %>
+───────────────
+
+<%= @newsletter.content %>
+
+───────────────
+
+<%- if @group_buy -%>
+You are receiving this email because you participated in the group buy "<%= @group_buy.name %>".
+
+<%= group_buy_url(@group_buy) %>
+<%- else -%>
+Don't want these emails anymore? Use the link below to unsubscribe
+
+<%= account_email_unsubscribe_url(@user.unsubscribe_token) %>
+<%- end -%>
+
+───────────────
+
+<%= root_url %>

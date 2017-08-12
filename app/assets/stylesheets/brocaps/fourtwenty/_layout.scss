@@ -1,0 +1,186 @@
+@import "bootstrap/mixins/buttons";
+@import "variables";
+
+.jolly-roger,
+.reaper-classic,
+.stump-ii {
+  margin-bottom: 60px;
+}
+
+.sale-content {
+  margin: 50px 0;
+}
+
+
+.product-thumbnail {
+  position: relative;
+  margin-bottom: 20px;
+
+  .thumbnail-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 5px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 12px;
+    background: rgba(black, .4);
+    z-index: 1000;
+  }
+}
+
+.product-images {
+  img { border: 2px solid transparent; }
+  .active img {
+    border: 2px solid $dank-pink;
+  }
+  a {
+    margin-right: 10px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+.spacer-top {
+  margin-top: 20px;
+}
+
+.btn-add-to-cart {
+  font-family: 'Roboto Condensed', sans-serif;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  @include button-variant(#FFF, $dank-pink, $dank-pink);
+}
+
+.text-condensed {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.switch-type-list {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  .switch-type {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: $text-color;
+    padding: 7px 14px;
+    border: 2px solid $text-color;
+    margin-right: 15px;
+    text-decoration: none;
+    opacity: .5;
+    display: inline-block;
+
+    &.active,
+    &:hover {
+      opacity: 1;
+      color: $body-bg;
+      background: $text-color;
+    }
+  }
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.reaper-classic-photos {
+  margin: 0;
+
+  img:focus,
+  .photo,
+  .slick-current {outline:0;}
+
+}
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 0;
+  line-height: 60px;
+}
+.slick-next {
+  right: 0;
+  margin-right: -20px;
+  padding-right: 10px
+}
+.slick-prev {
+  left: 0;
+  margin-left: -20px;
+  padding-left: 10px
+}
+
+.slick-dots {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  li {
+    display: inline-block;
+
+    button {
+      background: transparent;
+      border: none;
+      width: 20px;
+      height: 20px;
+      outline: none;
+      line-height: 0px;
+      font-size: 0px;
+      color: transparent;
+      padding: 5px;
+      cursor: pointer;
+
+      &:hover, &:focus {
+        outline: none;
+        &:before {
+          opacity: 1;
+        }
+      }
+
+      &:before {
+        content: "•";
+        width: 20px;
+        height: 20px;
+        font-size: 21px;
+        line-height: 21px;
+        text-align: center;
+        color: $dank-pink;
+        opacity: .30;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+    &.slick-active button:before {
+        color: $dank-pink;
+        opacity: 1;
+    }
+  }
+}
+
+.swatches {
+  margin-bottom: 20px;
+  .swatch {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    border: 2px solid transparent;
+    margin-right: 14px;
+    &:focus,
+    &:active,
+    &.selected {
+      border-color: black;
+    }
+  }
+}
+
+
+.tooltip .tooltip-inner {
+  border: 1px solid $dank-pink;
+}
+
+@media (max-width: 900px) {
+
+  .reaper-classic {
+    background: none;
+  }
+
+  .precision-gamer {
+    background: none;
+  }
+}

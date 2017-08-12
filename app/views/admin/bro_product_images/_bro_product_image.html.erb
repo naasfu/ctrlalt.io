@@ -1,0 +1,10 @@
+<%= content_tag_for :div, bro_product_image, class: 'block-grid-image' do %>
+  <div class="block-controls">
+    <div class="btn-group">
+      <%= link_to icon('arrows fa-fw'), '#/', class: 'btn btn-xs btn-default-o move' %>
+      <%= link_to icon('pencil fa-fw'), edit_admin_bro_sale_product_image_path(bro_product_image.bro_sale, bro_product_image.product, bro_product_image), class: 'btn btn-xs btn-default-o' %>
+      <%= link_to icon('times fa-fw'), admin_bro_sale_product_image_path(bro_product_image.bro_sale, bro_product_image.product, bro_product_image), method: :delete, remote: true, class: 'btn btn-xs btn-danger' %>
+    </div>
+  </div>
+  <%= image_tag bro_product_image.file_url(:sm_square), class: 'img-rounded img-responsive' %>
+<% end %>

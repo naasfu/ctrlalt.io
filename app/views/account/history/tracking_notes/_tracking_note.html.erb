@@ -1,0 +1,10 @@
+<div class="panel-body">
+  <p>
+    <%= link_to tracking_note.tracking_number, "https://www.royalmail.com/track-your-item?trackNumber=#{tracking_note.tracking_number}", class: 'text-mono', target: '_blank' %>
+    <br>
+    <small class="text-muted">
+      <%= icon 'clock-o', local_time_ago(tracking_note.created_at) %>
+    </small>
+  </p>
+  <%= tracking_note.notes if tracking_note.notes.present? %>
+</div>

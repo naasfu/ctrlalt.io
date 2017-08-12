@@ -1,0 +1,20 @@
+<%= content_tag_for :div, carousel do %>
+  <p>
+    <%= image_tag carousel.file_url(:lg), class: 'img-rounded img-responsive' %>
+  </p>
+  <% if carousel.title.present? %>
+    <h4 class="m-y-0">
+      <%= carousel.title %>
+    </h4>
+  <% end %>
+  <% if carousel.caption.present? %>
+    <p>
+      <%= carousel.caption %>
+    </p>
+  <% end %>
+  <ul class="list-inline">
+    <li class="pull-right"><%= link_to icon('times'), admin_carousel_path(carousel), method: :delete, remote: true, class: 'text-danger' %></li>
+    <li><%= link_to icon('reorder'), '#/', class: 'move' %></li>
+    <li><%= link_to icon('pencil', 'Details'), edit_admin_carousel_path(carousel), remote: true %></li>
+  </p>
+<% end %>

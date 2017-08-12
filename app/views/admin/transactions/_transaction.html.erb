@@ -1,0 +1,9 @@
+<article>
+  <div class="text-muted pull-right">
+    <%= CreditCardLogoPresenter.call(transaction.card_brand) %>
+    <%= transaction.last_4 %>
+  </div>
+  <p>
+    <%= transaction.full_name %>
+  </p>
+</article>

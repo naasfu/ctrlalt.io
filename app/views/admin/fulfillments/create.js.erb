@@ -1,0 +1,11 @@
+// Toggle modal
+$('#new_fulfillment_modal').modal('toggle');
+
+// Render fulfilment
+$('#fulfillments').prepend('<%= j render @fulfillment %>');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

@@ -1,0 +1,9 @@
+<% if @shipping_address.present? %>
+  <strong>Ship to</strong>
+  <small>
+    <%= link_to "Change", edit_checkouts_buys_shipping_address_path(@shipping_address), remote: true %>
+  </small>
+  <%= render 'addresses/shipping_address', shipping_address: @shipping_address %>
+<% else %>
+  <%= link_to icon("plus fa-fw", "Add shipping address"), new_checkouts_buys_shipping_address_path, class: "btn btn-primary-o", remote: true %>
+<% end %>

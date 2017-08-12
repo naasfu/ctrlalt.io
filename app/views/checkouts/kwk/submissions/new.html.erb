@@ -1,0 +1,129 @@
+<% provide :meta_title, "Submit Ticket" %>
+<% provide :page_title do %>
+  <div class="kwk-icon kwk-icon-lg">
+    <%= svg_kwk("dracula-yellow") %>
+  </div>
+  Submit Ticket
+<% end %>
+
+<% provide :page_subtitle, link_to(icon('angle-double-left', 'Back to kult kart'), checkouts_kwk_path) %>
+
+<% provide :page_scripts do %>
+  <script>
+    $(function() {
+      // Remove the address verification error div instantly
+      $(document).on("click", ".verification-error a", function() {
+        $('.verification-error').remove();
+      });
+      // Save notes on keyup
+      $(document).on("keyup", "#kwk_order_geekhack_username", function(event) {
+        $(this).trigger('submit.rails');
+        return event.keyCode != 13;
+      });
+      $(document).on("keyup mouseup", "#kwk_order_donation_amount", function(event) {
+        $(this).trigger('submit.rails');
+        return event.keyCode != 13;
+      });
+      $(document).on("keyup", "#kwk_order_user_notes", function() {
+        $(this).trigger('submit.rails');
+      });
+      $("#submit_ticket").submit(function( event ) {
+        $("#kwk_order_user_notes").trigger('submit.rails');
+      });
+    });
+  </script>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    
+    <!-- 1. Shipping address -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">1. Details</h4>
+      </div>
+
+      <div class="panel-body">
+        <%= simple_form_for current_kaps, url: checkouts_kwk_details_path, method: :patch, remote: true do |f| %>
+          <%= f.input :geekhack_username, placeholder: 'marshall.h.applewhite', hint: 'A valid geekhack.org username is required to participate in Kult Worship Kap events.' %>
+          <%= f.input :user_notes, label: "Notes", input_html: { rows: 3 }, placeholder: 'Anything else? We will do our best to accommodate all special requests.' %>
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :donation_amount, wrapper: :vertical_input_group do %>
+                <span class="input-group-addon"><%= icon 'heart text-danger' %></span>
+                <%= f.input_field :donation_amount, class: 'form-control' %>
+              <% end %>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+              <br>
+              We run off your donations!
+              <br>
+              <%= link_to 'Learn More', donations_path %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 1. Shipping address -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">2. Shipping address</h4>
+      </div>
+
+      <div class="panel-body">
+        
+        <div id="checkout_shipping_address">
+          <%= render 'checkouts/kwk/submissions/shipping_address' %>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 1. Shipping address -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">3. Confirm Kaps</h4>
+      </div>
+
+      <div class="panel-body">
+        If chosen, you would like to win a maximum of <strong><%= pluralize current_kaps.kap_count, 'kap' %></strong>.
+      </div>
+
+      <div class="list-group">
+        <%= render partial: "kwk_line_items/kwk_line_item", collection: @line_items, as: :kwk_line_item %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div id="totals_panel">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <% current_kwk_sales.each do |kwk_sale| %>
+            <strong><%= kwk_sale.name %></strong>
+            <br>
+            <%= content_tag :span, timeago(kwk_sale.deadline), class: (kwk_sale.ongoing? ? 'text-success' : 'text-danger') %>
+          <% end %>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            Please confirm all details before continuing.
+          </p>
+          <p class="text-danger">
+            <strong>
+              You will not be able to modify any details after you submit your ticket.
+            </strong>
+          </p>
+        </div>
+        <div class="panel-footer">
+          <%= form_tag checkouts_kwk_submit_ticket_path, id: "submit_ticket", method: :post do %>
+            <%= submit_tag "Submit ticket", class: "btn btn-block btn-success-o", data: { 'loading-text' => 'Processing...', toggle: :loading } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

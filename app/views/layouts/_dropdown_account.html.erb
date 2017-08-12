@@ -1,0 +1,23 @@
+<div class="dropdown-menu dropdown-menu-right dropdown-list-group">
+  <%= link_to account_help_support_requests_path, class: 'list-group-item' do %>
+    <div class="cai-bouy dracula-red"></div>
+    Support
+  <% end %>
+  <%= link_to account_history_orders_path, class: 'list-group-item' do %>
+    <div class="cai-orders dracula-green"></div>
+    Orders
+  <% end %>
+  <%= link_to account_history_bro_orders_path, class: 'list-group-item' do %>
+    <div class="cai-fist dracula-purple"></div>
+    Bro Caps
+  <% end %>
+  <div class="list-group-item text-center">
+    <%= current_user.email %>
+    <br>
+    <small>
+      <%= link_to 'Account', account_info_path %>
+      &middot;
+      <%= link_to 'Log out', logout_path %>
+    </small>
+  </div>
+</div>

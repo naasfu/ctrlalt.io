@@ -1,0 +1,17 @@
+<% provide :meta_title, "FAQ (#{@faq_category.name})" %>
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to FAQ"), help_faqs_path) %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4 class="m-t-0">
+          <%= pluralize(@faq_category.sorted_faqs.size, 'article') %> in <%= @faq_category.name %>
+        </h4>
+        <ul>
+          <%= render @faq_category.sorted_faqs, cached: true %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+// Dropzone
+//==
+.dropzone-catch {
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  border: 2px dashed $panel-default-border;
+  border-radius: 5px;
+}
+.dz-preview { margin-top: 15px; }
+.dz-processing { color: $text-muted; }
+.dz-success { color: $brand-success; }
+.dz-error { color: $brand-danger; }

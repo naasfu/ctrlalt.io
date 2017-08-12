@@ -1,0 +1,93 @@
+<%= simple_form_for [:admin, @group_buy, @product, @variant] do |f| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'Back', admin_group_buy_product_variants_path(@group_buy, @product), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+
+    <div class="panel-body">
+      <%= f.error_notification %>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Details</h4>
+          <p>Variant name and weight.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :name %>
+          <div class="row">
+            <div class="col-xs-4">
+              <%= f.input :weight, wrapper: :vertical_input_group do %>
+                <%= f.input_field :weight, class: "form-control", step: 'any' %>
+                <span class="input-group-addon">oz</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Price</h4>
+          <p>Variant pricing.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :unit_price, wrapper: :vertical_input_group do %>
+                <span class="input-group-addon"><%= icon 'usd' %></span>
+                <%= f.input_field :unit_price, class: "form-control", step: 'any' %>
+              <% end %>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :cost_price, wrapper: :vertical_input_group do %>
+                <span class="input-group-addon"><%= icon 'usd' %></span>
+                <%= f.input_field :cost_price, class: "form-control", step: 'any' %>
+              <% end %>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :sale_price, wrapper: :vertical_input_group do %>
+                <span class="input-group-addon"><%= icon 'usd' %></span>
+                <%= f.input_field :sale_price, class: "form-control", step: 'any' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Inventory</h4>
+          <p>Variant stock and purchase limits.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :stock %>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <%= f.input :limit %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Settings</h4>
+          <p>Hide this variant from everyone.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :visible %>
+          <%= f.input :active %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel-footer">
+      <%= link_to 'Back', admin_group_buy_product_variants_path(@group_buy, @product), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+  </div>
+<% end %>

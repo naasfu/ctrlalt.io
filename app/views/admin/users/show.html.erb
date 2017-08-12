@@ -1,0 +1,12 @@
+<% provide :meta_title, @user.username %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Users', admin_users_path %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title"><%= @user.username %></h4>
+    <span class="text-muted"><%= @user.email %></span>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<% provide :meta_title, raw("FAQ's in #{@faq_category.name}") %>
+<% provide :page_title, "FAQ's in #{@faq_category.name}" %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon("plus", "New FAQ"), new_admin_faq_category_faq_path(@faq_category), class: "btn btn-success-o" %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th width="70%">FAQ</th>
+          <th width="30%">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="sortable-table" data-update-url="<%= admin_sort_path(class_name: "faq") %>">
+        <%= render @faqs %>
+      </tbody>
+    </table>
+  </div>
+</div>

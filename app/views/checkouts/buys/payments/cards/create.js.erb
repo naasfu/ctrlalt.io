@@ -1,0 +1,19 @@
+<% if @credit_card %>
+  // Toggle modal
+  $('#new_card_modal').modal('toggle');
+  $('#checkout_payment_method').html('<%= j render "checkouts/buys/purchases/payment_method" %>');
+  
+  <% if current_cart.is_ready_for_purchase? %>
+    $('#totals_panel input[type="submit"]').removeClass("btn-default-o").addClass("btn-success-o").prop("disabled", false);
+  <% end %>
+<% else %>
+  $('#new_card_modal').addClass('has-error');
+<% end %>
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});
+
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');

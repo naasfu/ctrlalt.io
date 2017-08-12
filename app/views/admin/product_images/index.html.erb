@@ -1,0 +1,38 @@
+<% provide :meta_title, 'Images' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Group Buys', admin_group_buys_path %></li>
+  <li><%= link_to @group_buy.name, admin_group_buy_path(@group_buy) %></li>
+  <li><%= link_to 'Products', admin_group_buy_products_path(@group_buy) %></li>
+  <li><%= link_to @product.name, edit_admin_group_buy_product_path(@group_buy, @product) %></li>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= form_tag admin_group_buy_product_images_path(@group_buy, @product), method: :post, class: 'dropzone-images', multipart: true, remote: true, authenticity_token: true do %>
+          <div class="dropzone-catch">
+            <i class="fa fa-upload fa-2x"></i>
+            <br>
+            <span class="text-muted">Drag images here to upload</span>
+          </div>
+          <%= render 'admin/shared/dropzone' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Images</h4>
+      </div>
+      <div class="panel-body">
+        <div id="images" class="block-grid sortable-block-grid" data-update-url="<%= admin_sort_path(class_name: "product_image") %>">
+          <%= render @images %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

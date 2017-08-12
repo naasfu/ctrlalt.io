@@ -1,0 +1,52 @@
+<% provide :meta_title, 'Winning Orders' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @sale.name, admin_kwk_sale_path(@sale) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <ul class="list-inline m-y-0">
+      <li data-toggle="tooltip" data-original-title="Clear search"><%= link_to icon('times fa-lg') %></li>
+      <li data-toggle="tooltip" data-original-title="Search for anything">
+        <%= form_tag admin_kwk_sale_orders_path(@sale), method: :get, class: 'form-inline' do %>
+          <%= hidden_field_tag :workflow_state, params[:workflow_state] if params[:workflow_state].present? %>
+          
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><%= icon 'search' %></div>
+              <%= text_field_tag :keyword, params[:keyword], class: 'form-control input-sm', placeholder: 'Search for anything' %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+      <li data-toggle="tooltip" data-original-title="Filter by order status"><%= icon 'filter text-muted' %></li>
+      <li>
+        <div class="dropdown">
+          <a href="#/" class="dropdown-toggle" data-toggle="dropdown">
+            <% if params[:workflow_state].present? %>
+              <%= params[:workflow_state].titleize %>
+            <% else %>
+              All
+            <% end %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><%= link_to 'All', admin_kwk_sale_orders_path(@sale, order_search_url_options(workflow_state: nil)) %></li>
+            <li class="divider"></li>
+            <% KwkOrder.workflow_spec.state_names.map do |state| %>
+              <li><%= link_to state.to_s.titleize, admin_kwk_sale_orders_path(@sale, order_search_url_options(workflow_state: state.to_s)) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="list-group">
+    <%= render @orders %>
+  </div>
+</div>
+
+<%= paginate @orders %>

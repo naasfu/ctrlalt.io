@@ -1,0 +1,9 @@
+<% provide :meta_title, 'New Micropost' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Group Buys', admin_group_buys_path %></li>
+  <li><%= link_to @group_buy.name, admin_group_buy_path(@group_buy) %></li>
+  <li><%= link_to 'Microposts', admin_group_buy_microposts_path(@group_buy) %></li>
+<% end %>
+
+<%= render 'form' %>

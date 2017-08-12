@@ -1,0 +1,31 @@
+<div class="list-group-item">
+  <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <p>
+        <%= link_to image_tag(kwk_sale.logo_url(:md), class: "img-responsive img-rounded"), admin_kwk_sale_path(kwk_sale) %>
+      </p>
+    </div>
+    <div class="col-xs-12 col-sm-9">
+      <h4 class="m-y-0">
+        <%= link_to kwk_sale.name, admin_kwk_sale_path(kwk_sale) %>
+        <%= link_to icon('eye'), kwk_sale_path(kwk_sale), class: "text-muted" %>
+      </h4>
+      <p>
+        <%= content_tag :span, timeago(kwk_sale.deadline), class: (kwk_sale.ongoing? ? 'text-success' : 'text-danger') %>
+      </p>
+      <ul class="list-inline">
+        <li><%= link_to icon('trophy', 'Winners'), winners_admin_kwk_sale_path(kwk_sale), class: "btn btn-xs btn-success-o" %></li>
+        <li><%= link_to icon('bar-chart', 'Stats'), admin_kwk_sale_path(kwk_sale), class: "btn btn-xs btn-info-o" %></li>
+        <li><%= link_to icon('inbox', 'Orders'), admin_kwk_sale_orders_path(kwk_sale), class: "btn btn-xs btn-warning-o" %></li>
+      </ul>
+      <ul class="list-inline">
+        <li><%= link_to icon('pencil', 'Details'), edit_admin_kwk_sale_path(kwk_sale), class: "btn btn-xs btn-default-o" %></li>
+        <li><%= link_to icon('tags', 'Products'), admin_kwk_sale_products_path(kwk_sale), class: "btn btn-xs btn-default-o" %></li>
+        <li></li>
+      </ul>
+    </div>
+
+
+  </div>
+</div>
+

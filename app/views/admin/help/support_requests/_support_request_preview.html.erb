@@ -1,0 +1,27 @@
+<div class="list-group-item">
+  <div class="pull-right text-right text-muted">
+    <small>
+      <%= icon 'clock-o' %>
+      <%= timeago support_request.created_at %>
+    </small>
+  </div>
+
+    <span class="text-mono">
+      #<%= support_request.guid %>
+    </span>
+    <%= workflow_label support_request %>
+    <br>
+    <%= link_to support_request.subject, admin_help_support_request_path(support_request) %>
+    <br>
+  <small class="text-muted">
+    <%= icon 'comments-o' %>
+    <%= pluralize support_request.comments.size, 'reply' %>
+
+    <% if support_request.comments.any? %>
+      &mdash;
+      Last reply by
+      <%= image_tag support_request.last_reply.user.avatar_url(:sm), class: "img-rounded", height: 20 %>
+      <%= support_request.last_reply.user.username %>
+    <% end %>
+  </small>
+</div>

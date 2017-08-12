@@ -1,0 +1,88 @@
+<% provide :meta_title, "The Krew" %>
+<% provide :page_title, "The Krew" %>
+<% provide :page_description, "Meet the team" %>
+
+<% cache ["pages/krew"] do %>
+  <div class="page-content">
+    <div class="container"> 
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "bunnylake.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">BunnyLake</h4>
+              <p class="text-muted"><strong>Founder</strong></p>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "codyeatworld.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">codyeatworld</h4>
+              <p class="text-muted"><strong>Co-Founder</strong></p>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "brocaps.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Bro Caps</h4>
+              <p class="text-muted"><strong>Artist</strong></p>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "hipsterpunks.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">HipsterPunks</h4>
+              <p class="text-muted"><strong>Artist</strong></p>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "tym.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">tym</h4>
+              <p class="text-muted"><strong>Customer Support</strong></p>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag "sent.jpg", width: 54, class: "img-rounded media-object"%>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Sent</h4>
+              <p class="text-muted"><strong>Editor</strong></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content text-center">
+    <strong>We would also like to thank the following people for their contributions:</strong>
+    <br>
+    <ul class="list-inline m-y-0">
+      <li>margo</li>
+      <li>jdcarpe</li>
+      <li>Matt3o</li>
+      <li>jtk</li>
+      <li>Elrick</li>
+      <li>riotonthebay</li>
+      <li>spamray</li>
+    </ul>
+  </div>
+<% end %>

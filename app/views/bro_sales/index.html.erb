@@ -1,0 +1,8 @@
+<% provide :meta_title, 'Bro Caps' %>
+<% provide :page_title, 'Bro Caps' %>
+
+<% cache [@bro_sales] do %>
+  <div class="row">
+    <%= render @bro_sales %>
+  </div>
+<% end %>

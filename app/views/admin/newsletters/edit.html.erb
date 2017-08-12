@@ -1,0 +1,8 @@
+<% provide :meta_title, 'Edit Newsletter' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Newsletters', admin_newsletters_path %></li>
+  <li><%= link_to @newsletter.subject, admin_newsletter_path(@newsletter) %></li>
+<% end %>
+
+<%= render 'form' %>

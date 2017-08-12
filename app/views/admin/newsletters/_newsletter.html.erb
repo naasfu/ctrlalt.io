@@ -1,0 +1,12 @@
+<%= content_tag :tr, id: dom_id(newsletter) do %>
+  <td>
+    <%= link_to newsletter.subject, admin_newsletter_path(newsletter) %>
+    <br>
+    <%= truncate newsletter.content, length: 250, omission: '...' %>
+  </td>
+  <td>
+    <%= link_to icon("times"), admin_newsletter_path(newsletter), class: "btn btn-xs btn-danger-o pull-right", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+
+    <%= link_to icon('pencil', 'Details'), edit_admin_newsletter_path(newsletter), class: 'btn btn-xs btn-default-o' %>
+  </td>
+<% end %>

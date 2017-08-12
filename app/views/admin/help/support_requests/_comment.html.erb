@@ -1,0 +1,27 @@
+<%= content_tag :div, class: "list-group-item comment", id: dom_id(comment) do %>
+
+  <div class="comment-tools">
+    <%= link_to icon("pencil", "Edit"), edit_admin_help_comment_path(comment), class: "btn btn-xs btn-default-o", remote: true %>
+    <%= link_to icon("times"), admin_help_comment_path(comment), class: "btn btn-xs btn-danger-o", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
+  
+  <p>
+    <%= image_tag comment.user.avatar_url(:sm), height: 25, class: "img-rounded" %>
+    <strong><%= comment.user.username || comment.user.email %></strong>
+    <small class="text-muted">
+      <%= icon "clock-o" %>
+      <%= timeago comment.created_at %>
+      <%= icon("envelope") if comment.replied_by_email? %>
+    </small>
+
+  </p>
+
+  <div class="comment-content">
+    <%= render_markdown comment.content %>
+  </div>
+
+  <div class="reply-signature">
+    <%= render_markdown comment.user.signature if comment.user.admin? %>
+  </div>
+
+<% end %>

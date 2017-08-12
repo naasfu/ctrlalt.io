@@ -1,0 +1,6 @@
+$('.line-items-total').html('<%= number_to_currency current_cart.line_items_total %>');
+$('.shipping-total').html('<%= number_to_currency current_cart.shipping_total %>');
+$('.fee-total').html('<%= number_to_currency current_cart.fee_total %>');
+$('.donation-total').html('<%= number_to_currency current_cart.donation_total %>');
+$('.grand-total').html('<%= number_to_currency current_cart.grand_total %>');
+$('#totals_panel').css({ opacity: 1 });

@@ -1,0 +1,30 @@
+<%= simple_form_for [:checkouts, :bros, @shipping_address], remote: true, html: { class: 'm-y-0' } do |f| %>
+  <div class="modal-body">
+    <%= f.input :full_name, label: "Full name" %>
+    <%= f.input :street1, label: "Address line 1", placeholder: "Street address, P.O. box, company name, c/o" %>
+    <%= f.input :street2, label: "Address line 2", placeholder: "Apartment, suite, unit, building, floor, etc" %>
+
+    <div class="row">
+      <div class="col-xs-5">
+        <%= f.input :city %>
+      </div>
+      <div class="col-xs-7">
+        <%= f.input :state, label: "State/Province/Region" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5">
+        <%= f.input :zip %>
+      </div>
+      <div class="col-xs-7">
+      <%= f.input :country, collection: CountrySelectPresenter.options, selected: @shipping_address.country %>
+      </div>
+    </div>
+
+    <%= f.input :phone %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit class: "btn btn-success-o", data: { 'loading-text' => 'Verifying...', toggle: :loading } %>
+  </div>
+<% end %>

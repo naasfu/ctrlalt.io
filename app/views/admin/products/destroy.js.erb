@@ -1,0 +1,4 @@
+<% if @group_buy_product.destroyed? %>
+  $('#group_buy_product_<%= @group_buy_product.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

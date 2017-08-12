@@ -1,0 +1,11 @@
+// Alerts
+//==
+.hero {
+  padding: $spacer * 2.5;
+  width: 100%;
+  border-bottom: 2px solid $border-color;
+
+  h1, h2, h3 {
+    font-weight: 500;
+  }
+}

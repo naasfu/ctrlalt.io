@@ -1,0 +1,3 @@
+$('#<%= dom_id @support_request, :tags %>').replaceWith('<%= j render "admin/help/support_requests/tags" %>');
+$('#tag_list').val("");
+$('[data-toggle=loading]').button('reset');

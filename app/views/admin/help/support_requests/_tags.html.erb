@@ -1,0 +1,9 @@
+<%= content_tag :p, id: dom_id(@support_request, :tags) do %>
+  <% @support_request.tag_list.each do |tag| %>
+    <span class="label label-default">
+      <%= link_to tag.name, admin_help_tag_path(tag.name) %>
+      <%= link_to icon("times"), admin_help_support_request_tags_path(tag.support_request, tag: tag.name), method: :delete, remote: true %>
+    </span>
+    &nbsp;
+  <% end %>
+<% end %>

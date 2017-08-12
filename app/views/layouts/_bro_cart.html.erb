@@ -1,0 +1,10 @@
+<% cache ["bro_cart", current_user, current_bros] do %>
+  <% if current_bro_sales? %>
+    <li>
+      <%= link_to checkouts_bros_path do %>
+        <div class="cai-fist"></div>
+        <span class="bro-count"><%= pluralize current_bros.line_items.size, 'bro' %></span>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+Order <%= link_to "##{@order.guid}", account_history_order_url(@order) %> is on the way!
+
+Your package has been shipped via <%= @fulfillment.shipment_service %> and given a tracking number of <%= link_to @fulfillment.tracking_number, "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{@fulfillment.tracking_number}" %>.
+
+──────────────────────────────
+
+<%= render 'order_mailer/shared/footer' %>

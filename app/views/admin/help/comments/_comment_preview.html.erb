@@ -1,0 +1,16 @@
+<div class="list-group">
+  <div class="list-group-item">
+    <p>
+      <%= image_tag comment.user.avatar_url(:sm), height: 25, class: "img-rounded" %>
+      <strong><%= comment.user.username || comment.user.email %></strong>
+      <small class="text-muted">
+        <%= timeago comment.created_at %>
+        <%= icon("envelope") if comment.replied_by_email? %>
+      </small>
+      <br>
+      in <%= link_to comment.support_request.subject, admin_help_support_request_path(comment.support_request) %>
+    </p>
+
+    <%= truncate comment.content, length: 150, omission: '...' %>
+  </div>
+</div>

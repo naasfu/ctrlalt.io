@@ -1,0 +1,12 @@
+$("#new_fulfillment_modal").remove();
+
+$('body').append('<%= j render "admin/fulfillments/modal" %>');
+
+// Toggle modal
+$('#new_fulfillment_modal').modal('toggle');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

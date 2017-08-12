@@ -1,0 +1,62 @@
+<% provide :meta_title, 'Confirmation' %>
+<% provide :page_title, 'Confirmation' %>
+<% provide :page_description, 'Review ticket details and bro selection' %>
+
+<%= simple_form_for [:checkouts, :bros, current_bros], url: checkouts_bros_confirmation_path do |f| %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <p><%= link_to icon('angle-double-left', 'Back to details'), checkouts_bros_address_path %></p>
+      
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">
+          <h4 class="panel-title">
+            <span class="text-success">
+              You would like up to <%= pluralize current_bros.bro_count, 'bro' %>
+            </span>
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <h4 class="m-t-0 text-muted">Email</h4>
+              <p><%= current_bros.email %></p>
+
+              <h4 class="text-muted">Ship to</h4>
+              <%= render 'account/shared/shipping_address', shipping_address: @shipping_address %>
+
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <h4 class="m-t-0 text-muted">Shipment service</h4>
+
+              <% if @shipping_address.country == 'US' %>
+                <p>USPS Priority</p>
+              <% else %>
+                <p>USPS First Class International</p>
+              <% end %>
+
+              <%= render 'account/shared/optional_info', order: current_bros %>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="78%">Product</th>
+                <th width="20%" class="text-center">Price</th>
+              </tr>
+            </thead>
+            <tbody class="sortable-table" data-update-url="<%= checkouts_bros_sort_path %>">
+              <%= render partial: 'checkouts/bros/bro_line_items/confirm_line_item', collection: current_bros.line_items.sorted, as: :bro_line_item %>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer text-right">
+          <%= f.submit 'Confirm', class: "btn btn-success-o" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>

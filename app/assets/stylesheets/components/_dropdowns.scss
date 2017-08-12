@@ -1,0 +1,30 @@
+// Dropdowns
+//==
+li.dropdown ul.dropdown-menu {
+  border: 2px solid $panel-default-border;
+  @include box-shadow(0 10px 25px 0 rgba(black, .1));
+}
+
+li.dropdown .dropdown-menu.dropdown-list-group {
+  padding: 0;
+  margin: 0;
+  border-radius: $border-radius-base;
+  background: transparent;
+  min-width: 250px;
+  border: none;
+
+  .list-group {
+    @include box-shadow(0 15px 25px 0 rgba(black, .25));
+    // margin-bottom: 0;
+  }
+}
+
+li.dropdown .dropdown-menu.dropdown-cart-menu {
+  min-width: 500px;
+}
+
+
+.btn-group .dropdown-menu {
+  border: 2px solid $border-color;
+  @include box-shadow(0 15px 25px 0 rgba(black, .25));
+}

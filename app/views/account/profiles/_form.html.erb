@@ -1,0 +1,55 @@
+<%= simple_form_for [:account, @user], url: account_info_path do |f| %>
+
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Avatar</h4>
+        </div>
+        <div class="panel-body">
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag(@user.avatar_url(:sm), class: "media-object") %>
+            </div>
+            <div class="media-body">
+              <%= f.input :avatar, as: :file, label: false %>
+              <%= f.input :remove_avatar, as: :boolean if @user.avatar? %>
+              <%= f.hidden_field :avatar_cache %>
+            </div>
+            <div class="text-right">
+              <%= f.submit 'Update', class: 'btn btn-success-o' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Details</h4>
+        </div>
+        <div class="panel-body">
+          <%= f.input :username %>
+          <%= f.input :email %>
+
+          <% if @user.admin? %>
+            <%= f.input :signature, as: :text, input_html: { rows: 5 } %>
+          <% end %>
+          
+          <%= f.input :password %>
+          <%= f.input :password_confirmation %>
+        </div>
+        
+        <div class="panel-body">
+          <%= f.input :all_newsletters, as: :boolean, label: "Newsletter", hint: "Subscribe to email updates and announcements." %>
+        </div>
+
+        <div class="panel-body">
+          <div class="text-right">
+            <%= f.submit 'Update', class: 'btn btn-success-o' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

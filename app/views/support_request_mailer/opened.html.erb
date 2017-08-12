@@ -1,0 +1,20 @@
+<p style="color: #999">
+  # Please type your reply above this line #
+</p>
+
+<p>
+  Support request <%= link_to "##{@support_request.guid}", account_help_support_request_url(@support_request) %> has been opened.
+</p>
+
+<p>
+  <strong>
+    <%= @user.username || @user.email %>
+  </strong>
+  <small style="color: #999">
+    <%= l @support_request.created_at, format: :readable_time %>
+  </small>
+</p>
+
+<div style="padding: 0 30px;">
+  <%= simple_format @support_request.content %>
+</div>

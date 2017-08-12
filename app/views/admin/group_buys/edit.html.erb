@@ -1,0 +1,7 @@
+<% provide :meta_title, @group_buy.name %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Group Buys', admin_group_buys_path %></li>
+<% end %>
+
+<%= render 'form' %>

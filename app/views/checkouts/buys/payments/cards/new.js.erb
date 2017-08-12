@@ -1,0 +1,14 @@
+<% if @shipping_address.present? %>
+  if($("#new_card_modal").length === 0){
+    $('body').append('<%= j render "new_modal" %>');
+  }
+  // Toggle modal
+  $('#new_card_modal').modal('toggle');
+<% else %>
+  $('#notifications').html('<%= j render "layouts/notifications" %>');
+<% end %>
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

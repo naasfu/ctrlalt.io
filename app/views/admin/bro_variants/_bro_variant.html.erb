@@ -1,0 +1,13 @@
+<%= content_tag_for :tr, bro_variant do %>
+  <td>
+    <%= sortable_handle %>
+    <%= link_to bro_variant.name, edit_admin_bro_sale_product_variant_path(bro_variant.bro_sale, bro_variant.product, bro_variant) %>
+  </td>
+  <td class="price">
+    <%= number_to_currency bro_variant.unit_price %>
+  </td>
+  <td>
+    <%= link_to icon("times"), admin_bro_sale_product_variant_path(bro_variant.bro_sale, bro_variant.product, bro_variant), class: "btn btn-xs btn-danger pull-right", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to icon("pencil", "Details"), edit_admin_bro_sale_product_variant_path(bro_variant.bro_sale, bro_variant.product, bro_variant), class: "btn btn-xs btn-default-o" %>
+  </td>
+<% end %>

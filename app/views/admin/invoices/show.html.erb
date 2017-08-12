@@ -1,0 +1,41 @@
+<header class="invoice-header">
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="invoice-logo"><%= logo_svg %></div>
+    </div>
+    <div class="col-xs-6">
+      <table class="invoice-table">
+        <tbody>
+          <tr>
+            <td class="text-right"><strong>Purchased</strong></td>
+            <td><%= l @order_fulfillment.created_at, format: :readable_time_short %></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>Order</strong></td>
+            <td><%= format_guid @order.guid %></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>Fulfillment</strong></td>
+            <td><%= format_guid @order_fulfillment.guid %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</header>
+
+<div class="row">
+  <div class="col-xs-6">
+    <p><strong>Ship to</strong></p>
+    <%= render 'account/shared/shipping_address', shipping_address: @shipping_address %>
+  </div>
+  <div class="col-xs-6">
+    <p><strong>Items included in this shipment:</strong></p>
+    <%= render partial: 'line_items/media', collection: @line_items, as: :line_item %>
+  </div>
+</div>
+
+<div class="invoice-footer">
+  <strong>Questions about your order?</strong>
+  <p>Please visit our website to contact us. (<%= contact_url %>)</p>
+</div>

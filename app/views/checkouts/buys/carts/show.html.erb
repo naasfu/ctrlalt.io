@@ -1,0 +1,61 @@
+
+<% provide :page_scripts do %>
+  <script>
+    $(function() {
+      $(document).on("click", "a[data-method='delete']", function() {
+        if ($('.line-item').length > 1) {
+          $(this).parent().parent().remove();
+          $('#totals_panel').css({ opacity: 0.5 });
+        } else {
+          $('#cart').html('<%= j render "empty_cart" %>');
+          $('.line-items-total').html('$0.00');
+        }
+      })
+      $(document).on("change", "select", function() {
+        $('#totals_panel').css({ opacity: 0.5 });
+      })
+    });
+  </script>
+<% end %>
+
+<% if current_cart.is_empty? %>
+  <%= render 'checkouts/buys/carts/empty_cart' %>
+<% else %>
+  <div id="cart">
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="panel panel-default">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th colspan="2">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "line_items/cart_line_item", collection: @line_items, as: :line_item %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div id="totals_panel" class="panel panel-default">
+          <div class="panel-body text-center">
+            Subtotal
+            (<span class="line-items-count"><%= pluralize current_cart.line_items_count, 'item' %></span>)
+            <br>
+            <span class="line-items-total price price-xl">
+              <%= number_to_currency current_cart.line_items_total %>
+            </span>
+          </div>
+          <div class="panel-footer">
+            <%= link_to "Proceed to checkout", checkouts_buys_purchase_path, class: "btn btn-success-o btn-block" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

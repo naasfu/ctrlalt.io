@@ -1,0 +1,13 @@
+<% if current_bros.is_empty? %>
+
+  $('#cart').html('<%= j render "checkouts/bros/carts/empty_cart" %>');
+  
+<% else %>
+
+  $('#<%= dom_id @line_item, :cart %>').remove();
+
+<% end %>
+
+$('#totals_panel').velocity({ opacity: 1 }, { duration: 200 });
+
+$('.bro-count').html('<%= j pluralize current_bros.line_items.size, "bro" %>');

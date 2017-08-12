@@ -1,0 +1,9 @@
+<%= simple_form_for @user, url: password_path(params[:password_reset_token]) do |f| %>
+      <%= f.input :password, placeholder: "Password" %>
+
+      <%= f.input :password_confirmation, placeholder: "Confirm password" %>
+
+  <div class="text-right">
+    <%= f.submit 'Update password', class: "btn btn-success-o" %>
+  </div>
+<% end %>

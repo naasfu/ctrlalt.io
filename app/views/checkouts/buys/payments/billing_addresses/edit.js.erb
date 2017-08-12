@@ -1,0 +1,11 @@
+if($("#edit_billing_address_modal").length === 0){
+  $('body').append('<%= j render "edit_modal" %>');
+}
+
+$('#edit_billing_address_modal').modal('show');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

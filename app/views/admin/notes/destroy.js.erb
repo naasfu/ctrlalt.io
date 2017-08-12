@@ -1,0 +1,5 @@
+<% if @note.destroyed? %>
+  $('#note_<%= @note.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');
+createAutoClosingAlert(".alert", 1500);

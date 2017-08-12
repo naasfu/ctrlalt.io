@@ -1,0 +1,22 @@
+<% if bro_order.submitted? %>
+  <%= link_to icon('check', 'Approve'), transition_workflow_admin_bro_order_path(bro_order, event: 'approve'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('ban', 'Disqualify'), transition_workflow_admin_bro_order_path(bro_order, event: 'disqualify'), class: 'btn btn-xs btn-danger-o', remote: true, method: :post %>
+<% elsif bro_order.winner? %>
+  <%= link_to icon('check', 'Ok'), transition_workflow_admin_bro_order_path(bro_order, event: 'transaction_successful'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('ban', 'Cancel'), transition_workflow_admin_bro_order_path(bro_order, event: 'cancel'), class: 'btn btn-xs btn-danger-o', remote: true, method: :post %>
+<% elsif bro_order.processing_transaction? %>
+  <%= link_to icon('check', 'Ok'), transition_workflow_admin_bro_order_path(bro_order, event: 'transaction_successful'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('times', 'Fail'), transition_workflow_admin_bro_order_path(bro_order, event: 'transaction_failed'), class: 'btn btn-xs btn-danger-o', remote: true, method: :post %>
+  <%= link_to icon('ban', 'Cancel'), transition_workflow_admin_bro_order_path(bro_order, event: 'cancel'), class: 'btn btn-xs btn-danger-o', remote: true, method: :post %>
+<% elsif bro_order.payment_failed? %>
+  <%= link_to icon('undo', 'Revert'), transition_workflow_admin_bro_order_path(bro_order, event: 'revert'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('check', 'Ok'), transition_workflow_admin_bro_order_path(bro_order, event: 'transaction_successful'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('ban', 'Cancel'), transition_workflow_admin_bro_order_path(bro_order, event: 'cancel'), class: 'btn btn-xs btn-default-o', remote: true, method: :post %>
+<% elsif bro_order.paid? %>
+  <%= link_to icon('plane', 'Ship'), transition_workflow_admin_bro_order_path(bro_order, event: 'ship'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+  <%= link_to icon('ban', 'Cancel'), transition_workflow_admin_bro_order_path(bro_order, event: 'cancel'), class: 'btn btn-xs btn-danger-o', remote: true, method: :post %>
+<% elsif bro_order.shipping? %>
+  <%= link_to icon('home', 'Delivered'), transition_workflow_admin_bro_order_path(bro_order, event: 'delivered'), class: 'btn btn-xs btn-success-o', remote: true, method: :post %>
+<% else %>
+  <div class="btn btn-xs btn-default-o disabled">No actions available</div>
+<% end %>

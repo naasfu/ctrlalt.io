@@ -1,0 +1,23 @@
+<%= simple_form_for [:slack, @invite], url: slack_join_path, remote: true do |f| %>
+  <%= f.input :email, label: "Enter in your email address", placeholder: "your@email.com" %>
+  <%= f.input :username, placeholder: "ripster" %>
+
+  <p>
+    <strong>Which community does your username belong to?</strong>
+  </p>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <%= f.input :on_reddit, label: "reddit" %>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <%= f.input :on_geekhack, label: "geekhack.org" %>
+    </div>
+  </div>
+
+  <p>By requesting an invite, you are agreeing to our code of conduct for Slack.</p>
+
+  <div class="text-right">
+    <%= f.submit "Request invite", class: "btn btn-success-o" %>
+  </div>
+<% end %>

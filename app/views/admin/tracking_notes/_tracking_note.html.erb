@@ -1,0 +1,11 @@
+<%= content_tag :div, id: dom_id(tracking_note), class: 'list-group-item' do %>
+  <p class="list-group-item-text">
+    <%= link_to icon('times'), admin_order_tracking_note_path(tracking_note.order, tracking_note), remote: true, method: :delete, class: 'text-danger pull-right' %>
+    <%= link_to tracking_note.tracking_number, "https://www.royalmail.com/track-your-item?trackNumber=#{tracking_note.tracking_number}", class: 'text-mono', target: '_blank' %>
+    <br>
+    <%= raw tracking_note.notes if tracking_note.notes.present? %>
+  </p>
+  <small class="text-muted">
+    <%= icon 'clock-o', local_time_ago(tracking_note.created_at) %>
+  </small>
+<% end %>

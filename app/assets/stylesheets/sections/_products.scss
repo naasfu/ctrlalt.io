@@ -1,0 +1,28 @@
+// Products
+//==
+
+.product-thumbnail {
+    position: relative;
+  .out-of-stock {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+  }
+}
+
+// .products {
+//   .product {
+//     padding: ($spacer * 2) 0;
+//     border-bottom: 2px solid $border-color;
+
+//     &:last-child {
+//       border-bottom: none;
+//     }
+//   }
+// }
+
+// @media (max-width: 767px) {
+//   .product-image {
+//     margin-bottom: $spacer;
+//   }
+// }

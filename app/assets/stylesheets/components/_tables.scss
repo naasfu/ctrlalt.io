@@ -1,0 +1,17 @@
+// Tables
+//==
+
+.table > thead > tr > th {
+  padding: ($spacer / 2) $spacer;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle !important;
+}
+
+.table > tbody > tr:first-child > td {
+}
+
+.ui-sortable-helper {
+    display: table;
+}

@@ -1,0 +1,47 @@
+<header class="invoice-header">
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="invoice-logo">
+        <div class="brand">
+          <%= icon 'keyboard-o' %><br><span>[CTRL]ALT</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <table class="invoice-table">
+        <tbody>
+          <tr>
+            <td class="text-right"><strong>Placed</strong></td>
+            <td><%= local_time @order.placed_at %></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>Order</strong></td>
+            <td><%= short_guid @order %></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>Fulfillment</strong></td>
+            <td><%= short_guid @fulfillment %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</header>
+
+<div class="row">
+  <div class="col-xs-6">
+    <p><strong>Ship to</strong></p>
+    <%= render 'account/shared/shipping_address', shipping_address: @shipping_address %>
+    <p><strong>Notes</strong></p>
+    <%= simple_format @order.notes %>
+    <%= simple_format @fulfillment.notes %>
+  </div>
+  <div class="col-xs-6">
+    <%= render partial: 'line_items/line_item', collection: @line_items, as: :line_item %>
+  </div>
+</div>
+
+<div class="invoice-footer">
+  <strong>Questions about your order?</strong>
+  <p>Please visit our website to contact us. (<%= contact_url %>)</p>
+</div>

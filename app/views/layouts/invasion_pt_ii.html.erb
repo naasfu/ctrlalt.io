@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for?(:meta_title) ? "#{yield(:meta_title)} - Invasion Pt. II - Bro Caps" : "Invasion Pt. II - Bro Caps (Presented by [CTRL]ALT)" %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <%= csrf_meta_tags %>
+    <meta name="theme-color" content="#04fe1c">
+    <%= stylesheet_link_tag 'brocaps/invasion_pt_ii', media: 'all' %>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+
+  </head>
+  <body class="invasion-pt-ii">
+    <%= render 'layouts/notifications' %>
+
+    <header class="header">
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+          <ul class="list-inline nav-links">
+            <li><%= link_to 'Issue #1', invasion_path %></li>
+            <li><%= link_to 'Issue #2', invasion_pt_ii_path %></li>
+            <li><%= link_to 'Return to [CTRL]ALT', root_path %></li>
+          </ul>
+
+
+          <ul class="list-inline user-links">
+            <%= render "layouts/bro_cart" %>
+
+            <li>&middot;</li>
+
+            <%= render "layouts/user_links" %>
+            <%= render "layouts/admin_dropdown" %>
+          </ul>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="invasion-pt-ii-logo">
+        <%= image_tag "invasion_pt_ii/bro_issue_2_invasion.png", width: 730, class: "center-block img-responsive" %>
+      </div>
+
+      <%= yield %>
+   
+      <footer class="footer text-center">
+        <small>Copyright 2016 &copy; Bro Caps</small>
+      </footer>
+
+    </div>
+
+    <%= render 'layouts/javascripts' %>
+    <script>
+      var target = document.getElementsByTagName('body')[0];
+      var dimensions = target.getClientRects()[0];
+      var pattern = Trianglify({
+        width: dimensions.width+300,
+        height: dimensions.height+300,
+        x_colors: ['#161716', '#111111', '#666666'],
+        y_colors: 'match_x',
+        cell_size: 666 + Math.random() * 66
+      });
+      target.style['background-image'] = 'url(' + pattern.png() + ')';
+    </script>
+  </body>
+</html>

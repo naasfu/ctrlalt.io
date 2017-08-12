@@ -1,0 +1,51 @@
+<%= simple_form_for [:admin, @newsletter] do |f| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to 'Back', admin_newsletters_path, class: 'btn btn-default-o' %>
+    <%= f.submit class: 'btn btn-success-o pull-right' %>
+  </div>
+  <div class="panel-body">
+    <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Subject</h4>
+        <p>Pick something meaningful.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :subject %>
+      </div>
+    </div>
+
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Group Buy</h4>
+        <p>Only email participants of a group buy.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.association :group_buy %>
+      </div>
+    </div>
+    
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Content</h4>
+        <p>Keep it breif, and to the point.</p>
+        <p>Linking to blog to go in depth.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :content, as: :text, input_html: { rows: 15 } %>
+      </div>
+    </div>
+
+  </div>
+  <div class="panel-footer">
+    <%= link_to 'Back', admin_newsletters_path, class: 'btn btn-default-o' %>
+    <%= f.submit class: 'btn btn-success-o pull-right' %>
+  </div>
+</div>
+<% end %>

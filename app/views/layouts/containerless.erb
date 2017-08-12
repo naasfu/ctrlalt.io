@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render 'layouts/ascii' %>
+    <%= render 'layouts/meta' %>
+    <%= render 'layouts/stylesheets' %>
+  </head>
+  <body id="containerless">
+    <%= render 'layouts/notifications' %>
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/page_title' %>
+
+    <%= yield %>
+    
+    <%= render 'layouts/footer' %>
+
+    <%= render 'layouts/javascripts' %>
+  </body>
+</html>

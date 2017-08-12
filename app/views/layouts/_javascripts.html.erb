@@ -1,0 +1,5 @@
+<%= javascript_include_tag 'application' %>
+
+<% if content_for?(:page_scripts) %>
+  <%= yield(:page_scripts) %>
+<% end %>

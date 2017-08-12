@@ -1,0 +1,112 @@
+<%= simple_form_for [:admin, @bro_sale] do |f| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to 'Back', admin_bro_sales_path, class: 'btn btn-default' %>
+    <%= f.submit class: 'btn btn-primary-o pull-right' %>
+  </div>
+  <div class="panel-body">
+    <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Details</h4>
+        <p>Sale name and caption.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :name %>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Deadline</h4>
+        <p>Set a deadline for orders.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :deadline, wrapper: :horizontal_select_date %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Shipping ETA</h4>
+        <p>Set a shipping estimate for orders.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :shipping_eta, wrapper: :horizontal_select_date %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Newsletters</h4>
+        <p>Enter in a mailchimp list #.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :newsletter_list_id, label: 'List #' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Images</h4>
+        <p>Sale banner and logo.</p>
+        <%= f.input :remove_banner, as: :boolean if @bro_sale.banner? %>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <%= f.input :banner, as: :file %>
+            <%= f.hidden_field :banner_cache %>
+            <%= content_tag(:p, image_tag(@bro_sale.banner_url(:sm), class: "img-responsive", width: 250)) if @bro_sale.banner? %>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <%= f.input :logo, as: :file %>
+            <%= f.hidden_field :logo_cache %>
+            <%= content_tag(:p, image_tag(@bro_sale.logo_url(:sm), class: "img-responsive", width: 250)) if @bro_sale.logo? %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Content</h4>
+        <p>Sale description.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :content, as: :text, input_html: { rows: 15 } %>
+        <%= f.input :caption, as: :text, input_html: { rows: 8 } %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h3 class="title">SEO</h3>
+        <p>Customize the permalink and page title for search engine optimizations.</p>
+
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :meta_title %>
+        <%= f.input :slug %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <h4 class="title">Settings</h4>
+        <p>Hide this sale from everyone.</p>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <%= f.input :visible %>
+        <%= f.input :active %>
+      </div>
+    </div>
+    
+  </div>
+  <div class="panel-footer">
+    <%= link_to 'Back', admin_bro_sales_path, class: 'btn btn-default' %>
+    <%= f.submit class: 'btn btn-primary-o pull-right' %>
+  </div>
+</div>
+<% end %>

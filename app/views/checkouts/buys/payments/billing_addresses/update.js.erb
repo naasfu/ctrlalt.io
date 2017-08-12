@@ -1,0 +1,18 @@
+<% if @billing_address.errors.any? %>
+  $('#edit_billing_address').replaceWith('<%= j render "form" %>');
+<% else %>
+  $('#edit_billing_address_modal').modal('hide');
+  $('#checkout_payment_method').html('<%= j render "checkouts/buys/purchases/payment_method" %>');
+  
+  <% if current_cart.is_ready_for_purchase? %>
+    $('#totals_panel input[type="submit"]').removeClass("btn-default-o").addClass("btn-success-o").prop("disabled", false);
+  <% end %>
+<% end %>
+
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

@@ -1,0 +1,5 @@
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+$('#current_cart').html('<%= j render "checkout/carts/current_cart" %>');
+$('.dropdown-cart-panel').replaceWith('<%= j render "layouts/dropdown_cart" %>');
+$('.cart-items-total').html('<%= j number_to_currency current_cart.line_items_total %>');
+createAutoClosingAlert(".alert", 1500);

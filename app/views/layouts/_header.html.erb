@@ -1,0 +1,28 @@
+<% cache ["header", current_user, current_cart, current_kaps, current_bros] do %>
+  <header class="header">
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+
+        <div class="navbar-logo">
+          <%= link_to image_tag("logo_ctrlalt.svg", height: 55, class: "logo-ctrlalt"), root_path %>
+        </div>
+
+        <ul class="list-inline nav-links">
+          <%= render "layouts/nav_links" %>
+        </ul>
+
+        <ul class="list-inline user-links">
+          <%= render "layouts/bro_cart" %>
+          <%= render "layouts/kwk_cart" %>
+          <%= render "layouts/group_buy_cart" %>
+
+          <li>&middot;</li>
+
+          <%= render "layouts/user_links" %>
+          <%= render "layouts/admin_dropdown" %>
+        </ul>
+
+      </div>
+    </nav>
+  </header>
+<% end %>

@@ -1,0 +1,24 @@
+<%= content_tag_for :tr, bro_line_item do %>
+  <td>
+    <%= check_box_tag 'bro_line_item_ids[]', bro_line_item.id %>
+  </td>
+  <td>
+    <div class="media">
+      <%= link_to image_tag(bro_line_item.image_url(:sm), width: 50, class: "media-object"), bro_sale_path(bro_line_item.bro_sale), class: "pull-left" %>
+      <div class="media-body">
+        <p class="media-heading">
+          <strong><%= link_to "#{bro_line_item.product_name} (#{bro_line_item.bro_sale.name})", bro_sale_path(bro_line_item.bro_sale) %></strong>
+          <br>
+          <small>&mdash; <%= link_to bro_line_item.variant_name, bro_sale_path(bro_line_item.bro_sale) %></small>
+          <% if bro_line_item.color.present? %>
+            <br>
+            <small>&mdash; <%= bro_line_item.color %></small>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </td>
+  <td class="text-center">
+    <%= number_to_currency bro_line_item.unit_price %>
+  </td>
+<% end %>

@@ -1,0 +1,9 @@
+<% cache ["group_buy", group_buy] do %>
+  <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+    <p><%= link_to image_tag(group_buy.image_url(:md), class: 'img-responsive img-rounded'), group_buy %></p>
+    <h4><%= link_to truncate(group_buy.name, omission: '...', length: 25), group_buy %></h4>
+    <p>
+      <%= content_tag :span, timeago(group_buy.deadline), class: (group_buy.ongoing? ? 'text-success' : 'text-danger') %>
+    </p>
+  </div>
+<% end %>

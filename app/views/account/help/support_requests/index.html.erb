@@ -1,0 +1,60 @@
+<% provide :meta_title, 'Support' %>
+<% provide :page_title do %>
+  <div class="cai-bouy dracula-red"></div>
+  Support
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <div class="panel panel-default">
+
+      <% if @open_support_requests.any? %>
+
+        <div class="list-group">
+          <%= render @open_support_requests %>
+        </div>
+
+        <div class="panel-body text-right">
+          <%= link_to "Open a new request", new_account_help_support_request_path, class: "btn btn-success-o" %>
+        </div>
+
+      <% else %>
+
+        <div class="panel-body">
+          <strong>You currently have no open support requests.</strong>
+          <br>
+          If you're having problems or need help, you can <%= link_to "open a new request", new_account_help_support_request_path %>.
+        </div>
+
+      <% end %>
+      
+    </div>
+
+    <% if @popular_faqs.any? %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            If you have any general questions about Bro Caps, Kult Worship Kaps, or our group buys, you might find the answer in our FAQ.
+          </p>
+          <p>
+            <strong>Popular FAQ articles:</strong>
+          </p>
+          <ul class="m-y-0">
+            <%= render partial: "help/faqs/faq", collection: @popular_faqs, as: :faq %>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <%= link_to "View all", help_faqs_path %> of our FAQ articles.
+        </div>
+      </div>
+    <% end %>
+
+    <% if @closed_support_requests.any? %>
+      <h4>Closed support requests</h4>
+
+      <div class="panel panel-default list-group-muted">
+        <%= render @closed_support_requests %>
+      </div>
+    <% end %>
+  </div>
+</div>

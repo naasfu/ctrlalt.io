@@ -1,0 +1,5 @@
+<span class="label label-default">
+  <%= link_to tag.name, admin_help_tags_path(tag) %>
+  <%= link_to icon("times"), admin_help_support_request_tags_path(support_request, tag: tag.name), remote: true, method: :delete %>
+</span>
+&nbsp;

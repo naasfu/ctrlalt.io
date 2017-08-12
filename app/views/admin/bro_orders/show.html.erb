@@ -1,0 +1,241 @@
+<% provide :meta_title, "##{@bro_order.guid}" %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Sale Orders', admin_bro_orders_path %></li>
+<% end %>
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-5">
+    
+    <%= content_tag_for :div, @bro_order, class: 'panel panel-default' do %>
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <%= "##{@bro_order.guid}" %>
+          <span class="workflow-label">
+            <%= workflow_label @bro_order %>
+          </span>
+        </h4>
+      </div>
+      <div class="panel-body workflow-buttons">
+        <%= render 'admin/bro_orders/workflow_buttons', bro_order: @bro_order %>
+      </div>
+    <% end %>
+
+    <%= form_tag admin_bro_order_approvals_path(@bro_order), remote: true, method: :post do %>
+      <div class="panel panel-default">
+        
+        <% if @bro_order.user_notes.present? && @bro_order.geekhack_username.present? %>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <strong>Notes</strong>
+                <%= simple_format @bro_order.user_notes %>
+              </div>
+
+              <div class="col-xs-12 col-sm-6">
+                <strong>geekhack.org</strong>
+                <p><%= @bro_order.geekhack_username %></p>
+              </div>
+            </div>
+          </div>
+
+        <% elsif @bro_order.user_notes.present? %>
+
+          <div class="panel-body">
+            <strong>Notes</strong>
+            <%= simple_format @bro_order.user_notes %>
+          </div>
+
+        <% elsif @bro_order.geekhack_username.present? %>
+
+          <div class="panel-body">
+            <strong>geekhack.org</strong>
+            <p><%= @bro_order.geekhack_username %></p>
+          </div>
+
+        <% end %>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <strong>Ship to</strong>
+              <small>
+                <%= link_to "Change", edit_admin_shipping_address_path(@bro_order.shipping_address), remote: true %>
+              </small>
+              <%= render "addresses/shipping_address", shipping_address: @bro_order.shipping_address %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <strong>Shipping service</strong>
+              <% if @shipping_address.country == 'US' %>
+                <p>USPS Priority</p>
+              <% else %>
+                <p>USPS First Class International</p>
+              <% end %>
+              <strong>Payment method</strong>
+              <p><%= icon "paypal", "PayPal" %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="78%">Product</th>
+                <th width="20%" class="text-center">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @line_items %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel-footer text-right">
+          <%= submit_tag 'Approve Bro Caps', class: 'btn btn-primary-o', data: { 'loading-text' => 'Approving bros...', toggle: :loading } %>
+        </div>
+      </div>
+    <% end %>
+
+    
+  </div>
+  <div class="col-xs-12 col-sm-4">
+    <%= form_tag admin_bro_order_fulfillments_path(@bro_order), remote: true, method: :post do %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Approved Bro Caps</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="80%">Product</th>
+                <th width="20%" class="text-center">Price</th>
+              </tr>
+            </thead>
+            <tbody id="approved_line_items">
+              <%= render @approved_line_items %>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer text-right">
+          <%= pluralize @fulfillments.size, 'fulfillment' %>
+          <%= submit_tag 'Fulfill', class: 'btn btn-primary-o', data: { 'loading-text' => 'Calculating rates...', toggle: :loading } %>
+        </div>
+      </div>
+    <% end %>
+
+    <div id="fulfillments">
+      <%= render @fulfillments %>
+    </div>
+
+    <% if @user_orders.present? %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">Bro Order history for <%= @bro_order.user.username %></h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th width="40%">Details</th>
+                <th width="20%">Total</th>
+                <th width="40%">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @user_orders %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+
+    
+  </div>
+  <div class="col-xs-12 col-sm-3">
+    <div class="panel panel-default">
+        
+      <div class="panel-heading text-center">
+        <h4 class="panel-title">You would like up to <%= pluralize @bro_order.bro_count, 'bro' %></h4>
+      </div>
+
+      <% if @approved_line_items.any? %>
+        <div class="list-group">
+          <%= render partial: "bro_line_items/list_group_line_item", collection: @approved_line_items, as: :bro_line_item %>
+        </div>
+      <% end %>
+
+      <div class="panel-body text-center">
+        <span class="text-muted">Total amount due</span>
+        <br>
+        <span id="order_grand_total" class="price price-xl">
+          <%= number_to_currency (@bro_order.is_winner? ? @bro_order.grand_total : 0) %>
+        </span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <tr>
+            <td class="text-right" width="60%">Shipping</td>
+            <td class="shipping-total" width="40%">
+              <%= number_to_currency @bro_order.shipping_total %>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right">Subtotal</td>
+            <td class="line-items-total">
+              <%= number_to_currency @bro_order.line_items_total %>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right">
+              Fees
+              <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+            </td>
+            <td class="fee-total">
+              <%= number_to_currency @bro_order.fee_total %>
+            </td>
+          </tr>
+
+          <% if @bro_order.donated? %>
+            <tr>
+              <td class="text-right">
+                Donation
+                <% if @bro_order.donation_total >= 3 %>
+                  <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!'} %>
+                <% end %>
+              </td>
+              <td class="donation-total">
+                <%= number_to_currency @bro_order.donation_total %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div id="notes" class="list-group">
+        <% if @notes.any? %>
+          <%= render @notes %>
+        <% else %>
+          <div class="list-group-item no-notes">There are no notes for this order.</div>
+        <% end %>
+      </div>
+      <div class="panel-footer text-right">
+        <%= link_to 'New note', new_admin_bro_order_note_path(@bro_order), class: 'btn btn-primary-o', remote: true %>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+
+
+

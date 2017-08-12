@@ -1,0 +1,58 @@
+<div class="page-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        
+        <%= form_tag ENV['paypal_url'], id: 'paypal_checkout' do %>
+          <div class="panel panel-default">
+            <div class="panel-heading text-center">
+            <h4 class="panel-title">Bro Caps Use and Payment Terms of Service</h4>
+            </div>
+            <div class="panel-body">
+              <%= hidden_field_tag :cmd, "_s-xclick" %>
+              <%= hidden_field_tag :encrypted, @bro_order.paypal_encrypted(root_url, paypal_ipn_receiver_url(secret: ENV['paypal_secret'])) %>
+              
+              <h4 class="m-t-0">Payment</h4>
+              <p>
+                Orders are automatically canceled after 24 hours. Please <%= link_to "open a suport request", new_account_help_support_request_path %> if you need an extension.
+              </p>
+              <p>
+                You will be redirected to PayPal upon acceptance of these terms to complete this purchase. 
+                Upon payment completion you will be redirected back to ctrlalt.io.
+                If your payment has any errors it will be manually reviewed by our support team.
+              </p>
+              
+              <h4>Shipping</h4>
+
+              <p>Shipping for this sale will commence on 10/25/2016.</p>
+
+              <p>Shipments will go out in batches, and may take up to 6 weeks to process.</p>
+              
+              <h4>Support</h4>
+              <p>If there is a problem with your order, please <%= link_to "open a suport request", new_account_help_support_request_path %>.</p>
+              </p>
+            </div>
+            <div class="panel-body">
+                <strong>
+                  If you issue a PayPal dispute or chargeback prior to contacting us, you will be banned from any future sales or group buy. Please <%= link_to "communicate", new_account_help_support_request_path %> with us first.
+                </strong>
+            </div>
+            <div class="panel-footer text-right">
+              <p>
+                By clicking "Accept and continue", you are agreeing to the terms above.
+              </p>
+                <%= submit_tag "Accept and continue", class: 'btn btn-primary-o' %>
+                <%= link_to "Cancel", root_url, class: "btn btn-danger-o" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p class="text-center">
+    <small>Copyright 2016 &copy; Bro Caps</small>
+  </p>
+</footer>

@@ -1,0 +1,15 @@
+// Update fulfillment
+<% if params[:fulfillment][:selected_service_name].present? || params[:fulfillment][:tracking_number].present? %>
+  $('#notifications').prepend('<%= j render "layouts/notifications" %>');
+  $('#fulfillment_<%= @fulfillment.id %>').replaceWith('<%= j render @fulfillment %>');
+  $('#edit_fulfillment_<%= @fulfillment.id %>_modal').modal('toggle');
+<% else %>
+  $('#edit_fulfillment_<%= @fulfillment.id %>_modal .modal-body .alert').remove();
+  $('#edit_fulfillment_<%= @fulfillment.id %>_modal .modal-body').prepend('<%= j flash_notification %>');
+<% end %>
+
+// Reset loading button once the dialog loads.
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

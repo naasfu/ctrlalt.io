@@ -1,0 +1,95 @@
+<script type="text/javascript">
+  $(function() {
+    $('#new_card').submit(function(event) {
+      var form = $(this);
+
+      form.find('button').html('Adding...');
+      form.find('button').prop('disabled', true);
+
+      if ( !Stripe.card.validateCardNumber(number) ) {
+        Stripe.createToken(form, stripeResponseHandler);
+        return false;
+      } else {
+        form.find('button').html('Add credit card');
+        form.find('button').prop('disabled', false);
+        return false
+      }
+    });
+
+    $('#stripe_billing_address').hide();
+
+    $(document).on("change", "#stripe_toggle_billing_address", function() {
+      if($('#stripe_billing_address').is(':visible')) {
+        $("#stripe_billing_address").velocity("slideUp");
+      } else {
+        $("#stripe_billing_address").velocity("slideDown");
+      }
+    });
+
+    function stripeResponseHandler(status, response) {
+      var form = $('#new_card');
+
+      if (response.error) {
+        $('#new_card_modal').addClass('modal-error');
+        $('#new_card_modal .modal-dialog')
+          .velocity({ translateX: -15, rotateY: -3, transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: 15,  rotateY: 3,  transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: -15, rotateY: -3, transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: 15,  rotateY: 3,  transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: -15, rotateY: -3, transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: 15,  rotateY: 3,  transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: -15, rotateY: -3, transformPerspective: [500, 500] }, { duration: 85 })
+          .velocity({ translateX: 0,   rotateY: 0,  transformPerspective: [500, 500] }, { duration: 85 })
+
+        $('.form-group').removeClass('has-error');
+
+        if(response.error.code == 'invalid_number') {
+          $('#stripe_number').addClass('has-error');
+          $('#number').focus();
+        }
+        if(response.error.code == 'invalid_expiry_year') {
+          $('#stripe_exp_year').addClass('has-error');
+          $('#exp-year').focus();
+        }
+        if(response.error.code == 'invalid_expiry_month') {
+          $('#stripe_exp_month').addClass('has-error');
+          $('#exp-month').focus();
+        }
+        if(response.error.code == 'invalid_cvc') {
+          $('#stripe_cvc').addClass('has-error');
+          $('#cvc').focus();
+        }
+
+        $('#new_card_modal .modal-body .alert').remove();
+
+        $('#new_card_modal .modal-body').prepend(
+          '<div class="alert alert-error fade in">'
+          + response.error.message
+          + '</div>'
+        );
+
+        form.find('button').html('Add credit card');
+        form.find('button').prop('disabled', false);
+      } else {
+        var token = response.id;
+        form.append($('<input type="hidden" name="token">').val(token));
+        form.trigger('submit.rails');
+      }
+    }
+  });
+</script>
+
+<div class="modal fade" id="new_card_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">
+          Add credit card
+        </h4>
+      </div>
+
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

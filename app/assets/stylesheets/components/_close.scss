@@ -1,0 +1,12 @@
+// Close icons
+// 
+.close {
+  // font-size: $font-size-base;
+  @include opacity(.8);
+
+  &:hover,
+  &:focus {
+    @include opacity(1);
+  }
+
+}

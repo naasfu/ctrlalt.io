@@ -1,0 +1,61 @@
+<div class="banner-wrapper">
+  <section class="banner-closeup-right banner-<%= %w[jtk-vandal jtk-bros jtk-classic-reaper].sample %> ">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+          <div class="caption">
+            <div class="caption-text">
+              <h4 class="m-t-0">Custom Keyboard &amp; Desk Accessories</h4>
+              <p>
+                <em>“We ask ourselves, “Why settle?” In any industry, boundaries should be pushed. Limits should be tested. The keyboard enthusiast community is no different. Rather than sitting back, we decided to take a stand and innovate.”</em>
+              </p>
+              <%= link_to "About Us", about_path, class: "btn btn-sm btn-primary-o" %>
+              <%= link_to "The Krew", krew_path, class: "btn btn-sm btn-default-o" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<section class="page-subtitle text-center">
+  <div class="container-fluid" onclick="$('body').html('');">
+    Imagination is the only weapon in the war against reality.
+  </div>
+</section>
+
+<% cache [current_buys?, current_bro_sales?, current_kwk_sales?] do %>
+  <section class="page-border">
+    <div class="container">
+      <div class="spotlight">
+        <%= link_to group_buys_path, class: "spotlight-group-buys" do %>
+          <div class="spotlight-icon">
+            <%= svg_keycap("text-body") %>
+          </div>
+          <strong class="text-body">Group Buys</strong>
+          <p class="text-muted m-y-0">Custom key sets and accessories.</p>
+          <%= current_buys? ? icon("circle text-success") : icon("circle text-danger") %>
+          <span class="text-body"><%= pluralize @group_buy_count, "buy" %></span>
+        <% end %>
+        <%= link_to bro_sales_path, class: "spotlight-bro-caps" do %>
+          <div class="spotlight-icon">
+            <%= svg_brofist("text-body") %>
+          </div>
+          <strong class="text-body">Bro Caps</strong>
+          <p class="text-muted m-y-0">BroBots, Stumps, Reapers and more.</p>
+          <%= current_bro_sales? ? icon("circle text-success") : icon("circle text-danger") %>
+          <span class="text-body"><%= pluralize @bro_sale_count, "sale" %></span>
+        <% end %>
+        <%= link_to kwk_sales_path, class: "spotlight-kwk" do %>
+          <div class="spotlight-icon">
+            <%= svg_kwk("text-body") %>
+          </div>
+          <strong class="text-body">Kult Worship Kaps</strong>
+          <p class="text-muted m-y-0">Mummies, Walruses, Vandals and more.</p>
+          <%= current_kwk_sales? ? icon("circle text-success") : icon("circle text-danger") %>
+          <span class="text-body"><%= pluralize @kwk_sale_count, "sale" %></span>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>

@@ -1,0 +1,20 @@
+// Alerts
+//==
+.alert { 
+  border-width: 2px;
+  @include box-shadow(0 1px 0 rgba(0,0,0,.25));
+  
+  .close { 
+    color: #FFF;
+    text-shadow: none;
+  }
+}
+.alert-error {
+  @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+}
+
+.alert-success .close    { color: $state-success-text; }
+.alert-warning .close    { color: $state-warning-text; }
+.alert-info .close       { color: $state-info-text; }
+.alert-danger .close,
+.alert-error .close      { color: $state-danger-text; }

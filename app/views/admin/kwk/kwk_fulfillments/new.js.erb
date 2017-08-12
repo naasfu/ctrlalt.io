@@ -1,0 +1,5 @@
+if($("#new_kwk_fulfillment_modal").length === 0){
+  $('body').append('<%= j render "admin/kwk/kwk_fulfillments/modal" %>');
+}
+// Toggle modal
+$('#new_kwk_fulfillment_modal').modal('toggle');

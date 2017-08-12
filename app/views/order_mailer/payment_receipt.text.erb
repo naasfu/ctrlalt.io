@@ -1,0 +1,43 @@
+Payment receipt for order <%= "##{@order.guid}" %>.
+
+<%= account_history_order_url(@order) %>
+
+──────────────────────────────
+
+Ship to:
+
+  <%= @shipping_address.full_name %>
+  <%= @shipping_address.street1 %><%= ",\n#{@shipping_address.street2}".html_safe if @shipping_address.street2.present? %>
+  <%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>
+  <%= @shipping_address.country %>
+  <% if @shipping_address.phone.present? %>
+  P: <%= @shipping_address.phone %>
+  <% end %>
+──────────────────────────────
+
+<% @line_items.each do |line_item| %>
+<%= "x#{sprintf '%02d', line_item.quantity} #{line_item.product_name} (#{line_item.group_buy_name})" %><% unless line_item.variant_name == line_item.product_name %> - <%= line_item.variant_name %><% end %>
+    <%= number_to_currency line_item.unit_price %>
+<% end %>
+──────────────────────────────
+
+Shipping: <%= number_to_currency @order.shipping_total %>
+Subtotal: <%= number_to_currency @order.line_items_total %>
+    Fees: <%= number_to_currency @order.fee_total %>
+Donation: <%= number_to_currency @order.donation_amount %>
+          ────────────────────
+   Total: <%= number_to_currency @order.grand_total %>
+
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

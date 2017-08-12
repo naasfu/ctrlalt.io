@@ -1,0 +1,3 @@
+$('#winnings_panel').replaceWith("<%= j render 'admin/kwk/kwk_orders/winnings_panel' %>");
+$('[data-toggle=loading]').button('reset');
+$('#kwk_order_workflow_label').html('<%= j workflow_label @order %>');

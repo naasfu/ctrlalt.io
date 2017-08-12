@@ -1,0 +1,16 @@
+<div class="panel-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <%= link_to fulfillment.tracking_number, "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{fulfillment.tracking_number}", target: :_blank, class: "text-mono" %>
+      <br>
+      <span class="text-muted">
+        <%= local_time fulfillment.shipped_at %>
+      </span>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <%= link_to pluralize(fulfillment.line_items.size, "item"), account_history_order_fulfillment_path(fulfillment.order, fulfillment), remote: true %>
+      <br>
+      <%= workflow_label fulfillment %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="list-group-item">
+  <p>
+    <span class="text-mono">
+      #<%= support_request.guid %>
+    </span>
+    <%= workflow_label support_request %>
+    <br>
+    <%= link_to support_request.subject, admin_help_support_request_path(support_request) %>
+  </p>
+
+  <p>
+    <%= image_tag support_request.user.avatar_url(:sm), height: 25, class: "img-rounded" %>
+    <strong><%= support_request.user.username || support_request.user.email %></strong>
+    <small class="text-muted">
+      <%= icon 'clock-o' %>
+      <%= timeago support_request.created_at %>
+    </small>
+  </p>
+
+  <p>
+    <%= truncate support_request.content, length: 150, omission: "...", separator: " "  %>
+  </p>
+
+  <% if support_request.tags.any? %>
+    <p>
+      <% support_request.tags.each do |tag| %>
+        <%= link_to tag, admin_help_tag_path(tag), class: "label label-default" %>
+        &nbsp;
+      <% end %>
+    </p>
+  <% end %>
+
+  <small class="text-muted">
+    <%= icon 'comments-o' %>
+    <%= pluralize support_request.comments.size, 'reply' %>
+
+    <% if support_request.comments.any? %>
+      &mdash;
+      Last reply by
+      <%= image_tag support_request.last_reply.user.avatar_url(:sm), class: "img-rounded", height: 20 %>
+      <%= support_request.last_reply.user.username %>
+    <% end %>
+  </small>
+</div>

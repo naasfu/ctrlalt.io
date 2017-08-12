@@ -1,0 +1,13 @@
+<% if current_kaps.is_empty? %>
+
+  $('#cart').html('<%= j render "checkouts/kwk/carts/empty_cart" %>');
+  $('#quick_kwk_cart .list-group').html('<div class="list-group-item text-center">Your kart is empty!</div>');
+
+
+<% end %>
+
+$('#<%= dom_id @line_item, :cart %>').remove();
+
+$('#totals_panel').velocity({ opacity: 1 }, { duration: 200 });
+
+$('.kwk-count').html('<%= j pluralize current_kaps.line_items.size, "kap" %>');

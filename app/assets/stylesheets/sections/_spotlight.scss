@@ -1,0 +1,100 @@
+// Spotlight
+// 
+
+// .spotlight {//   }
+//   a.spotlight-group-buys,
+//   a.spotlight-bro-caps,
+//   a.spotlight-kwk {
+//     width: 33.33333333%;
+//     float: left;
+//     border-right: 2px solid $border-color;
+//     background: mix($dracula-purple, $body-bg, 3%);
+//     &:hover,
+//     &:active {
+//       text-decoration: none;
+//       background: $body-bg;
+//     }
+//   }
+//   .spotlight-group-buys {
+//     border-left: 2px solid $border-color;
+//   }
+//   .spotlight-bro-caps {
+//   }
+//   .spotlight-kwk {
+//   }
+// }
+
+.spotlight {
+  .spotlight-icon {
+    height: 80px;
+    padding-bottom: $spacer / 2;
+  }
+  a.spotlight-group-buys,
+  a.spotlight-bro-caps,
+  a.spotlight-kwk {
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    float: left;
+    border-right: 2px solid $border-color;
+    border-left: 2px solid $border-color;
+    border-bottom: 2px solid $border-color;
+    background: mix($dracula-purple, $body-bg, 3%);
+    transition: background .25s ease-in-out;
+    
+    &:hover,
+    &:active {
+      text-decoration: none;
+      background: $body-bg;
+    }
+  }
+  a.spotlight-kwk {
+    border-bottom: none;
+  }
+}
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+  .spotlight {
+    a.spotlight-group-buys,
+    a.spotlight-bro-caps,
+    a.spotlight-kwk {
+      width: 33.33333333%;
+      float: left;
+      border-bottom: none;
+      border-left: none;
+    }
+    a.spotlight-group-buys {
+      border-left: 2px solid $border-color;
+    }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+  .spotlight {
+    a.spotlight-group-buys,
+    a.spotlight-bro-caps,
+    a.spotlight-kwk {
+      padding: 40px 30px;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+

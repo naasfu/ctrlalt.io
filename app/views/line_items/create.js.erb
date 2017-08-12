@@ -1,0 +1,9 @@
+<% if @variant.present? %>
+  $('#<%= dom_id(@variant.product, :notifications) %>').html('<%= j flash_notification %>');
+<% else %>
+  $('#notifications').html('<%= j flash_notification %>');
+<% end %>
+
+$('.line-items-total').html('<%= number_to_currency current_cart.line_items_total %>');
+
+$('[data-toggle=loading]').button('reset');

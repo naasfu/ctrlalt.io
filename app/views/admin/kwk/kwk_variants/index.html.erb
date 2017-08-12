@@ -1,0 +1,24 @@
+<% provide :meta_title, 'Variants' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @kwk_sale.name, admin_kwk_sale_path(@kwk_sale) %></li>
+  <li><%= link_to 'Products', admin_kwk_sale_products_path(@kwk_sale) %></li>
+  <li><%= link_to @product.name, edit_admin_kwk_sale_product_path(@kwk_sale, @product) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Variant'), new_admin_kwk_sale_product_variant_path(@kwk_sale, @product), class: 'btn btn-success-o' %>
+  </div>
+
+  <div class="list-group sortable" data-update-url="<%= admin_sort_path(class_name: 'kwk_variant') %>">
+    <% if @variants.any? %>
+      <%= render @variants %>
+    <% else %>
+      <div class="list-group-item text-center">
+        <em class="text-muted">There are no variants yet...</em>
+      </div>
+    <% end %>
+  </div>
+</div>

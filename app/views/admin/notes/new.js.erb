@@ -1,0 +1,5 @@
+if($("#new_note_modal").length === 0){
+  $('body').append('<%= j render "admin/notes/modal" %>');
+}
+// Toggle modal
+$('#new_note_modal').modal('toggle');

@@ -1,0 +1,12 @@
+<% cache ["kwk_cart", current_user, current_kwk_sales, current_kaps] do %>
+  <% if current_kwk_sales? %>
+    <li>
+      <%= link_to checkouts_kwk_path do %>
+        <div class="kwk-icon">
+          <%= svg_kwk %>
+        </div>
+        <span class="kwk-count"><%= pluralize current_kaps.line_items.size, 'kap' %></span>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

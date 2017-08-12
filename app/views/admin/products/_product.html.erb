@@ -1,0 +1,15 @@
+<%= content_tag_for :tr, product do %>
+  <td>
+    <%= sortable_handle %>
+    <%= link_to product.name, edit_admin_group_buy_product_path(product.group_buy, product) %>
+  </td>
+  <td class="price">
+    <%= product_price_range product %>
+  </td>
+  <td>
+    <%= link_to icon("times"), admin_group_buy_product_path(product.group_buy, product), class: "btn btn-xs btn-danger pull-right", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to icon("pencil", "Details"), edit_admin_group_buy_product_path(product.group_buy, product), class: "btn btn-xs btn-default-o" %>
+    <%= link_to icon("cubes", "Variants"), admin_group_buy_product_variants_path(product.group_buy, product), class: "btn btn-xs btn-default-o" %>
+    <%= link_to icon("picture-o", "Images"), admin_group_buy_product_images_path(product.group_buy, product), class: "btn btn-xs btn-default-o" %>
+  </td>
+<% end %>

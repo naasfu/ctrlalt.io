@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reapers N' Gamers - Bro Caps &mdash; Presented by [CTRL]ALT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <%= csrf_meta_tags %>
+    <meta name="theme-color" content="#cd0106">
+    <%= stylesheet_link_tag 'brocaps/reapersngamers', media: 'all' %>
+  </head>
+  <body class="reapersngamers">
+    <%= render 'layouts/notifications' %>
+
+    <header class="header">
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+          <div class="navbar-logo">
+            <%= link_to root_path do %>
+              <%= image_tag "reapersngamers/logo_ctrlalt.svg", height: 45, class: "logo-ctrlalt" %>
+            <% end %>
+          </div>
+          <ul class="list-inline nav-links">
+            <%= render "layouts/nav_links" %>
+          </ul>
+
+          <ul class="list-inline user-links">
+            <li>
+              <%= link_to checkouts_bros_path do %>
+                <div class="cai-fist"></div>
+                <span class="bro-count"><%= pluralize current_bros.line_items.size, 'bro' %></span>
+              <% end %>
+            </li>
+
+            <li>
+              &middot;
+            </li>
+
+            <% if current_user %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <%= image_tag current_user.avatar_url(:sm), class: "img-rounded", height: 25 %>
+                  <%= current_user.username %>
+                  <b class="caret"></b>
+                </a>
+                <%= render 'layouts/dropdown_account' %>
+              </li>
+            <% else %>
+              <li><%= link_to 'Sign up', signup_path %></li>
+              <li><%= link_to 'Log in', login_path %></li>
+            <% end %>
+
+            <% if admin_signed_in? %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <div class="cai-cog"></div>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-list-group">
+                  <%= render 'layouts/admin/admin_links' %>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="reaper-classic">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-10 col-md-offset-1">
+            
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="reaper-classic-photos">
+                  <% (1..3).map do |i| %>
+                    <div class="photo">
+                      <%= image_tag "reapersngamers/rc_#{i}.jpg", class: "img-responsive center-block" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                
+                <p class="m-y-0 bebas pull-right text-right">
+                  <span style="font-size: 55px; line-height: 55px;">
+                    <%= number_to_currency @reaper_classic.master_variant.unit_price, precision: 4, strip_insignificant_zeros: true %>
+                  </span>
+                  <br>
+                  * Limit 3 per customer
+                </p>
+                <h3 class="m-y-0 bebas">
+                  <%= image_tag "reapersngamers/text_reaper.png", height: 50, alt: 'Reaper Classic' %>
+                  <br>
+                  Classic
+                </h3>
+            
+                <p class="bebas text-lg" style="margin-top: 50px;">Select a color:</p>
+                <%= render 'swatches' %>
+                <% if @reaper_classic.available? %>
+                  <%= form_tag bro_line_items_path, remote: true, id: dom_id(@reaper_classic, :add) do |f| %>
+                    <%= hidden_field_tag :variant_id, @reaper_classic.master_variant.id %>
+                    <%= hidden_field_tag :color %>
+                    <p class="bebas text-lg">Select a switch type:</p>
+                    <div class="form-group">
+                      <%= select_tag :variant_id, options_for_select(@reaper_classic.variants.collect{ |v| [v.name, v.id] }), class: "form-control input-lg" %>
+                    </div>
+                    <%= submit_tag 'Add to Cart', class: 'btn disabled', disable: true %>
+                  <% end %>
+                <% else %>
+                  <%= link_to 'Unavailable', '#/', class: 'btn disabled' %>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+            
+
+
+      </div>
+    </div>
+
+    <div class="rng-divider">
+      <div></div>
+    </div>
+
+    <div class="precision-gamer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+                
+                <h3 class="m-y-0 bebas">
+                  <span style="font-size: 55px; line-height: 55px;">Precision</span>
+                  <br>
+                  Gamer sets
+                </h3>
+
+                <p class="m-y-0 bebas reaper-red">
+                  * Limit 1 set per customer
+                </p>
+
+                <div class="precision-ruler"></div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+  
+      <% @gamer_kits.each do |kit| %>
+        <div class="row" style="margin-top: 50px;">
+          <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <%= image_tag kit.image_url, class: "img-responsive center-block" %>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                
+                <p class="m-y-0 bebas pull-right text-right">
+                  <span style="font-size: 55px; line-height: 55px;"><%= number_to_currency kit.master_variant.unit_price, precision: 4, strip_insignificant_zeros: true %></span>
+                  <br>
+                </p>
+
+                <h3 class="m-y-0 bebas precision-gray">
+                  <span style="font-size: 55px; line-height: 55px;"><%= kit.name %></span>
+                  <br>
+                  <%= kit.master_variant.name %>
+                </h3>
+
+                <p class="bebas text-lg" style="margin-top: 42px;">Select a color:</p>
+
+                <%= render 'swatches' %>
+                
+                <% if kit.available? %>
+                  <%= form_tag bro_line_items_path, remote: true, id: dom_id(kit, :add) do |f| %>
+                    <%= hidden_field_tag :variant_id, kit.master_variant.id %>
+                    <%= hidden_field_tag :color, "" %>
+                    <%= submit_tag 'Add to Cart', class: 'btn disabled', disable: true %>
+                  <% end %>
+                <% else %>
+                  <%= link_to 'Unavailable', '#/', class: 'btn disabled' %>
+                <% end %>
+                <div class="precision-ruler" style="margin-top: 30px;"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+
+      </div>
+    </div>
+
+
+    <footer class="footer">
+      <p class="text-center">
+        <small>Copyright 2016 &copy; Bro Caps</small>
+      </p>
+    </footer>
+
+    <%= render 'layouts/javascripts' %>
+
+    <script>
+
+
+      $('.photo img').on('click', function(){
+        $('.reaper-classic-display img').attr('src', $(this).attr('src'));
+      });
+
+      $('.swatch').on('click', function(){
+        $(this).parent().find('.swatch').removeClass('selected');
+        $(this).addClass('selected');
+        var form = $(this).parent().next()
+        form.find('#color').val( $(this).data('original-title') );
+        form.find('input[type=submit]').removeClass('disabled').prop('disabled', false);
+      });
+
+      $('.slick-prev').on('click', function(){
+        $('.reaper-classic-photos').slick('slickPrev');
+        // $('.reaper-classic-display img').attr('src', $('.slick-current img').attr('src'));
+      });
+
+      $('.slick-next').on('click', function(){
+        $('.reaper-classic-photos').slick('slickNext');
+        // $('.reaper-classic-display img').attr('src', $('.slick-current img').attr('src'));
+      });
+
+      $('.reaper-classic-photos').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        fade: true,
+        arrows: false,
+        cssEase: 'linear',
+        autoplay: true,
+        autoplaySpeed: 4000,
+      });
+
+      $('form').submit(function(event) {
+        var form = $(this);
+        var color = $(this).find('#color').val();
+        if( color.length === 0 ) {
+
+          $('#notifications').html(
+            '<div class="alert alert-error fade in"><button class="close" data-dismiss="alert">&times;</button>'
+            + "Please select a color first."
+            + '</div>'
+          );
+          form.find('input[type=submit]').addClass('disabled').prop('disabled', true);
+          $('[data-toggle=loading]').button('reset');
+          return false;
+        } else {
+          form.find('input[type=submit]').removeClass('disabled').prop('disabled', false);
+        }
+      });
+
+    </script>
+
+    <script src="https://use.typekit.net/tkk6rza.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </body>
+</html>

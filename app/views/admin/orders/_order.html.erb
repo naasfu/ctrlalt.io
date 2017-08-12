@@ -1,0 +1,20 @@
+<div class="list-group-item">
+  <div class="row">
+    <div class="col-xs-12 col-sm-5 col-md-6 col-lg-5">
+      <%= link_to "##{order.guid}", admin_order_path(order) %>
+      (<%= order.email %>)
+      <%= "[#{order.geekhack_username}]" if order.geekhack_username.present? %>
+    </div>
+    <div class="col-xs-12 col-sm-7 col-md-6 col-lg-3">
+      <%= local_time(order.paid_at || order.placed_at || order.created_at, format: :readable_date) %>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-6 col-lg-2">
+      <%= workflow_label(order) %>
+    </div>
+    <div class="col-xs-12 col-sm-7 col-md-6 col-lg-2">
+      <span class="price">
+        <%= number_to_currency(order.grand_total) %>
+      </span>
+    </div>
+  </div>
+</div>

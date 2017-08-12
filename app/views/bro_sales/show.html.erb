@@ -1,0 +1,64 @@
+<% provide :meta_title, @bro_sale.name %>
+
+<div class="hero text-center">
+  <h2 class="m-y-0"><%= @bro_sale.name %></h2>
+  <h4>
+    <%= content_tag :span, timeago(@bro_sale.deadline), class: (@bro_sale.ongoing? ? 'text-success' : 'text-danger') %>
+  </h4>
+</div>
+
+<div class="page-content">
+  <% cache @bro_sale do %>
+    <div class="container">
+      <% if @bro_sale.past_deadline? %>
+        <div class="alert alert-error text-center">
+          This sale ended on <%= local_time @bro_sale.deadline %> and is no longer available.
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <p>
+            <%= image_tag @bro_sale.banner_url(:lg), class: 'img-responsive img-rounded' %>
+          </p>
+          <% if @images.any? %>
+            <div class="row">
+              <%= render @images %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+          <%= render_markdown @bro_sale.content %>
+          
+          <% if @bro_sale.newsletter_list_id.present? %>
+            <%= form_tag newsletter_bro_sale_path(@bro_sale), remote: true do  %>
+              <div id="newsletter_notifications"></div>
+              <h4 class="text-muted">Newsletter</h4>
+              <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                  <div class="input-group">
+                    <%= text_field_tag :email, params[:email], placeholder: 'elliot@allsafe.com', class: 'form-control' %>
+                    <span class="input-group-btn">
+                      <%= submit_tag 'Subscribe', class: 'btn btn-primary-o', data: { 'loading-text' => 'Subscribing...', toggle: :loading } %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <span class="help-block">We'll send you a reminder before the event ends and all major updates. Each sale newsletter require manual opt in.</span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+<%= render @products %>
+
+<% if @bro_sale.slug == "odds-ends" %>
+  <div class="page-content">
+    <%= image_tag "https://i.imgur.com/gpiNc0z.gif", class: "img-responsive center-block" %>
+  </div>
+<% end %>

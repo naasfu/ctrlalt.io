@@ -1,0 +1,141 @@
+
+.banner-wrapper {
+  position: relative;
+}
+
+.banner-jtk-vandal {
+  background: asset-url("banners/jtk-vandal-60.jpg");
+}
+.banner-jtk-classic-reaper {
+  background: asset-url("banners/jtk-classic-reaper-60.jpg");
+}
+
+.banner-jtk-bros {
+  background: asset-url("banners/jtk-bros-60.jpg");
+}
+
+.banner-closeup-right {
+  
+  background-size: 375px 250px;
+  background-position: top right;
+  background-repeat: no-repeat;
+  height: 600px;
+  background-color: #0b0b0b;
+  
+  .container {
+    position: absolute;
+    top: 250px;
+
+    .caption {
+      display: table;
+      border-top: 2px solid $border-color;
+      border-bottom: 2px solid $border-color;
+      margin-left: -15px;
+      margin-right: -15px;
+      padding: 20px;
+      height: 350px;
+
+      .caption-text {
+        display: table-cell;
+        vertical-align: middle; 
+      }
+    }
+  }
+}
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 580px) {
+
+  .banner-closeup-right {
+    height: 550px;
+    
+    .container {
+      top: 250px;
+
+      .caption {
+        height: 300px;
+      }
+    }
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+  .banner-closeup-right {
+    background-position: top right -80px;
+    background-size: 525px 350px;
+    height: 352px;
+    border-bottom: 2px solid $border-color;
+    
+    .container {
+      position: static;
+
+      .caption {
+        display: table;
+        border-top: none;
+        border-bottom: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        height: 350px;
+
+        .caption-text {
+          display: table-cell;
+          vertical-align: middle; 
+        }
+      }
+    }
+  }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 850px) {
+
+  .banner-closeup-right {
+    background-position: top right;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 1300px) {
+
+  .banner-closeup-right {
+    background-size: 600px 400px;
+    height: 402px;
+
+    .container .caption {
+      height: 400px;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1600px) {
+
+  .banner-closeup-right {
+    background-size: 750px 500px;
+    height: 502px;
+
+    .container .caption {
+      height: 500px;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 2000px) {
+
+  .banner-closeup-right {
+    background-size: 1050px 700px;
+    height: 702px;
+
+    .container .caption {
+      height: 700px;
+    }
+  }
+}

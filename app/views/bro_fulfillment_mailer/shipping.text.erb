@@ -1,0 +1,49 @@
+Bro Caps
+──────────────────────────────
+
+Your Bro Caps are on the way!
+
+Shipment details for order #<%= @bro_order.guid %>
+
+You can view this ticket in further detail in your account bro history.
+<%= account_history_bro_order_url(@bro_order) %>
+
+──────────────────────────────
+Fulfillment #<%= @fulfillment.guid %> <%= "via #{@fulfillment.shipment_service_name}" %>
+──────────────────────────────
+
+<% if @fulfillment.tracking_number.present? %>
+Tracking # <%= @fulfillment.tracking_number %>
+<%= "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{@fulfillment.tracking_number}" %>
+<% else %>
+Tracking #: N/A
+<% end %>
+
+──────────────────────────────
+
+Ship to:
+
+  <%= @shipping_address.full_name %>
+  <%= @shipping_address.street1 %><%= ",\n#{@shipping_address.street2}".html_safe if @shipping_address.street2.present? %>
+  <%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>
+  <%= @shipping_address.country %>
+  <% if @shipping_address.phone.present? %>
+  P: <%= @shipping_address.phone %>
+  <% end %>
+
+──────────────────────────────
+
+<%= render partial: 'bro_order_mailer/shared/bro_line_item', collection: @line_items, as: :bro_line_item %>
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

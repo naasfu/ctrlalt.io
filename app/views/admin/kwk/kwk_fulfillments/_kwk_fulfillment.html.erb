@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-md-5">
+        <strong>Fulfillment #<%= kwk_fulfillment.guid %></strong>
+        <%= workflow_label kwk_fulfillment %>
+        <br>
+        <%= timeago kwk_fulfillment.created_at %>
+        <br>
+        <%= link_to "##{kwk_fulfillment.tracking_number}", "https://www.royalmail.com/track-your-item?trackNumber=#{kwk_fulfillment.tracking_number}", target: :_blank, class: "text-mono" %>
+        via
+        <%= kwk_fulfillment.service_name %>
+      </div>
+      <div class="col-xs-12 col-md-7">
+        <% if kwk_fulfillment.customer_notes.present? %>
+          <strong class="dracula-cyan">Customer Notes</strong>
+          <%= simple_format kwk_fulfillment.customer_notes %>
+        <% end %>
+        <% if kwk_fulfillment.notes.present? %>
+          <strong class="dracula-yellow">Notes</strong>
+          <%= simple_format kwk_fulfillment.notes %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

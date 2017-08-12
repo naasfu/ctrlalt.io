@@ -1,0 +1,26 @@
+<%= cache([bro_order.workflow_state, bro_order]) do %>
+  <%= content_tag_for :tr, bro_order do %>
+    <td>
+      <%= link_to "##{bro_order.guid}", admin_bro_order_path(bro_order), class: 'text-mono' %>
+      (<%= bro_order.email %>)
+      <%= "[#{bro_order.geekhack_username}]" %>
+      <br>
+      <span class="workflow-label">
+        <%= workflow_label bro_order %>
+      </span>
+      <%= local_time_ago bro_order.submitted_at %>
+      <small class="price" style="opacity: .7"><%= number_to_currency bro_order.donation_amount %></small>
+    </td>
+    <td class="price">
+      <%= number_to_currency bro_order.grand_total %>
+    </td>
+    <td>
+      <%= link_to icon('pencil', 'Details'), admin_bro_order_path(bro_order), class: 'btn btn-xs btn-default-o' %>
+      <%= link_to icon('user', 'User'), admin_user_path(bro_order.user), class: 'btn btn-xs btn-default-o' if bro_order.user %>
+
+      <div class="workflow-buttons pull-right">
+        <%= render 'admin/bro_orders/workflow_buttons', bro_order: bro_order %>
+      </div>
+    </td>
+  <% end %>
+<% end %>

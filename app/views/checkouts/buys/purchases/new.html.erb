@@ -1,0 +1,141 @@
+<% provide :page_subtitle, link_to(icon('angle-double-left', 'Back to cart'), checkouts_buys_path) %>
+
+<% provide :page_scripts do %>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+  <script type="text/javascript">
+    var pk = "<%= ENV['stripe_publishable_key'] %>"
+    Stripe.setPublishableKey(pk);
+  </script>
+
+  <script>
+    $(function() {
+      // Save and update cart on shipping select
+      $(document).on("change blur", "#checkout_shipping_service input[type=radio]", function() {
+        $('#totals_panel').velocity('stop').velocity({ opacity: 0.5 }, { duration: 200 });
+        $(this).trigger('submit.rails');
+      });
+
+      // Remove the address verifiction error div instantly
+      $(document).on("click", ".verification-error a", function() {
+        $('.verification-error').remove();
+      });
+
+      // Save notes on keyup
+      $(document).on("keyup mouseup mousewheel change blur", "#order_donation_amount", function(event) {
+        $('#totals_panel').velocity('stop').velocity({ opacity: 0.5 }, { duration: 200 });
+        $(this).trigger('submit.rails');
+        return event.keyCode != 13;
+      });
+      $(document).on("keyup blur change", "#order_geekhack_username", function(event) {
+        $(this).trigger('submit.rails');
+        return event.keyCode != 13;
+      });
+      $(document).on("keyup blur change", "#order_user_notes", function() {
+        $(this).trigger('submit.rails');
+      });
+    });
+  </script>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    
+    <!-- 1. Shipping address -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Shipping</h4>
+      </div>
+
+      <div class="panel-body">
+        
+        
+        <div class="row">
+          <div class="col-xs-12 col-sm-5">
+            <div id="checkout_shipping_address">
+              <%= render 'checkouts/buys/purchases/shipping_address' %>
+            </div>
+            
+          </div>
+          <div class="col-xs-12 col-sm-7">
+
+            <div id="checkout_shipping_service">
+              <%= render 'checkouts/buys/purchases/shipping_service' %>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 2. Payment method -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Payment</h4>
+      </div>
+      <div class="panel-body">
+
+        <div id="checkout_payment_method">
+          <%= render 'checkouts/buys/purchases/payment_method' %>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- 3. Review items -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Review</h4>
+      </div>
+
+      <div id="checkout_review_items">
+        <div class="table-responsive">
+          <table class="table m-y-0">
+            <thead>
+              <tr>
+                <th width="60%">Product</th>
+                <th width="20%">Price</th>
+                <th width="20%">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "line_items/line_item", collection: @line_items, as: :line_item %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. Notes -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Notes</h4>
+      </div>
+      <div class="panel-body">
+
+        <div id="checkout_notes">
+          <%= render 'checkouts/buys/purchases/notes' %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4">
+
+    <div id="totals_panel" class="panel panel-default">
+      <div class="totals">
+        <%= render 'checkouts/buys/purchases/totals' %>
+      </div>
+
+      <div class="panel-footer">
+        <%= form_tag checkouts_buys_complete_purchase_path, method: :post do %>
+          <%= submit_tag "Complete purchase", class: "btn btn-block #{current_cart.is_ready_for_purchase? ? 'btn-success-o' : 'btn-default-o'}", data: { 'loading-text' => 'Processing...', toggle: :loading } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

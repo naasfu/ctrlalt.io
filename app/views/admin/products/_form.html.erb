@@ -1,0 +1,97 @@
+<%= simple_form_for [:admin, @group_buy, @product] do |f| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'Back', admin_group_buy_products_path(@group_buy), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+    
+    <div class="panel-body">
+      <%= f.error_notification %>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Details</h4>
+          <p>Product name.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :name %>
+        </div>
+      </div>
+      
+      <% if @group_buy.slug == 'store' %>
+        <div class="row">
+          <div class="col-xs-12 col-sm-3">
+            <h4 class="title">Category</h4>
+            <p>Choose or create a category.</p>
+          </div>
+          <div class="col-xs-12 col-sm-9">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <%= f.association :category, collection: ProductCategory.all, prompt: "Choose a category" %>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <%= label_tag :category_name, "Create new category", class: "control-label" %>
+                <%= text_field_tag :category_name, params[:category_name], class: "form-control" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Images</h4>
+          <p>Featured product image.</p>
+          <%= f.input :remove_image, as: :boolean if @product.image? %>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <%= f.input :image, as: :file %>
+              
+              <%= f.hidden_field :image_cache %>
+              <%= content_tag(:p, image_tag(@product.image_url(:sm), class: "img-responsive", width: 100)) if @product.image? %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Content</h4>
+          <p>Product description.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :content, as: :text, input_html: { rows: 16 } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h3 class="title">SEO</h3>
+          <p>Customize the slug and title for search engine optimizations.</p>
+
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :meta_title %>
+          <%= f.input :slug %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <h4 class="title">Settings</h4>
+          <p>Hide this product from everyone.</p>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <%= f.input :visible %>
+          <%= f.input :active %>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <%= link_to 'Back', admin_group_buy_products_path(@group_buy), class: 'btn btn-default' %>
+      <%= f.submit class: 'btn btn-primary-o pull-right' %>
+    </div>
+  </div>
+<% end %>

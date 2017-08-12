@@ -1,0 +1,14 @@
+//= require jquery2
+//= require jquery_ujs
+//= require bootstrap-sprockets
+//= require throttle
+//= require fluidbox/jquery.fluidbox
+//= require jquery-ui/sortable
+//= require local_time
+//= require slick
+//= require timeago
+//= require dropzone
+//= require velocity
+//= require trianglify.min
+//= require velocity.ui
+//= require_tree ./features

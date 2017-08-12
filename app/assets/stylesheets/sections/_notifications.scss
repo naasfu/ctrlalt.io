@@ -1,0 +1,35 @@
+// Notifications
+//==
+#notifications {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 120px 0 0 0;
+
+  .alert {
+    margin: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-radius: 0;
+
+    @include box-shadow(0 15px 25px 0 rgba(black, .3));
+  }
+}
+
+
+
+// Landscape phones and portrait tablets
+@media (min-width: 767px) {
+  #notifications {
+    width: 50%;
+    margin: 50px 25% 0 25%;
+    .alert {
+      border-left-width: 2px;
+      border-right-width: 2px;
+      border-radius: $border-radius-base;
+    }
+  }
+
+}

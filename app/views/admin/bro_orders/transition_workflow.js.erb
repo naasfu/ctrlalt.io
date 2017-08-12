@@ -1,0 +1,3 @@
+$('#bro_order_<%= @bro_order.id %>').addClass('warning');
+$('#bro_order_<%= @bro_order.id %> .workflow-label').html('<%= j workflow_label @bro_order %>');
+$('#bro_order_<%= @bro_order.id %> .workflow-buttons').html('<%= j render "admin/bro_orders/workflow_buttons", bro_order: @bro_order %>');

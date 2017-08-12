@@ -1,0 +1,21 @@
+<% provide :meta_title, 'Kult Worship Kaps' %>
+<% provide :page_title do %>
+  <div class="kwk-icon kwk-icon-lg">
+    <%= svg_kwk("dracula-yellow") %>
+  </div>
+  Kult Worship Kaps
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <% if @orders.any? %>
+      <div class="list-group">
+        <%= render @orders %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        No Kult Worship Kaps found. Please check out our <%= link_to 'FAQ', help_faqs_path %> for more help.
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<%= content_tag :div, id: dom_id(kwk_product), class: "list-group-item" do %>
+
+  <div class="media">
+    <div class="media-left hidden-xs">
+      <%= link_to image_tag(kwk_product.image_url(:sm_square), width: 50, class: "media-object img-rounded"), admin_kwk_sale_product_path(kwk_product.kwk_sale, kwk_product) %>
+    </div>
+    <div class="media-body">
+      <h4 class="m-y-0">
+        
+        <%= link_to kwk_product.name, edit_admin_kwk_sale_product_path(kwk_product.kwk_sale, kwk_product) %>
+      </h4>
+      <ul class="list-inline m-y-0">
+        <li><%= sortable_handle %></li>
+
+        <% if kwk_product.variants.any? %>
+          <li class="price">
+            <%= number_to_currency 25 %>
+          </li>
+          <li>
+            <%= link_to kwk_product.variants.sorted.pluck(:name).join(", ").to_s, admin_kwk_sale_product_variants_path(kwk_product.kwk_sale, kwk_product) %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "(no variants)", admin_kwk_sale_product_variants_path(kwk_product.kwk_sale, kwk_product) %>
+          </li>
+        <% end %>
+        <li>
+          <em class="text-muted">
+            Last updated <%= local_time kwk_product.updated_at %>
+          </em>
+        </li>
+        <li>
+          <small>
+            <%= link_to icon("times"), admin_kwk_sale_product_path(kwk_product.kwk_sale, kwk_product), class: "text-danger-o", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+          </small>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+
+<% end %>
+

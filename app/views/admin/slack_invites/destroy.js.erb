@@ -1,0 +1,2 @@
+$('#slack_invite_<%= @invite.id %>').remove();
+$('#slack_emails').val('<%= j @invites.pluck(:email).join(", ") %>');

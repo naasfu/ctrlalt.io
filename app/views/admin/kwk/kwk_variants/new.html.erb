@@ -1,0 +1,11 @@
+<% provide :meta_title, 'New Variant' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @kwk_sale.name, admin_kwk_sale_path(@kwk_sale) %></li>
+  <li><%= link_to 'Products', admin_kwk_sale_products_path(@kwk_sale) %></li>
+  <li><%= link_to @product.name, edit_admin_kwk_sale_product_path(@kwk_sale, @product) %></li>
+  <li><%= link_to 'Variants', admin_kwk_sale_product_variants_path(@kwk_sale, @product) %></li>
+<% end %>
+
+<%= render 'form' %>

@@ -1,0 +1,60 @@
+<%= content_tag_for :div, bro_fulfillment do %>
+  <div class="panel panel-default panel-<%= bro_fulfillment.current_state.to_s %>">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <%= short_guid(bro_fulfillment) %>
+        <%= "via #{bro_fulfillment.shipment_service_name}" %>
+      </h4>
+      <%= workflow_label bro_fulfillment %>
+      <%= local_time bro_fulfillment.shipped_at if bro_fulfillment.shipped_at.present? %>
+    </div>
+    <div class="panel-body">
+      <% if bro_fulfillment.shipping? %>
+        <%= link_to icon('barcode', 'View Label'), bro_fulfillment.label_png_url, class: 'btn btn-xs btn-default' if bro_fulfillment.purchased_rate %>
+        <%= link_to icon('download', 'ZPL'), bro_fulfillment.label_zpl_url, class: 'btn btn-xs btn-default' if bro_fulfillment.purchased_rate %>
+        <%= link_to icon('money', 'Refund'), transition_workflow_admin_bro_order_fulfillment_path(bro_fulfillment.bro_order, bro_fulfillment, event: 'refund'), class: 'btn btn-xs btn-danger', remote: true, method: :post if bro_fulfillment.purchased_rate %>
+      <% elsif bro_fulfillment.preparing? %>
+        <%= link_to icon('money', 'Purchase'), edit_admin_bro_order_fulfillment_path(bro_fulfillment.bro_order, bro_fulfillment), class: 'btn btn-xs btn-success-o', remote: true, data: { 'loading-text' => 'Calculating rates...', toggle: :loading } %>
+      <% else %>  
+        <div class="btn btn-xs btn-default-o disabled">No actions available</div>
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-3">
+          <strong>Cost</strong>
+          <p>
+            <% if bro_fulfillment.shipment_cost > 0 %>
+              <%= number_to_currency bro_fulfillment.shipment_cost %>
+            <% else %>
+              N/A
+            <% end %>
+          </p>
+        </div>
+        <div class="col-xs-3">
+          <strong>Weight</strong>
+          <p><%= bro_fulfillment.total_weight_in_oz %>oz</p>
+        </div>
+        <div class="col-xs-6">
+          <strong>Tracking #</strong>
+          <p><%= bro_fulfillment.tracking_number.present? ? link_to(bro_fulfillment.tracking_number, "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{bro_fulfillment.tracking_number}", target: :_blank) : 'N/A' %></p>
+        </div>
+      </div>
+
+      <strong>Shipment #</strong>
+      <p><%= bro_fulfillment.shipment_id ? bro_fulfillment.shipment_id : 'N/A' %></p>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <strong>Items</strong>
+          <%= render partial: 'bro_line_items/cart_line_item', collection: bro_fulfillment.line_items, as: :bro_line_item %>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <strong>Notes</strong>
+          <%= simple_format bro_fulfillment.notes %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,89 @@
+<% provide :meta_title, @product.name %>
+<% provide :page_scripts do %>
+
+  <script>
+    $('.product-images a').on('click', function(){
+      var preview = $('.product-thumbnail');
+
+      preview.find('a').attr("href", $(this).data('preview-image'));
+      preview.find('img').attr("src", $(this).data('preview-image'));
+      preview.find('.thumbnail-label').html($(this).data('preview-label'));
+
+      $(this).parent().find('a').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    $('.switch-style-list a').on('click', function(){
+      var current_variant = $(this).data('variant-id');
+      $('#variant_id').val(current_variant);
+      $(this).parent().find('a').removeClass('active');
+      $(this).addClass('active');
+    });
+  </script>
+
+<% end %>
+
+<div class="dirty-ego fs-24 spacer-b">
+  <%= link_to "Home", @sale %>
+  <%= icon "caret-right fa-fw" %>
+  <%= @product.name %>
+</div>
+
+<h2 class="dirty-ego m-y-0 fs-32"><%= @product.caption %></h2>
+<h1 class="dirty-ego m-y-0 fs-64" style="color: <%= @product.primary_color %>"><%= @product.name %></h1>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <div class="product-thumbnail">
+      <%= link_to image_tag(@product.image_url, class: "img-responsive"), @product.image_url, class: "fluidbox" %>
+    </div>
+    <div class="product-images">
+      <a href="#/" class="active" data-image-id="default" data-preview-image="<%= @product.image_url %>">
+        <%= image_tag @product.thumbnail_url(:md), class: "img-responsive", width: 64 %>
+      </a>
+      <% @product.images.sorted.each_with_index do |image, i| %>
+        <a href="#/" data-image-id="<%= image.id %>" data-preview-image="<%= image.file_url %>">
+          <%= image_tag image.thumbnail_url, class: "img-responsive", width: 64 %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <div class="invasion-green">
+      <div class="invasion-price">
+        <%= product_price_range @product %>
+      </div>
+      <span class="dirty-ego fs-24">
+        <%= render_markdown @product.content %>
+      </span>
+      <% if @product.current_variants.size > 1 %>
+        <p class="dirty-ego fs-24">Select a gaming style:</p>
+        <div class="switch-style-list">
+          <% @variants.each_with_index do |variant, i| %>
+            <a href="#/" class="switch-style <%= 'active' if i == 0 %>" data-variant-id="<%= variant.id %>">
+              <%= variant.name %>
+            </a>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @product.available? %>
+        <%= form_tag bro_line_items_path, remote: true, id: dom_id(@product, :add) do |f| %>
+          <%= hidden_field_tag :variant_id, @product.master_variant.id %>
+
+     
+          <%= submit_tag 'Add to Cart', class: 'btn-invasion disabled', disable: true %>
+        <% end %>
+      <% else %>
+        <%= link_to 'Unavailable', '#/', class: 'btn-invasion disabled' %>
+      <% end %>
+      <p class="invasion-green">Limit 1 per customer.</p>
+    </div>
+  </div>
+</div>
+
+<% unless @product.summary.blank? %>
+  <p class="dirty-ego fs-64 m-y-0 invasion-green">Field Report:</p>
+  <span class="ubuntu">
+    <%= render_markdown @product.summary %>
+  </span>
+<% end %>

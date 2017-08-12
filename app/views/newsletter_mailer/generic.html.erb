@@ -1,0 +1,22 @@
+<h4 style="margin: 0; line-height: 45px; font-size: 21px;"><%= @newsletter.subject %></h4>
+
+<%= simple_format @newsletter.content %>
+
+<% if @group_buy %>
+  <p style="padding: 30px 0;">
+    <small>
+      <span style="color: #999">You are receiving this email because you participated in the group buy <%= link_to @group_buy.name, group_buy_url(@group_buy) %>.</span>
+      <br>
+      <a href="https://ctrlalt.io/">https://ctrlalt.io</a>
+    </small>
+  </p>
+<% else %>
+  <p style="padding: 30px 0;">
+    <small>
+      <span style="color: #999">Don't want these emails anymore?</span>
+      <%= link_to "Unsubscribe", account_email_unsubscribe_url(@user.unsubscribe_token) %>
+      <br>
+      <a href="https://ctrlalt.io/">https://ctrlalt.io</a>
+    </small>
+  </p>
+<% end %>

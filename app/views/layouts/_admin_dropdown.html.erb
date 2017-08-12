@@ -1,0 +1,16 @@
+<% if admin_signed_in? %>
+
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <div class="cai-cog"></div>
+      <b class="caret"></b>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right dropdown-list-group">
+      <div class="list-group-item">
+        <%= render 'layouts/admin/admin_links' %>
+      </div>
+    </div>
+  </li>
+
+<% end %>

@@ -1,0 +1,11 @@
+<%= content_tag_for :div, note, class: 'list-group-item' do %>
+  <p class="list-group-item-text">
+    <%= link_to icon('times'), admin_order_note_path(note.order, note), remote: true, method: :delete, class: 'text-danger pull-right' %>
+    <%= raw note.content %>
+  </p>
+  <small class="text-muted">
+    <%= icon 'clock-o', local_time_ago(note.created_at) %>
+    &mdash;
+    <%= note.user.username %>
+  </small>
+<% end %>

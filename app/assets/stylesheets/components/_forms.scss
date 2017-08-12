@@ -1,0 +1,30 @@
+// Forms
+//
+
+.form-options-footer {
+  z-index: 500;
+  position: fixed;
+  background: $panel-default-heading-bg;
+  border-top: 2px solid $border-color;
+  padding: $spacer;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.form-control { border-width: 2px; }
+.radio { margin-top: 0; }
+
+// .control-label {
+//   font-size: 12px;
+//   color: $gray;
+//   text-transform: uppercase;
+//   letter-spacing: 1px;
+// }
+.help-block {
+  color: $gray-light;
+}
+
+label .radio-md {
+  margin: 10px 0 0;
+}

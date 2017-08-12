@@ -1,0 +1,60 @@
+<% provide :meta_title, 'Support' %>
+<% provide :page_title do %>
+  <div class="cai-bouy dracula-red"></div>
+  Support
+<% end %>
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to Support"), account_help_support_requests_path) %>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4 class="m-y-0"><%= @support_request.subject %></h4>
+    <p class="text-muted">
+      Support request #<%= @support_request.guid %>
+      <%= workflow_label @support_request %>
+    </p>
+    <p>
+      <%= image_tag @support_request.user.avatar_url(:sm), height: 25, class: "img-rounded" %>
+      <strong><%= @support_request.user.username || @support_request.user.email %></strong>
+      <small class="text-muted">
+        <%= timeago @support_request.created_at %>
+      </small>
+    </p>
+
+    <%= render_markdown @support_request.content %>
+
+
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="list-group">
+    <%= render @comments %>
+  </div>
+
+  <div class="panel-body">
+    <%= simple_form_for [:account, :help, @support_request, @comment] do |f| %>
+      <%= f.input :content, label: "Respond to this request", hint: "Use markdown to format your messages.", input_html: { rows: 6 } %>
+      <div class="text-right">
+        <%= f.submit "Post comment", class: "btn btn-success-o" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="text-center">
+  <% if @support_request.open? %>
+    <p class="m-y-0">
+      All done with this request?
+      <%= link_to "Mark it resolved", account_help_support_request_resolve_path(@support_request), class: "btn btn-default-o" %>
+    </p>
+  <% else %>
+    <% if @support_request.resolved? %>
+      <p>This request was resolved <%= timeago(@support_request.resolved_at) %>.</p>
+    <% elsif @support_request.closed? %>
+      <p>This request was closed <%= timeago(@support_request.closed_at) %>.</p>
+    <% end %>
+    <p class="m-y-0">
+      Please <%= link_to "open a new request", new_account_help_support_request_path %> if you need further assistance.
+    </p>
+  <% end %>
+</div>

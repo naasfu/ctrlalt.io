@@ -1,0 +1,12 @@
+<%= simple_form_for @inquiry, url: contact_path, method: :post, remote: true do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :email, placeholder: 'your@email.com' %>
+  <%= f.input :subject, collection: ['General inquiries', 'Group buy requests', 'Collaborations', 'Account support', 'Store support', 'Bro Caps', 'Other'], prompt: "Please select a subject" %>
+  <%= f.input :content, placeholder: 'Hello!', label: 'Message', input_html: { rows: 6 } %>
+
+  <div class="form-group text-right">
+    <%= f.submit 'Send message', class: 'btn btn-success-o', data: { 'loading-text' => 'Sending...', toggle: :loading } %>
+  </div>
+
+<% end %>

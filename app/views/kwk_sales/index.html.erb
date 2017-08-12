@@ -1,0 +1,47 @@
+<% provide :meta_title, 'Kult Worship Kaps' %>
+
+<% cache ["kwk_sales", "kwk_header"] do %>
+  <div class="kwk-page-title-wrapper">
+    <div class="page-title kwk-page-title text-center">
+      <div class="container">
+        <h3 class="m-y-0">Kult Worship Kaps</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+          <div class="row">
+            <div class="col-xs-6 col-sm-3">
+              <p>
+                <%= link_to image_tag("kwk/thumb_3.png", class: "img-rounded img-responsive"), image_url("kwk/full_3.png"), class: "fluidbox" %>
+              </p>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <p>
+                <%= link_to image_tag("kwk/thumb_1.png", class: "img-rounded img-responsive"), image_url("kwk/full_1.png"), class: "fluidbox" %>
+              </p>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <p>
+                <%= link_to image_tag("kwk/thumb_2.png", class: "img-rounded img-responsive"), image_url("kwk/full_2.png"), class: "fluidbox" %>
+              </p>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+              <p>
+                <%= link_to image_tag("kwk/thumb_4.png", class: "img-rounded img-responsive"), image_url("kwk/full_4.png"), class: "fluidbox" %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% cache ["kwk_sales", @kwk_sales] do %>
+  <%= render @kwk_sales, cached: true %>
+<% end %>

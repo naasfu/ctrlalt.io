@@ -1,0 +1,41 @@
+<% cache ["kwk_sales/partial", kwk_sale] do %>
+  <div class="page-content">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <p><%= link_to image_tag(kwk_sale.logo_url(:md), class: 'img-responsive img-rounded'), kwk_sale %></p>
+          </p>
+          <h4 class="m-b-0"><%= link_to kwk_sale.name, kwk_sale %></h4>
+          <p>
+            <%= content_tag :span, timeago(kwk_sale.deadline), class: (kwk_sale.ongoing? ? 'text-success' : 'text-danger') %>
+          </p>
+          <%= simple_format kwk_sale.caption if kwk_sale.caption  %>
+          <p>
+            <%= link_to "View sale", kwk_sale, class: "btn btn-warning-o btn-block" %>
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <div class="row">
+            <% kwk_sale.sorted_products.each do |product| %>
+              <div class="col-xs-12 col-sm-6">
+                <div class="media spacer-b">
+                  <div class="media-left media-middle">
+                    <%= link_to image_tag(product.image_url(:sm_square), width: 50, class: "media-object") %>
+                  </div>
+                  <div class="media-body">
+                    <strong><%= product.name %></strong>
+                    <br>
+                    <em class="text-muted">
+                      <%= product.sorted_variants.pluck(:name).join(", ").to_s %>
+                    </em>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

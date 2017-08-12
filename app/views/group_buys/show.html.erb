@@ -1,0 +1,59 @@
+<% provide :meta_title, @group_buy.name %>
+
+<div class="hero text-center">
+  <h2 class="m-y-0"><%= @group_buy.name %></h2>
+  <h4>
+    <%= content_tag :span, timeago(@group_buy.deadline), class: (@group_buy.ongoing? ? 'text-success' : 'text-danger') %>
+  </h4>
+</div>
+
+<div class="page-content">
+  <% cache ["group_buy_details", @group_buy] do %>
+    <div class="container">
+      <% if @group_buy.past_deadline? %>
+        <div class="alert alert-error text-center">
+          This group buy ended on <%= local_time @group_buy.deadline %> and is no longer available.
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <p>
+            <%= image_tag @group_buy.image_url(:lg), class: 'img-responsive img-rounded' %>
+          </p>
+          <% if @images.any? %>
+            <div class="row">
+              <%= render @images %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs spacer-p">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <li><a href="#updates" data-toggle="tab">Updates (<%= @microposts.count %>)</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="details">
+              <%= render 'details' %>
+            </div>
+            <div class="tab-pane fade" id="updates">
+              <%= render(@microposts) || content_tag(:em, "There are no updates yet.") %>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+<% cache ["group_buy_products", @group_buy, @products] do %>
+  <%= render @products, group_buy: @group_buy %>
+<% end %>

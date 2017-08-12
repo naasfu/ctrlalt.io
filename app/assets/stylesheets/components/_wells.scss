@@ -1,0 +1,7 @@
+// Wells
+//==
+
+.well {
+  border-width: 2px;
+  @include box-shadow(none);
+}

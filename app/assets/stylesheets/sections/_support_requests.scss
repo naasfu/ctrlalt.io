@@ -1,0 +1,20 @@
+// Support Requests
+// 
+
+.reply-signature {
+  color: $text-muted;
+
+  p:last-child {
+    margin: 0;
+  }
+}
+
+.comment {
+  &:hover .comment-tools {
+    opacity: 1;
+  }
+}
+.comment-tools {
+  float: right;
+  opacity: .4;
+}

@@ -1,0 +1,26 @@
+<% cache ["kwk_products/partial", kwk_sale, kwk_product] do %>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <%= link_to image_tag(kwk_product.image_url(:md), class: 'img-responsive'), kwk_product.image_url, class: 'fluidbox' if kwk_product.image? %>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-8">
+        <h4 class="m-t-0"><%= kwk_product.name %></h4>
+        <%= render_markdown kwk_product.content %>
+
+        <%= form_tag kwk_line_items_path, remote: true do |f| %>
+
+          <%= render kwk_product.sorted_variants, kwk_sale: kwk_sale, cached: true %>
+
+          <% if kwk_sale.ongoing? %>
+            <%= submit_tag 'Add to Cart', class: 'btn btn-primary-o', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+          <% else %>
+            <%= link_to 'Unavailable', '#/', class: 'btn btn-primary-o disabled' %>
+          <% end %>
+
+          <%= content_tag :div, "", class: "btn-padding", id: dom_id(kwk_product, :notifications) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

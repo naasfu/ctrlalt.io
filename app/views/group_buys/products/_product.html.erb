@@ -1,0 +1,54 @@
+<% cache [product.group_buy, product] do %>
+  <div class="page-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-7">
+          <%= link_to image_tag(product.image_url(:md), class: 'img-responsive'), product.image_url, class: 'fluidbox' if product.image? %>
+
+          <% if product.images.any? %>
+            <div class="row">
+              <%= render product.images.sorted %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-xs-12 col-md-5">
+          <h4><%= product.name %></h4>
+          <%= render_markdown product.content %>
+
+          <%= form_tag line_items_path, remote: true do |f| %>
+
+            <% if product.current_variants.any? %>
+              <% if product.current_variants.size == 1 %>
+                <p class="price price-md"><%= number_to_currency product.master_variant.current_price %></p>
+                <%= hidden_field_tag :variant_id, product.master_variant.id %>
+              <% else %>
+                <%= render product.current_variants %>
+              <% end %>
+            <% end %>
+
+            <div class="row">
+              <div class="col-xs-10">
+                <% if product.available? %>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <%= select_tag :quantity, options_for_select(1..20), { class: "form-control" } %>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= submit_tag 'Add to Cart', class: 'btn btn-success-o btn-add-to-cart', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+                      </div>
+                    </div>
+                  </div>
+                  <%= content_tag :span, nil, id: dom_id(product, :add_to_cart) %>
+                <% else %>
+                  <%= link_to 'Unavailable', '#/', class: 'btn btn-success-o disabled' %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

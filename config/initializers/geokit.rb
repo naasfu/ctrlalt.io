@@ -1,0 +1,1 @@
+Geokit::Geocoders::GoogleGeocoder.api_key = ENV['google_geokit']

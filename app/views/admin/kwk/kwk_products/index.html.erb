@@ -1,0 +1,22 @@
+<% provide :meta_title, 'Products' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @kwk_sale.name, admin_kwk_sale_path(@kwk_sale) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Product'), new_admin_kwk_sale_product_path(@kwk_sale), class: 'btn btn-success-o' %>
+  </div>
+
+  <div class="list-group list-group-xl sortable" data-update-url="<%= admin_sort_path(class_name: 'kwk_product') %>">
+    <% if @products.any? %>
+      <%= render @products %>
+    <% else %>
+      <div class="list-group-item text-center">
+        <em class="text-muted">There are no products yet...</em>
+      </div>
+    <% end %>
+  </div>
+</div>

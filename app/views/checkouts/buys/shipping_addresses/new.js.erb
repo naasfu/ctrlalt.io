@@ -1,0 +1,12 @@
+$('#notifications').html('');
+if($("#new_shipping_address_modal").length === 0){
+  $('body').append('<%= j render "new_modal" %>');
+}
+// Toggle modal
+$('#new_shipping_address_modal').modal('toggle');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

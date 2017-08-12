@@ -1,0 +1,44 @@
+Bro Caps
+──────────────────────────────
+
+You've won <%= pluralize @line_items.size, 'bro' %>!
+
+What happens next?
+
+Your payment is due within 24 hours. 
+Please click on the link below to pay now with PayPal or visit your order history.
+
+<%= pay_account_history_bro_order_url(@bro_order) %>
+
+──────────────────────────────
+
+You won the following bros:
+
+<%= render partial: 'bro_order_mailer/shared/bro_line_item', collection: @line_items, as: :bro_line_item %>
+──────────────────────────────
+
+Shipping: <%= number_to_currency @bro_order.shipping_total %>
+Subtotal: <%= number_to_currency @bro_order.line_items_total %>
+    Fees: <%= number_to_currency @bro_order.fee_total %>
+Donation: <%= number_to_currency @bro_order.donation_amount %>
+          --
+   Total: <%= number_to_currency @bro_order.grand_total %>
+
+──────────────────────────────
+
+You can view this ticket in further detail in your account bro history.
+<%= account_history_bro_order_url(@bro_order) %>
+
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

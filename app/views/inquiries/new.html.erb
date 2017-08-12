@@ -1,0 +1,27 @@
+<% provide :meta_title, 'Contact' %>
+<% provide :page_title, 'Contact' %>
+
+<% provide :page_description do %>
+  Say hello or send us a message
+<% end %>
+
+<% provide :page_subtitle do %>
+  <div class="text-center">
+    Please <%= link_to "open a suport request", new_account_help_support_request_path %> if you need help with a recent purchase or group buy. 
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= render 'form' %>
+      </div>
+    </div>
+    <p class="text-center"> 
+      <strong>Prefer email?</strong>
+      <br>
+      You can also email us directly at <%= link_to "support@ctrlalt.io", "mailto:support@ctrlalt.io" %>.
+    </p> 
+  </div>
+</div>

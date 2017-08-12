@@ -1,0 +1,7 @@
+<% provide :meta_title, 'New Newsletter' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Newsletters', admin_newsletters_path %></li>
+<% end %>
+
+<%= render 'form' %>

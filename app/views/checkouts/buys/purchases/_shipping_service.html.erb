@@ -1,0 +1,17 @@
+<% if @shipping_address.present? && @shipping_rates.radio_options.any? %>
+  <%= form_tag checkouts_buys_shipping_service_path, method: :patch, remote: true do |f| %>
+    <% @shipping_rates.radio_options.each do |label, value| %>
+      <div class="radio">
+        <label>
+          <%= radio_button_tag :rate_id, value, (current_cart.rate_id == value) %>
+          <%= label %>
+        </label>
+      </div>
+    <% end %>
+  <% end %>
+<% elsif @shipping_address.present? && @shipping_rates.radio_options.blank? %>
+  
+  We couldn't find any shipping rates to your provided address, are you sure its right?
+  <br><%= link_to "Change shipping address", edit_checkouts_buys_shipping_address_path(@shipping_address), remote: true %>
+
+<% end %>

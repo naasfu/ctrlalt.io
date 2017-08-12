@@ -1,0 +1,5 @@
+<% if @newsletter.destroyed? %>
+  $('#newsletter_<%= @newsletter.id %>').remove();
+<% end %>
+
+$('#notifications').html('<%= j render "layouts/notifications" %>');

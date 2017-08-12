@@ -1,0 +1,37 @@
+// Kult Worship Kaps
+// 
+
+.kwk-icon {
+  text-align: center;
+  width: 32.67px;
+  padding: 0 5px;
+  display: inline-block;
+  color: currentColor;
+  fill: currentColor;
+  
+  > svg {
+    display: block;
+    margin-bottom: -4px;
+  }
+
+  &.kwk-icon-lg {
+    width: 45px;
+    > svg {
+      margin-bottom: -5px;
+    }
+  }
+}
+
+.kwk-page-title-wrapper {
+  @include gradient-vertical(rgba(black, .2), rgba(black, 0), 0, 50%);
+}
+
+.page-title.kwk-page-title {
+  background-image: asset-url('kwk_makers_mark.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 120px 123px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-bottom: none;
+}

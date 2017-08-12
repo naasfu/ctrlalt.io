@@ -1,0 +1,9 @@
+<% if @inquiry.errors.any? %>
+  $('#new_inquiry').replaceWith('<%= j render "form" %>');
+<% else %>
+  $('#new_inquiry').animate({height:0, opacity:0}, 'slow', function() {
+    $(this).replaceWith('<%= j render "inquiries/success_message" %>');
+  });
+<% end %>
+
+$('#notifications').html('<%= j render "layouts/notifications" %>');

@@ -1,0 +1,39 @@
+<%= content_tag :div, id: dom_id(bro_line_item, :cart), class: "list-group-item" do %>
+
+  <div class="media">
+    <div class="media-left">
+      <%= image_tag(bro_line_item.image_url(:sm), width: 55, class: "media-object img-rounded") %>
+    </div>
+    <div class="media-body">
+      <p class="m-y-0">
+        <strong><%= bro_line_item.product_name %></strong>
+        <br>
+        <small>&mdash; <%= bro_line_item.variant_name %></small>
+        <% if bro_line_item.color.present? %>
+          <br>
+          <small>&mdash; <%= bro_line_item.color %></small>
+        <% end %>
+      </p>
+      <ul class="list-inline m-y-0">
+        <li class="hidden-xs"><%= sortable_handle %></li>
+        <li><%= link_to icon("chevron-circle-up"), move_up_bro_line_item_path(bro_line_item), remote: true, class: "text-body" %></li>
+        <li><%= link_to icon("chevron-circle-down"), move_down_bro_line_item_path(bro_line_item), remote: true, class: "text-body" %></li>
+
+        <li class="price">
+          <%= number_to_currency bro_line_item.unit_price %>
+        </li>
+        <li>
+          <%= bro_line_item.variant_name %>
+        </li>
+        <li class="pull-right">
+          <small>
+            <%= link_to icon("times fa-fw"), checkouts_bros_bro_line_item_path(bro_line_item), class: "text-danger", method: :delete, remote: true %>
+          </small>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+
+<% end %>
+

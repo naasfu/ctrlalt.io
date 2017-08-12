@@ -1,0 +1,27 @@
+<% provide :meta_title, "Newsletters" %>
+<% provide :page_title, "Newsletters" %>
+<% provide :page_description, "A catalog of our email newsletters" %>
+<% provide :page_subtitle do %>
+  <div class="text-center">
+    <%= link_to 'Sign up for an account', signup_path %> to receive these emails.
+  </div>
+<% end %>
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+    <div class="panel panel-default m-y-0">
+        <% if @newsletters.any? %>
+          <div class="list-group">
+            <%= render @newsletters, cached: true %>
+          </div>
+        <% else %>
+          <div class="panel-body">
+            <p>
+              <em>We haven't sent any newsletters yet.</em>
+            </p>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>

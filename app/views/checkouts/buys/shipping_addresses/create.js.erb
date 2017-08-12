@@ -1,0 +1,37 @@
+<% if @shipping_address.errors.any? %>
+
+  // Replace form (show errors)
+  $('#new_shipping_address').replaceWith('<%= j render "form" %>');
+
+<% else %>
+
+  // Close modal
+  $('#new_shipping_address_modal').modal('toggle');
+
+  // Update shipping service
+  $('#checkout_shipping_service').html('<%= j render "checkouts/buys/purchases/shipping_service" %>');
+  
+  // Update shipping address
+  $('#checkout_shipping_address').html('<%= j render "checkouts/buys/purchases/shipping_address" %>');
+  
+  // Update totals
+  $('.line-items-total').html('<%= number_to_currency current_cart.line_items_total %>');
+  $('.shipping-total').html('<%= number_to_currency current_cart.shipping_total %>');
+  $('.fee-total').html('<%= number_to_currency current_cart.fee_total %>');
+  $('.donation-total').html('<%= number_to_currency current_cart.donation_total %>');
+  $('.grand-total').html('<%= number_to_currency current_cart.grand_total %>');
+  
+  <% if current_cart.is_ready_for_purchase? %>
+    $('#totals_panel input[type="submit"]').removeClass("btn-default-o").addClass("btn-success-o").prop("disabled", false);
+  <% end %>
+
+<% end %>
+
+// Render notifications
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

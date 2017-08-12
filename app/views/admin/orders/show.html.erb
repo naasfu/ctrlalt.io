@@ -1,0 +1,240 @@
+<% provide :meta_title, "##{@order.guid}" %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Orders', admin_orders_path %></li>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <%= content_tag_for :div, @order, class: 'panel panel-default' do %>
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <%= "##{@order.guid}" %>
+          <span class="workflow-label">
+            <%= workflow_label @order %>
+          </span>
+        </h4>
+      </div>
+      <div class="panel-body workflow-buttons">
+        <%= render 'admin/orders/workflow_buttons', order: @order %>
+      </div>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div id="tracking_notes" class="list-group">
+        <% if @tracking_notes.any? %>
+          <%= render @tracking_notes %>
+        <% else %>
+          <div class="list-group-item no-tracking_notes">There are no tracking notes for this order.</div>
+        <% end %>
+      </div>
+      <div class="panel-footer text-right">
+        <%= link_to 'New tracking note', new_admin_order_tracking_note_path(@order), class: 'btn btn-primary-o', remote: true %>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+
+      <div class="panel-body text-center">
+        <span class="grand-total price price-xl">
+          <%= number_to_currency @order.grand_total %>
+        </span>
+      </div>
+      <table class="table table-condensed m-y-0">
+        <tr>
+          <td class="text-right" width="50%">Shipping</td>
+          <td class="shipping-total" width="50%">
+            <%= number_to_currency @order.shipping_total %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Subtotal</td>
+          <td class="line-items-total">
+            <%= number_to_currency @order.line_items_total %>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="text-right">
+            Donation
+              <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!' } %>
+          </td>
+          <td class="donation-total">
+            <%= number_to_currency @order.donation_total %>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <% if @user %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><%= @user.email %></h4>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal m-y-0">
+            <dt>#</dt>
+            <dd><%= @user.id %></dd>
+
+            <dt>Username</dt>
+            <dd><%= @user.username %></dd>
+
+            <dt>Joined</dt>
+            <dd><%= local_time @user.created_at, format: :readable_date %></dd>
+
+            <dt>Avatar</dt>
+            <dd><%= image_tag @user.avatar_url(:md), class: "img-rounded", height: 50 %></dd>
+          </dl>
+        </div>
+
+        <% if @user_orders.any? %>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th width="70%">Order</th>
+                  <th width="30%">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @user_orders.each do |order| %>
+                  <tr>
+                    <td>
+                      <%= link_to short_guid(order), admin_order_path(order), class: "text-mono" %>
+                      <%= workflow_label order %>
+                      <br>
+                      <%= local_time (order.placed_at || order.paid_at), format: :readable_date %>
+                    </td>
+                    <td>
+                      <span class="price"><%= number_to_currency order.grand_total %></span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+
+    <div class="panel panel-default">
+      <div id="notes" class="list-group">
+        <% if @notes.any? %>
+          <%= render @notes %>
+        <% else %>
+          <div class="list-group-item no-notes">There are no notes for this order.</div>
+        <% end %>
+      </div>
+      <div class="panel-footer text-right">
+        <%= link_to 'New note', new_admin_order_note_path(@order), class: 'btn btn-primary-o', remote: true %>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+
+      <% if @order.user_notes.present? && @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <strong>Notes</strong>
+              <%= simple_format @order.user_notes %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <strong>geekhack.org</strong>
+              <p><%= @order.geekhack_username %></p>
+            </div>
+          </div>
+        </div>
+
+      <% elsif @order.user_notes.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @order.user_notes %>
+        </div>
+
+      <% elsif @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>geekhack.org</strong>
+          <p><%= @order.geekhack_username %></p>
+        </div>
+
+      <% end %>
+
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Email</strong>
+            <p><%= @order.email %></p>
+          </div>
+
+
+          <div class="col-xs-12 col-sm-6">
+            <strong>Shipping service</strong>
+            <p><%= @order.shipment_service %></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Ship to</strong>
+            <small><%= link_to "Change", edit_admin_shipping_address_path(@order.shipping_address), remote: true %></small>
+            <%= render "addresses/shipping_address", shipping_address: @order.shipping_address %>
+          </div>
+
+
+          <div class="col-xs-12 col-sm-6">
+            <strong>Payment method</strong>
+            <%= render @transactions %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= form_tag new_admin_order_fulfillment_path(@order), remote: true, method: :get do %>
+      <div class="panel panel-default">
+
+        <div class="panel-body workflow-buttons">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+              <div class="input-group">
+                <%= number_field_tag :weight, nil, placeholder: "weight/oz", step: "0.01", class: "form-control" %>
+                <span class="input-group-btn">
+                <%= submit_tag 'Fulfill', class: 'btn btn-block btn-primary-o', data: { 'loading-text' => 'Calculating...', toggle: :loading } %>
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="0%" style="padding-right: 0;"><%= icon "check" %></th>
+                <th width="65%">Product</th>
+                <th width="20%" class="text-center">Price</th>
+                <th width="15%" class="text-center">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @line_items %>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    <% end %>
+
+    <div id="fulfillments">
+      <%= render @fulfillments %>
+    </div>
+  </div>
+</div>

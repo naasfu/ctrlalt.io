@@ -1,0 +1,9 @@
+<% provide :meta_title, @product.name %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @kwk_sale.name, admin_kwk_sale_path(@kwk_sale) %></li>
+  <li><%= link_to 'Products', admin_kwk_sale_products_path(@kwk_sale) %></li>
+<% end %>
+
+<%= render 'form' %>

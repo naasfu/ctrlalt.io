@@ -1,0 +1,13 @@
+<%= content_tag_for :tr, variant do %>
+  <td>
+    <%= sortable_handle %>
+    <%= link_to variant.name, edit_admin_group_buy_product_variant_path(variant.group_buy, variant.product, variant) %>
+  </td>
+  <td class="price">
+    <%= number_to_currency variant.current_price %>
+  </td>
+  <td>
+    <%= link_to icon("times"), admin_group_buy_product_variant_path(variant.group_buy, variant.product, variant), class: "btn btn-xs btn-danger pull-right", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to icon("pencil", "Details"), edit_admin_group_buy_product_variant_path(variant.group_buy, variant.product, variant), class: "btn btn-xs btn-default-o" %>
+  </td>
+<% end %>

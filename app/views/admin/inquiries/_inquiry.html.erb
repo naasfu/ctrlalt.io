@@ -1,0 +1,16 @@
+<%= content_tag_for :tr, inquiry do %>
+  <td>
+    <%= link_to inquiry.subject, admin_inquiry_path(inquiry) %>
+    from <%= inquiry.name %> (<%= link_to inquiry.email, "mailto:#{inquiry.email}", target: :_blank %>)
+    <br>
+    <span class="text-muted"> 
+      <%= short_guid inquiry %>
+      &mdash;
+      <%= local_time inquiry.created_at %>
+      (<%= local_time_ago inquiry.created_at %>)
+    </span>
+  </td>
+  <td>
+    <%= truncate(inquiry.content, separator: ' ', omission: '...', length: 150)%>
+  </td>
+<% end %>

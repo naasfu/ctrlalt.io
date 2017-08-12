@@ -1,0 +1,12 @@
+<%= content_tag :tr, id: dom_id(faq) do %>
+  <td>
+    <%= sortable_handle %>
+    <%= link_to faq.q, edit_admin_faq_category_faq_path(faq.category, faq) %>
+  </td>
+  <td>
+    <ul class="list-inline m-y-0">
+      <li class="pull-right"><%= link_to icon("times"), admin_faq_category_faq_path(faq.category, faq), class: "text-danger", remote: true, method: :delete, data: { confirm: "Are you sure?" } %></li>
+      <li><%= link_to "Update", edit_admin_faq_category_faq_path(faq.category, faq) %></li>
+    </ul>
+  </td>
+<% end %>

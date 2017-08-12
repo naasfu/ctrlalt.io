@@ -1,0 +1,9 @@
+<% cache ["help", faq_category] do %>
+  <h4>
+    <%= faq_category.name %>
+    <small><%= link_to icon('link'), help_faq_category_path(faq_category) %></small>
+  </h4>
+  <ul>
+    <%= render faq_category.sorted_faqs, cached: true %>
+  </ul>
+<% end %>

@@ -1,0 +1,59 @@
+<% provide :meta_title, @newsletter.subject %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Newsletters', admin_newsletters_path %></li>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-7">
+    <div class="newsletter-preview">
+      <%= link_to image_tag("logo_invoice.png", height: 45), root_url, style: "float:right;" %>
+      <h4 style="margin: 0; line-height: 45px;"><%= @newsletter.subject %></h4>
+      <%= simple_format @newsletter.content %>
+      <p>
+        <small>
+          <span style="color: #999">Don't want these emails anymore?</span>
+          <%= link_to "Unsubscribe", account_email_unsubscribe_path(current_user.unsubscribe_token) %>
+          <br>
+          <a href="https://ctrlalt.io/">https://ctrlalt.io</a>
+        </small>
+      </p>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-5">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p>
+          <strong>This email will be sent to</strong>
+          <span class="text-lg"><%= number_with_delimiter @newsletter.recipients.size %></span> users
+        </p>
+        <strong>Group buy</strong>
+        <% if @group_buy.present? %>
+          <p><%= image_tag(@group_buy.image_url(:md), width: 200, class: 'img-responsive img-rounded') %></p>
+          <p><%= @group_buy.name %></p>
+        <% else %>
+          <p>
+            <em class="text-muted">No group buy selected.</em>
+          </p>
+        <% end %>
+        <strong>Last sent at</strong>
+        <% if @newsletter.last_sent_at.present? %>
+          <p>
+            <%= local_time @newsletter.last_sent_at, format: :readable_time %>
+            (<%= timeago @newsletter.last_sent_at %>)
+          </p>
+          <p>
+            <%= link_to "Resend it", admin_send_newsletter_path(@newsletter), class: "btn btn-danger-o", data: { confirm: "Are you sure?" } %>
+          </p>
+        <% else %>
+          <p>
+            <em class="text-muted">This newsletter has not been sent yet.</em>
+          </p>
+          <p>
+            <%= link_to "Send it now", admin_send_newsletter_path(@newsletter), class: "btn btn-success-o" %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

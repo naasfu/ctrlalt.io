@@ -1,0 +1,14 @@
+
+// Render dropdown contents
+$('.kwk-count').html('<%= j pluralize current_kaps.line_items.size, "kap" %>');
+$('[data-toggle=loading]').button('reset');
+
+<% if @variant.product %>
+  $('#<%= dom_id @variant.product, :notifications %>').html('<%= flash_notification(true) %>');
+<% else %>
+  $('#notifications').replaceWith('<%= j render "layouts/notifications" %>');
+<% end %>
+
+$('#quick_kwk_cart .list-group').html("<%= j render partial: 'kwk_line_items/cart_line_item', collection: current_kaps.line_items.sorted, as: :kwk_line_item %>");
+
+closeAlerts(1200);

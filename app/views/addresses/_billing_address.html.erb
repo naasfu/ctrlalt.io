@@ -1,0 +1,10 @@
+<%= content_tag :address, class: "billing-address m-y-0" do %>
+  <%= billing_address.street1 %>
+  <%= ",<br>#{billing_address.street2}".html_safe if billing_address.street2.present? %>
+  <br>
+  <%= billing_address.city %>,
+  <%= billing_address.state %>
+  <%= billing_address.zip %>
+  <br>
+  <%= billing_address.country %>
+<% end %>

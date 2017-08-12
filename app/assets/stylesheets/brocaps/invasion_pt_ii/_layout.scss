@@ -1,0 +1,151 @@
+@import "variables";
+
+body.invasion-pt-ii {
+}
+
+.navbar {
+  border: none;
+  background: transparent;
+  font-family: $font-family-ubuntu;
+}
+
+.product-thumbnail {
+  border: 2px solid $invasion-green;
+}
+.product-images {
+  margin-top: $spacer;
+
+  a {
+    float: left;
+    margin-right: $spacer;
+    border: 2px solid transparent;
+
+    &.active {
+      border: 2px solid $invasion-green;
+    }
+  }
+}
+
+.invasion-price {
+  font-family: $font-family-dirty-ego;
+  font-size: 166px;
+  line-height: 130px;
+  margin-bottom: $spacer;
+
+}
+
+.invasion-green {
+  color: $invasion-green;
+}
+.invasion-product-list {
+  margin-top: 50px;
+}
+.invasion-product {
+
+  margin-bottom: $spacer;
+  color: $text-color;
+  text-decoration: none;
+
+  img {
+    border: 2px solid $invasion-green;
+  }
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+.fs-32 {
+  font-size: 32px;
+}
+.fs-64 {
+  font-size: 64px;
+}
+.fs-128 {
+  font-size: 128px;
+}
+
+.invasion-pt-ii-logo {
+  padding: 50px 0;
+
+}
+
+.ubuntu {
+  font-family: $font-family-ubuntu;
+}
+
+.dirty-ego {
+  font-family: $font-family-dirty-ego;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.switch-style-list {
+  margin-top: -10px;
+  margin-bottom: 20px;
+
+  .switch-style {
+    font-family: $font-family-dirty-ego;
+    color: #6a6a6a;
+    font-size: 32px;
+    background: #454545;
+    padding: 0 14px;
+    margin-right: $spacer;
+    text-decoration: none;
+    display: inline-block;
+
+    &.active,
+    &:hover {
+      color: #272727;
+      background: $invasion-green;
+    }
+  }
+}
+
+.btn-invasion {
+  font-family: $font-family-dirty-ego;
+  font-size: 54px;
+  line-height: 60px;
+  color: #272727;
+  background: $invasion-green;
+  padding: 0 20px;
+  border-radius: 8px;
+  border: none;
+
+  &:hover {
+    background: darken($invasion-green, 15%);
+  }
+  &.disabled,
+  &.disabled:hover {
+    color: #272727;
+    background: darken($invasion-green, 15%);
+    text-decoration: none;
+    border: none;
+  }
+}
+
+.footer {
+  margin: 50px 0;
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+  .invasion-product {
+
+    .fs-64 {
+      font-size: 50px;
+      margin-right: $spacer;
+    }
+  }
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 1200px) {
+  .invasion-product {
+    .fs-64 {
+      font-size: 60px;
+    }
+  }
+}

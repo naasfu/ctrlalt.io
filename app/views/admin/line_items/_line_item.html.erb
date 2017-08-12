@@ -1,0 +1,25 @@
+<%= content_tag_for :tr, line_item do %>
+  <td>
+    <%= check_box_tag 'line_item_ids[]', line_item.id %>
+  </td>
+  <td>
+    <div class="media">
+      <div class="pull-left">
+        <%= image_tag(line_item.image_url(:sm), width: 50, class: "media-object") %>
+      </div>
+      <div class="media-body">
+        <p class="media-heading">
+          <strong><%= line_item.product_name %> (<%= line_item.group_buy.name %>)</strong>
+          <br>
+          <small>&mdash; <%= line_item.variant_name %></small>
+        </p>
+      </div>
+    </div>
+  </td>
+  <td class="text-center price">
+    <%= number_to_currency line_item.unit_price %>
+  </td>
+  <td class="text-center">
+    <%= line_item.quantity %>
+  </td>
+<% end %>

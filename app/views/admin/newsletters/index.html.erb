@@ -1,0 +1,22 @@
+<% provide :meta_title, 'Manage Newsletters' %>
+
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Newsletter'), new_admin_newsletter_path, class: 'btn btn-success-o' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="60%">Newsletter</th>
+          <th width="40%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @newsletters %>
+      </tbody>
+    </table>
+  </div>
+</div>

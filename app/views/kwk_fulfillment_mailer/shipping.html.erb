@@ -1,0 +1,47 @@
+<strong>Your Kult Worship Kaps are on the way!</strong>
+
+Shipment details for order <%= link_to "##{@order.guid}", account_history_kwk_order_url(@order) %>.
+
+<% if @fulfillment.customer_notes.present? %>
+───
+
+<strong>Notes</strong>
+
+<%= @fulfillment.customer_notes %>
+
+<% end %>
+───
+
+Tracking <%= link_to "##{@fulfillment.tracking_number}", "https://www.royalmail.com/track-your-item?trackNumber=#{@fulfillment.tracking_number}" %> <%= "via #{@fulfillment.service_name}" %>
+
+───
+
+<strong>Ship to:</strong>
+
+  <%= @shipping_address.full_name %>
+  <%= @shipping_address.street1 %><%= ",\n#{@shipping_address.street2}".html_safe if @shipping_address.street2.present? %>
+  <%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>
+  <%= @shipping_address.country %>
+  <% if @shipping_address.phone.present? %>
+  P: <%= @shipping_address.phone %>
+  <% end %>
+
+───
+
+<strong>Kult Worship Kaps included in this shipment:</strong>
+
+<% @line_items.each do |kwk_line_item| %>
+  <%= number_to_currency kwk_line_item.unit_price %> ─ <%= "#{kwk_line_item.product_name} (#{kwk_line_item.kwk_sale_name})" %>
+  ─ <%= kwk_line_item.variant_name %>
+
+<% end %>
+───
+
+Please check out our <%= link_to "FAQ", help_faqs_url %> or reply to this email for more help.
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on <%= link_to "Instagram", "https://www.instagram.com/ctrlalt.io/" %> to keep in touch!
+

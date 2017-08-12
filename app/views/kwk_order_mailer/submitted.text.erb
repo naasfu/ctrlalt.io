@@ -1,0 +1,26 @@
+Kult Worship Kaps
+──────────────────────────────
+
+Confirmation for ticket #<%= @order.guid %>
+
+You will notified with details and further instructions upon winning.
+
+──────────────────────────────
+
+<%= render partial: 'kwk_order_mailer/shared/kwk_line_item', collection: @line_items, as: :kwk_line_item %>
+You can view this ticket in further detail in your account history.
+<%= account_history_kwk_order_url(@order) %>
+
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

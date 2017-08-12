@@ -1,0 +1,74 @@
+<% provide :meta_title, "Help" %>
+<% provide :page_title, "Help" %>
+<% provide :page_description, "Our support channels" %>
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4 class="m-t-0">General Inquiries</h4>
+        <p>You can ask us questions or say hello using our <%= link_to "contact form", contact_path %>.</p>
+      </div>
+      <div class="panel-footer">
+        <strong>Prefer email?</strong>
+        You can also email us directly at <%= link_to "support@ctrlalt.io", "mailto:support@ctrlalt.io" %>.
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4>Support Requests</h4>
+        <p>
+          If you have any questions or problems with your order, the fastest way to receive support is by opening a support request.
+        </p>
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <p class="text-success">
+              <strong>Common support request topics:</strong>
+            </p>
+            <ul class="m-y-0">
+              <li>Missing key caps or items</li>
+              <li>Shipping address changes</li>
+              <li>Shipping status</li>
+              <li>Replacements</li>
+            </ul>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <p class="text-danger">
+              <strong>We do not allow:</strong>
+            </p>
+            <ul class="m-y-0">
+              <li>Order transfers</li>
+              <li>Refunds after group buy or sale deadlines</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <%= link_to "Click here", new_account_help_support_request_path %> to open a support request.
+      </div>
+    </div>
+
+    <% cache @popular_faqs do %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h4>FAQ</h4>
+          <p>
+            If you have any general questions about Bro Caps, Kult Worship Kaps, or our group buys, you might find the answer in our FAQ.
+          </p>
+          <p>
+            <strong>Popular FAQ articles:</strong>
+          </p>
+          <ul class="m-y-0">
+            <%= render partial: "help/faqs/faq", collection: @popular_faqs, as: :faq, cached: true %>
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <%= link_to "View all", help_faqs_path %> of our FAQ articles.
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

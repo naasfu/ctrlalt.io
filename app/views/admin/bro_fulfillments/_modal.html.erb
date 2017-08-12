@@ -1,0 +1,54 @@
+<div class="modal fade" id="edit_fulfillment_<%= @fulfillment.id %>_modal">
+  <div class="modal-dialog modal-lg">
+    <%= simple_form_for [:admin, @bro_order, @fulfillment], remote: true, url: admin_bro_order_fulfillment_path(@bro_order, @fulfillment) do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title"><%= short_guid @fulfillment %></h4>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <%= render partial: 'bro_line_items/cart_line_item', collection: @line_items, as: :bro_line_item %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <% if @bro_order.shipping_address.country == 'US' %>
+                <p>
+                  <strong>USPS Small Flat Rate</strong>
+                  &mdash;
+                  <span class="price">
+                    <%= number_to_currency @fulfillment.current_rate %>
+                  </span>
+                  <br>
+                  All CONUS packages are shipped via Small Flat Rate.
+                </p>
+              <% else %>
+                <p>
+                  <strong>USPS First Class International</strong>
+                  &mdash;
+                  <span class="price">
+                    <%= number_to_currency @fulfillment.current_rate %>
+                  </span>
+                  <br>
+                  All international (ROW) packages are shipped via First Class International.
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%= pluralize @fulfillment.line_items.size, 'item' %>
+          (x<%= @fulfillment.item_count %>)
+          &mdash;
+          <%= @fulfillment.total_weight_in_oz %>oz
+          
+          <%= f.submit "Purchase for #{number_to_currency @fulfillment.current_rate}", class: 'btn btn-primary-o', data: { 'loading-text' => 'Purchasing...', toggle: :loading } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

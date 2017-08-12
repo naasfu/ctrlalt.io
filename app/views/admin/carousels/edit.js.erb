@@ -1,0 +1,4 @@
+if($("#edit_carousel_<%= @carousel.id %>_modal").length === 0){
+  $('body').append('<%= j render "admin/carousels/modal", carousel: @carousel %>');
+}
+$('#edit_carousel_<%= @carousel.id %>_modal').modal('toggle');

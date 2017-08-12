@@ -1,0 +1,26 @@
+<% provide :meta_title, @faq.q %>
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to FAQ"), help_faqs_path) %>
+
+<% cache @faq do %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h4><%= @faq.q %></h4>
+
+          <%= render_markdown @faq.a %>
+          
+          <p class="text-muted">Last updated <%= local_time @faq.updated_at %></p>
+        </div>
+        <% if @similar_faqs.any? %>
+          <div class="panel-body">
+            <h5 class="m-t-0">Similar articles</h5>
+            <ul>
+              <%= render @similar_faqs, cached: true %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

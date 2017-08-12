@@ -1,0 +1,15 @@
+// Update shipping_address
+$('#notifications').prepend('<%= j render "layouts/notifications" %>');
+<% if @shipping_address.errors.any? %>
+  $('#edit_shipping_address_<%= @shipping_address.id %>').replaceWith("<%= j render 'form' %>");
+<% else %>
+  $('#shipping_address_<%= @shipping_address.id %>').replaceWith("<%= j render 'addresses/shipping_address', shipping_address: @shipping_address %>");
+  
+  $('#edit_shipping_address_<%= @shipping_address.id %>_modal').modal('toggle');
+<% end %>
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

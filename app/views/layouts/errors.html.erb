@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render 'layouts/meta' %>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+      body {
+        font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+        font-size: 16px;
+        line-height: 1.52857143;
+        color: #c0c2d0;
+        background-color: #333545;
+        padding: 50px;
+      }
+      a {
+        color: #ffa2d7;
+        text-decoration: none;
+        margin-right: 20px;
+      }
+      a:hover, a:focus {
+        color: #ffcbe9;
+        text-decoration: underline;
+      }
+      a:focus {
+        outline: thin dotted;
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+      }
+
+      h2 { 
+        font-size: 44px;
+        color: #E74C3C; 
+        margin-top: 20px;
+      }
+
+      .container { 
+        width: 500px;
+        margin: 0 auto;
+      }
+
+      .links {
+        margin-top: 20px;
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 25px;
+        }
+        .container {
+          width: 100%;
+        }
+      }
+  </style>
+  </head>
+  <body>
+    <div class="container">
+      <%= yield %>
+      <div class="links">
+        <%= link_to 'Home', root_path %>
+        <%= link_to 'Contact', contact_path %>
+      </div>
+    </div>
+  </body>
+</html>

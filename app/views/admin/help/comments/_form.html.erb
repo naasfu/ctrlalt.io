@@ -1,0 +1,8 @@
+<%= simple_form_for [:admin, :help, @comment], remote: true do |f| %>
+
+  <%= f.input :content, label: false, input_html: { rows: 5 } %>
+  <div class="form-group text-right">
+    <%= f.submit class: "btn btn-success-o" %>
+  </div>
+
+<% end %>

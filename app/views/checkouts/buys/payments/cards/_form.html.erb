@@ -1,0 +1,40 @@
+<%= simple_form_for [:checkouts, :buys, :payments, @credit_card], method: :post, remote: true do %>
+
+  <div class="modal-body">
+    <div id="stripe_name" class="form-group">
+      <label class="control-label" for="name">Card holder name</label>
+      <input type="text" size="80" class="form-control" id="name" data-stripe="name" placeholder="Rick Sanchez">
+    </div>
+
+    <div id="stripe_number" class="form-group">
+      <label class="control-label" for="number">Card number</label>
+      <input type="text" pattern="[\d ]*" size="20" class="form-control" id="number" data-stripe="number" placeholder="**** **** **** ****">
+    </div>
+
+    <div class="row">
+      <div class="col-xs-7">
+        <label class="control-label">Expiration</label>
+        <div id="stripe_exp">
+          <div id="stripe_exp_month" class="form-group">
+            <input type="text" pattern="\d*" size="2" class="form-control" id="exp-month" data-stripe="exp-month" placeholder="MM">
+          </div>
+          <div id="stripe_exp_year" class="form-group">
+            <input type="text" pattern="\d*" size="4" class="form-control" id="exp-year" data-stripe="exp-year" placeholder="YYYY">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-5">
+        <div id="stripe_cvc" class="form-group">
+          <label class="control-label" for="cvc">CVC</label>
+          <input type="text" pattern="\d*" size="3" class="form-control" id="cvc" data-stripe="cvc" placeholder="123">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success-o">Add credit card</button>
+  </div>
+
+<% end %>

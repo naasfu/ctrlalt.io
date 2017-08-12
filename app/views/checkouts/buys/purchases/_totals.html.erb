@@ -1,0 +1,41 @@
+<div class="panel-body b-t-0 text-center">
+  Your total is
+  <br>
+  <span class="grand-total price price-xl">
+    <%= number_to_currency current_cart.grand_total %>
+  </span>
+</div>
+
+<table class="table table-condensed m-y-0">
+  <tr>
+    <td class="text-right" width="60%">Shipping</td>
+    <td class="shipping-total" width="40%">
+      <%= number_to_currency current_cart.shipping_total %>
+    </td>
+  </tr>
+  <tr>
+    <td class="text-right">Subtotal</td>
+    <td class="line-items-total">
+      <%= number_to_currency current_cart.line_items_total %>
+    </td>
+  </tr>
+  <tr>
+    <td class="text-right">
+      Fees
+      <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+    </td>
+    <td class="fee-total">
+      <%= number_to_currency current_cart.fee_total %>
+    </td>
+  </tr>
+
+    <tr>
+      <td class="text-right">
+        Donation
+          <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We run off your donations!'} %>
+      </td>
+      <td class="donation-total">
+        <%= number_to_currency current_cart.donation_total %>
+      </td>
+    </tr>
+</table>

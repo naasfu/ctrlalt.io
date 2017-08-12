@@ -1,0 +1,21 @@
+<%= content_tag :tr, id: dom_id(faq_category) do %>
+  <td>
+    <%= sortable_handle %>
+    <%= link_to faq_category.name, admin_faq_category_path(faq_category) %>
+    &middot;
+    <%= pluralize faq_category.faqs.count, "faq" %>
+  </td>
+  <td>
+    <ul class="list-inline m-y-0">
+      <li class="pull-right">
+        <%= link_to icon("times"), admin_faq_category_path(faq_category), class: "text-danger", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+      </li>
+      <li>
+        <%= link_to "Details", edit_admin_faq_category_path(faq_category) %>
+      </li>
+      <li>
+        <%= link_to "FAQ's", admin_faq_category_path(faq_category) %>
+      </li>
+    </ul>
+  </td>
+<% end %>

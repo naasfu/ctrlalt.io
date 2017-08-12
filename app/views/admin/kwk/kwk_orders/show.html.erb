@@ -1,0 +1,163 @@
+<% provide :meta_title, "##{@order.guid}" %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @sale.name, admin_kwk_sale_path(@sale) %></li>
+  <li><%= link_to 'Tickets', admin_kwk_sale_orders_path(@sale) %></li>
+<% end %>
+
+<% provide :page_scripts do %>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.js'></script>
+  <style>
+    #map { 
+      height: 250px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    $(function() {
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY29keWVhdHdvcmxkIiwiYSI6ImNpamE3Zms2YzAwNWZ1bWx4bjJpZHhvZG0ifQ.alYL4sUGvCwHzyAQXB8RYQ';
+
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/dark-v8', //hosted style id
+        center: [<%= @shipping_address.longitude %>, <%= @shipping_address.latitude.to_f + 0.00100 %>], // starting position
+        zoom: 12, // starting zoom,
+        zoomControl: false,
+        interactive: false
+      });
+
+      var tooltip = new mapboxgl.Popup({closeOnClick: false})
+        .setLngLat([<%= @shipping_address.longitude %>, <%= @shipping_address.latitude %>])
+        .setHTML('<h6 class="m-y-0">Shipping address</h6><strong><%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>')
+        .addTo(map);
+
+      // Disable tap handler, if present.
+      if (map.tap) map.tap.disable();
+    });
+  </script>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h4 class="m-y-0">#<%= @order.guid %></h4>
+        <span id="kwk_order_workflow_label">
+          <%= workflow_label @order %>
+        </span>
+        <%= local_time(@order.paid_at || @order.submitted_at || @order.created_at, format: :readable_time) %>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="media">
+          <div class="media-left">
+            <%= image_tag @user.avatar_url(:sm), height: 53, class: "img-rounded media-object" %>
+          </div>
+          <div class="media-body">
+            <strong><%= @user.username %></strong>
+            <small class="text-muted">(<%= @user.email %>)</small>
+            <br>
+            Joined <%= local_time @user.created_at %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer" id="kwk_order_workflow_buttons">
+    <%= render 'workflow_buttons' %>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="panel panel-default">
+      <div id="map"></div>
+      
+      <div class="panel-body">
+        <strong>Ship to</strong>
+        <%= render "addresses/shipping_address", shipping_address: @order.shipping_address %>
+        <% if @order.winner? %>
+          <strong>Shipping service</strong>
+          <p>Royal Mail Tracked</p>
+          <strong>Payment method</strong>
+          <p><%= icon "paypal", "PayPal" %></p>
+        <% end %>
+      </div>
+
+      <div class="panel-body">
+        <strong>Donation</strong>
+        <br>
+        <strong class="dracula-yellow"><%= number_to_currency @order.donation_total %></strong>
+      </div>
+      
+      <% if @order.user_notes.present? && @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @order.user_notes %>
+
+          <strong>geekhack.org</strong>
+          <p><%= @order.geekhack_username %></p>
+        </div>
+
+      <% elsif @order.user_notes.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @order.user_notes %>
+        </div>
+
+      <% elsif @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>geekhack.org</strong>
+          <p><%= @order.geekhack_username %></p>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8">
+    
+    <div class="panel panel-default">
+      <div id="notes" class="list-group">
+        <% if @notes.any? %>
+          <%= render @notes %>
+        <% else %>
+          <div class="list-group-item no-notes">There are no notes for this order.</div>
+        <% end %>
+      </div>
+      <div class="panel-footer text-right">
+        <%= link_to icon("plus", 'New note'), new_admin_kwk_order_note_path(@order), class: 'btn btn-primary-o', remote: true %>
+      </div>
+    </div>
+
+    <div id="fulfillments">
+      <%= render @fulfillments %>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <%= form_tag admin_kwk_order_approvals_path(@order), remote: true, method: :post do %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Submitted</h4>
+            </div>
+            <div class="list-group">
+              <%= render @line_items %>
+            </div>
+            <div class="panel-footer text-right">
+              <%= submit_tag 'Approve Kaps', class: 'btn btn-success-o', data: { 'loading-text' => 'Approving kaps...', toggle: :loading } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <%= render 'winnings_panel' %>
+      </div>
+    </div>
+  </div>
+</div>

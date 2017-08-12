@@ -1,0 +1,6 @@
+if($("#fulfillment_<%= @fulfillment.id %>_modal").length === 0){
+  $('body').append('<%= j render "modal" %>');
+}
+
+// Toggle modal
+$('#fulfillment_<%= @fulfillment.id %>_modal').modal('toggle');

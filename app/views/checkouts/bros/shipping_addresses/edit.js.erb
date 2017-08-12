@@ -1,0 +1,12 @@
+if($("#edit_shipping_address_<%= @shipping_address.id %>_modal").length === 0){
+  $('body').append('<%= j render "checkouts/buys/shipping_addresses/edit_modal" %>');
+}
+
+// Toggle modal
+$('#edit_shipping_address_<%= @shipping_address.id %>_modal').modal('toggle');
+
+// Reset loading button
+$('[data-toggle=loading]').button('reset');
+$('[data-toggle=loading]').click(function(){
+  $(this).button('loading');
+});

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render 'layouts/meta' %>
+    <%= render 'layouts/stylesheets' %>
+  </head>
+  <body id="admin">
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/notifications' %>
+
+    <% if content_for?(:page_title) %>
+      <div class="page-title">
+        <div class="container">
+          <h3 class="m-y-0"><%= yield(:page_title) %></h3>
+          <%= yield(:page_description) if content_for?(:page_description) %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="page-content">
+      <div class="container">
+        <ol class="breadcrumb">
+          <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
+          <li class="active"><%= yield(:meta_title) %></li>
+        </ol>
+
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= render 'layouts/footer' %>
+
+    <%= render 'layouts/javascripts' %>
+  </body>
+</html>

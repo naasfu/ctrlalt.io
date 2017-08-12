@@ -1,0 +1,45 @@
+<% provide :meta_title, 'Stats' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Kult Worship Kaps', admin_kwk_sales_path %></li>
+  <li><%= link_to @kwk_sale.name, admin_kwk_sale_path(@kwk_sale) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon('trophy', 'Winners'), winners_admin_kwk_sale_path(@kwk_sale), class: "btn btn-success-o" %>
+    <%= link_to icon('inbox', 'Orders'), admin_kwk_sale_orders_path(@kwk_sale), class: "btn btn-warning-o" %>
+    <%= link_to icon('pencil', 'Details'), edit_admin_kwk_sale_path(@kwk_sale), class: "btn btn-default-o" %>
+    <%= link_to icon('tags', 'Products'), admin_kwk_sale_products_path(@kwk_sale), class: "btn btn-default-o" %>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <h3 class="m-y-0">
+          <%= @kwk_sale.days_left %>
+        </h3>
+        <span class="text-muted">days left</span>
+      </div>
+
+      <div class="col-xs-12 col-sm-4">
+        <h3 class="m-y-0">
+          <%= @kwk_sale.total_orders %>
+        </h3>
+        <span class="text-muted">orders</span>
+      </div>
+
+      <div class="col-xs-12 col-sm-4">
+        <h3 class="m-y-0">
+          <%= @kwk_sale.total_participants %>
+        </h3>
+        <span class="text-muted">participants</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="list-group">
+  <%= render @kwk_orders, kwk_sale: @kwk_sale %>
+</div>
+
+<%= render partial: 'admin/kwk/kwk_sales/kwk_product', collection: @products %>

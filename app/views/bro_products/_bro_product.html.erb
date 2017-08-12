@@ -1,0 +1,45 @@
+<% cache [bro_product.bro_sale, bro_product] do %>
+  <div class="page-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-7">
+          <p>
+            <%= link_to image_tag(bro_product.image_url(:md), class: 'img-responsive'), bro_product.image_url, class: 'fancybox', rel: 'product_images' if bro_product.image? %>
+          </p>
+          <% if bro_product.images.any? %>
+            <div class="row">
+              <%= render bro_product.images.sorted %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-xs-12 col-md-5">
+          <h4 class="m-t-0"><%= bro_product.name %></h4>
+          <%= render_markdown bro_product.content %>
+
+          <%= form_tag bro_line_items_path, remote: true do |f| %>
+
+            <% if bro_product.current_variants.any? %>
+              <% if bro_product.current_variants.size == 1 %>
+                <p class="price price-md"><%= product_price_range bro_product %></p>
+                <%= hidden_field_tag :variant_id, bro_product.master_variant.id %>
+              <% else %>
+                <%= render bro_product.current_variants %>
+              <% end %>
+            <% end %>
+
+            <div class="row">
+              <div class="col-xs-8">
+                <% if bro_product.available? %>
+                  <%= submit_tag 'Add to Cart', class: 'btn btn-success-o', data: { 'loading-text' => 'Adding...', toggle: :loading } %>
+                <% else %>
+                  <%= link_to 'Unavailable', '#/', class: 'btn btn-success-o disabled' %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div> 
+  </div>
+<% end %>

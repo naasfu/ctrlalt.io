@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>420 - Bro Caps &mdash; Presented by [CTRL]ALT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <%= csrf_meta_tags %>
+    <meta name="theme-color" content="#f303f0">
+    <%= stylesheet_link_tag 'brocaps/fourtwenty', media: 'all' %>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:700' rel='stylesheet' type='text/css'>
+  </head>
+  <body class="fourtwenty">
+    <%= render 'layouts/notifications' %>
+
+
+    <header class="header">
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+          <div class="navbar-logo">
+            <a href="/">
+              <%= image_tag "fourtwenty/logo_ctrlalt.svg", height: 45, class: "logo-ctrlalt" %>
+            </a>
+          </div>
+
+          <ul class="list-inline user-links">
+            <li>
+              <%= link_to checkouts_bros_path do %>
+                <div class="cai-fist"></div>
+                <span class="bro-count"><%= pluralize current_bros.line_items.size, 'bro' %></span>
+              <% end %>
+            </li>
+
+            <li>
+              &middot;
+            </li>
+
+            <% if current_user %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <%= image_tag current_user.avatar_url(:sm), class: "img-rounded", height: 25 %>
+                  <%= current_user.username %>
+                  <b class="caret"></b>
+                </a>
+                <%= render 'layouts/dropdown_account' %>
+              </li>
+            <% else %>
+              <li><%= link_to 'Sign up', signup_path %></li>
+              <li><%= link_to 'Log in', login_path %></li>
+            <% end %>
+
+            <% if admin_signed_in? %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <div class="cai-cog"></div>
+                  <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-list-group">
+                  <div class="list-group-item">
+                    <%= render 'layouts/admin/admin_links' %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    
+    <div class="page-content">
+      <div class="container">
+
+        <%= image_tag "fourtwenty/banner.png", width: 1200, class: "img-responsive" %>
+        
+        <div class="sale-content">
+          <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+              <%= render_markdown @fourtwenty.content %>
+            </div>
+          </div>
+        </div>
+
+        <div class="reaper-classic">
+          <%= render 'products', title: "Reaper Classic", featured_product: @featured_reaper, products: @reapers, is_mx: true, is_topre: true, is_ibm: true if @featured_reaper %>
+        </div>
+
+        <div class="jolly-roger">
+          <%= render 'products', title: "Jolly Roger", featured_product: @featured_jolly_roger, products: @jolly_rogers, is_mx: true, is_topre: true, is_ibm: false if @featured_jolly_roger %>
+        </div>
+
+        <div class="stump-ii">
+          <%= render 'products', title: "Stump II", featured_product: @featured_stump, products: @stumps, is_mx: true, is_topre: true, is_ibm: false if @featured_stump %>
+        </div>
+
+        <div class="gamer-sets">
+          <%= render 'products', title: "Gamer Sets", featured_product: @featured_gamer_set, products: @gamer_sets, is_mx: true, is_topre: false, is_ibm: false if @featured_gamer_set %>
+        </div>
+
+      </div>
+    </div>
+
+
+    <footer class="footer">
+      <p class="text-center">
+        <small>Copyright 2016 &copy; Bro Caps</small>
+      </p>
+    </footer>
+
+    <%= render 'layouts/javascripts' %>
+
+    <script>
+
+      $('.product-images a').on('click', function(){
+        var preview = $(this).parent().parent().prev().find('.product-thumbnail');
+        var form = $(this).parent().next().find('form');
+
+        preview.find('a').attr("href", $(this).data('preview-image'));
+        preview.find('img').attr("src", $(this).data('preview-image'));
+        preview.find('.thumbnail-label').html($(this).data('preview-label'));
+
+        form.find('#product_id').val($(this).data('product-id'));
+        form.find('#color').val($(this).data('preview-label'));
+
+        $(this).parent().find('a').removeClass('active');
+        $(this).addClass('active');
+      });
+
+      $('.switch-type-list a').on('click', function(){
+        var form = $(this).parent().parent().next().find('form');
+
+        form.find('#switch_type').val($(this).data('switch-type'))
+
+        $(this).parent().find('a').removeClass('active');
+        $(this).addClass('active');
+      });
+
+
+    </script>
+  </body>
+</html>

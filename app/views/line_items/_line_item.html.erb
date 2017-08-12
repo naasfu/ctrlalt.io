@@ -1,0 +1,29 @@
+<%= content_tag :tr, class: "line-item", id: dom_id(line_item) do %>
+  
+  <td>
+    <div class="media">
+
+      <div class="media-left">
+        <%= image_tag line_item.image_url(:sm), width: "64px", class: "media-object" %>
+      </div>
+
+      <div class="media-body">
+        <h5 class="m-y-0"><%= line_item.product_name %></h5>
+        <p class="text-muted">&mdash; <%= line_item.variant_name %></p>
+      </div>
+
+    </div>
+
+  </td>
+
+  <td class="price">
+    <%= number_to_currency line_item.unit_price %>
+  </td>
+
+  <td>
+    <%= line_item.quantity %>
+  </td>
+
+<% end %>
+
+

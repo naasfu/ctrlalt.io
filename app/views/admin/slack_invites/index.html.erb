@@ -1,0 +1,11 @@
+<% provide :meta_title, 'Slack Invites' %>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <strong>Emails to invite:</strong>
+    <%= text_area_tag :slack_emails, @emails, class: "form-control" %>
+  </div>
+  <div class="list-group">
+    <%= render @invites %>
+  </div>
+</div>

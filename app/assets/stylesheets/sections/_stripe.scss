@@ -1,0 +1,22 @@
+
+#stripe_exp {
+  #stripe_exp_month {
+    width: 45%;
+    float: left;
+
+    .form-control {
+      border-radius: $border-radius-base 0 0 $border-radius-base;
+      border-right-width: 1px;
+    }
+  }
+
+  #stripe_exp_year {
+    width: 55%;
+    float: left;
+
+    .form-control {
+      border-radius: 0 $border-radius-base $border-radius-base 0;
+      border-left-width: 1px;
+    }
+  }
+}

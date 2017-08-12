@@ -1,0 +1,46 @@
+// Panels
+//==
+.panel {
+  border-width: 2px;
+  @include box-shadow(none);
+}
+
+.panel-heading-image {
+  position: absolute;
+  margin-left: -$spacer;
+  margin-top: -$spacer;
+}
+.panel-heading-image + .panel-title {
+  margin-left: 58px;
+}
+
+.panel-heading,
+.panel-body {
+  > p:last-child,
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+.panel-heading + .panel-body {
+  border-top: none;
+}
+.list-group + .panel-body {
+  border-top-width: 1px;
+}
+.panel-body:only-child {
+  border: none;
+}
+.panel-body:first-child {
+  border-top-width: 0px;
+}
+// .panel-body + .panel-body {
+//   border-top-width: 1px;
+// }
+.panel-body {
+  border-top: 2px solid $border-color;
+  // border-bottom: 2px solid $border-color;
+}
+.panel-heading,
+.panel-footer {
+  border-width: 2px;
+}

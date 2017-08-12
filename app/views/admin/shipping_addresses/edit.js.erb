@@ -1,0 +1,6 @@
+if($("#edit_shipping_address_<%= @shipping_address.id %>_modal").length === 0){
+  $('body').append('<%= j render "admin/shipping_addresses/edit_modal" %>');
+}
+
+// Toggle modal
+$('#edit_shipping_address_<%= @shipping_address.id %>_modal').modal('toggle');

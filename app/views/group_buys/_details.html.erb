@@ -1,0 +1,14 @@
+<%= render_markdown @group_buy.content %>
+
+<h4 class="text-muted">Estimated ship date is </h4>
+<h3 class="m-y-0">
+  <% if @group_buy.shipping_tbd? %>
+    TBD
+    <small data-toggle="tooltip" data-original-title="To be determined at a later time, usually after the group buy ordering period is over.">
+      <i class="fa fa-info-circle text-muted"></i>
+    </small>
+  <% else %>
+    <%= local_time @group_buy.shipping_eta, format: :readable_date %>
+  <% end %>
+</h3>
+<p>Domestic and international orders will be shipped by [CTRL]ALT.</p>

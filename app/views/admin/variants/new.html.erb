@@ -1,0 +1,11 @@
+<% provide :meta_title, 'New Variant' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Group Buys', admin_group_buys_path %></li>
+  <li><%= link_to @group_buy.name, admin_group_buy_path(@group_buy) %></li>
+  <li><%= link_to 'Products', admin_group_buy_products_path(@group_buy) %></li>
+  <li><%= link_to @product.name, edit_admin_group_buy_product_path(@group_buy, @product) %></li>
+  <li><%= link_to 'Variants', admin_group_buy_product_variants_path(@group_buy, @product) %></li>
+<% end %>
+
+<%= render 'form' %>

@@ -1,0 +1,92 @@
+<% provide :meta_title, "Support requests" %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row text-center">
+      <div class="col-xs-6 col-sm-3 text-danger">
+        <span class="text-lg"><%= @open_count %></span>
+        <br>
+        <%= icon 'circle fa-lg' %>
+        Open 
+      </div>
+      <div class="col-xs-6 col-sm-3 text-primary">
+        <span class="text-lg"><%= @resolved_count %></span>
+        <br>
+        <%= icon 'check-circle-o fa-lg' %>
+        Resolved
+      </div>
+      <div class="col-xs-6 col-sm-3 text-info">
+        <span class="text-lg"><%= @on_hold_count %></span>
+        <br>
+        <%= icon 'dot-circle-o fa-lg' %>
+        On Hold
+      </div>
+      <div class="col-xs-6 col-sm-3 text-success">
+        <span class="text-lg"><%= @comment_count %></span>
+        <br>
+        <%= icon 'comments-o fa-lg' %>
+        Replies
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <p class="m-y-0">
+      <strong>Tags</strong>
+    </p>
+    <% @tags.each do |tag| %>
+      <%= link_to tag, admin_help_tag_path(tag), class: "label label-default" %>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    
+    <ul class="list-inline m-y-0">
+      <li data-toggle="tooltip" data-original-title="Clear search"><%= link_to icon('times fa-lg'), admin_help_support_requests_path %></li>
+      <li data-toggle="tooltip">
+        <%= form_tag admin_help_support_requests_path, method: :get, class: 'form-inline' do %>
+          <%= hidden_field_tag :workflow_state, params[:workflow_state] if params[:workflow_state].present? %>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><%= icon 'search' %></div>
+              <%= text_field_tag :keyword, params[:keyword], class: 'form-control input-sm', placeholder: 'Search for anything' %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+      <li data-toggle="tooltip" data-original-title="Filter by order status"><%= icon 'filter text-muted' %></li>
+      <li>
+        <div class="dropdown">
+          <a href="#/" class="dropdown-toggle" data-toggle="dropdown">
+            <% if params[:workflow_state].present? %>
+              <%= params[:workflow_state].titleize %>
+            <% else %>
+              All
+            <% end %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><%= link_to 'All', admin_help_support_requests_path(order_search_url_options(workflow_state: nil)) %></li>
+            <li class="divider"></li>
+            <% SupportRequest.workflow_spec.state_names.map do |state| %>
+              <li><%= link_to state.to_s.titleize, admin_help_support_requests_path(order_search_url_options(workflow_state: state.to_s)) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="list-group list-group-xl">
+  <%= render @results %>
+</div>
+
+<%= paginate @results %>
+
+
+

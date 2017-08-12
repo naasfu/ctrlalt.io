@@ -1,0 +1,45 @@
+Kult Worship Kaps
+──────────────────────────────
+
+You've won <%= pluralize @line_items.size, 'kap' %>!
+
+What happens next?
+
+Your payment is due within 24 hours. 
+Please click on the link below to pay now with PayPal or visit your order history.
+
+<%= pay_account_history_kwk_order_url(@order) %>
+
+──────────────────────────────
+
+You won the following kaps:
+
+<%= render partial: 'kwk_order_mailer/shared/kwk_line_item', collection: @line_items, as: :kwk_line_item %>
+──────────────────────────────
+
+Shipping: <%= number_to_currency @order.shipping_total %>
+Subtotal: <%= number_to_currency @order.line_items_total %>
+    Fees: <%= number_to_currency @order.fee_total %>
+Donation: <%= number_to_currency @order.donation_amount %>
+          --
+   Total: <%= number_to_currency @order.grand_total %>
+
+──────────────────────────────
+
+You can view this ticket in further detail in your account history.
+
+<%= account_history_kwk_order_url(@order) %>
+
+──────────────────────────────
+
+Please check out our FAQ or reply to this email for more help.
+
+<%= help_faqs_url %>
+
+Thanks,
+
+[CTRL]ALT
+
+P.S. Follow us on Instagram to keep in touch!
+
+https://www.instagram.com/ctrlalt.io/

@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= image_tag kwk_product.image_url(:sm), width: 63, class: "panel-heading-image" %>
+    <h3 class="panel-title">
+      <%= link_to kwk_product.name, "#kwk_product_#{kwk_product.id}_variants", data: { toggle: 'collapse' } %>
+    </h3>
+  </div>
+
+  <div class="table-responsive collapse in" id="kwk_product_<%= kwk_product.id %>_variants">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th width="40%">Variant</th>
+          <th width="15%">Submitted</th>
+          <th width="15%">Winners</th>
+          <th width="15%">Price</th>
+          <th width="15%">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'admin/kwk/kwk_sales/kwk_variant', collection: kwk_product.variants.sorted %>
+      </tbody>
+    </table>
+  </div>
+</div>

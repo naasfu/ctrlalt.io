@@ -1,0 +1,19 @@
+<% provide :meta_title, 'Bro Caps' %>
+<% provide :page_title do %>
+  <div class="cai-fist dracula-purple"></div>
+  Bro Caps
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <% if @bro_orders.any? %>
+      <div class="list-group">
+        <%= render @bro_orders %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        No Bro Caps found. Please check out our <%= link_to 'FAQ', help_faqs_path %> for more help.
+      </div>
+    <% end %>
+  </div>
+</div>

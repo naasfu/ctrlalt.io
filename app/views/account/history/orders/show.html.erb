@@ -1,0 +1,170 @@
+<% provide :meta_title, "Order ##{@order.guid}" %>
+
+<% provide :page_subtitle do %>
+  <strong>Order #<%= @order.guid %></strong>
+  <%= workflow_label(@order) %>
+  <%= local_time(@order.paid_at || @order.placed_at || @order.created_at) %>
+<% end %>
+
+<% provide :page_scripts do %>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.js'></script>
+  <style>
+    #map {
+      height: 250px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    $(function() {
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY29keWVhdHdvcmxkIiwiYSI6ImNpamE3Zms2YzAwNWZ1bWx4bjJpZHhvZG0ifQ.alYL4sUGvCwHzyAQXB8RYQ';
+
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/dark-v8', //hosted style id
+        center: [<%= @shipping_address.longitude %>, <%= @shipping_address.latitude.to_f + 0.00100 %>], // starting position
+        zoom: 12, // starting zoom,
+        zoomControl: false,
+        interactive: false
+      });
+
+      var tooltip = new mapboxgl.Popup({closeOnClick: false})
+        .setLngLat([<%= @shipping_address.longitude %>, <%= @shipping_address.latitude %>])
+        .setHTML('<h6 class="m-y-0">Shipping address</h6><strong><%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>')
+        .addTo(map);
+
+      // Disable tap handler, if present.
+      if (map.tap) map.tap.disable();
+    });
+  </script>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-lg-7">
+
+    <div class="panel panel-default">
+      <div id="map"></div>
+
+      <%= render @fulfillments %>
+      <%= render @tracking_notes %>
+
+      <% if @order.user_notes.present? && @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <strong>Notes</strong>
+              <%= simple_format @order.user_notes %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <strong>geekhack.org</strong>
+              <p><%= @order.geekhack_username %></p>
+            </div>
+          </div>
+        </div>
+
+      <% elsif @order.user_notes.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @order.user_notes %>
+        </div>
+
+      <% elsif @order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>geekhack.org</strong>
+          <p><%= @order.geekhack_username %></p>
+        </div>
+
+      <% end %>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Ship to</strong>
+            <%= render "addresses/shipping_address", shipping_address: @order.shipping_address %>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <strong>Billing address</strong>
+            <%= render "addresses/billing_address", billing_address: @order.billing_address %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Shipping service</strong>
+            <p>USPS Priority</p>
+          </div>
+
+
+          <div class="col-xs-12 col-sm-6">
+            <strong>Payment method</strong>
+            <%= render @transactions %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="col-xs-12 col-md-6 col-lg-5">
+
+    <div class="panel panel-default">
+      <div class="list-group">
+        <%= render partial: "line_items/list_group_line_item", collection: @order.line_items, as: :line_item %>
+      </div>
+      <div class="panel-body text-center">
+        Your total is
+        <br>
+        <span class="grand-total price price-xl">
+          <%= number_to_currency @order.grand_total %>
+        </span>
+      </div>
+
+      <table class="table table-condensed m-y-0">
+        <tr>
+          <td class="text-right" width="60%">Shipping</td>
+          <td class="shipping-total" width="40%">
+            <%= number_to_currency @order.shipping_total %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Subtotal</td>
+          <td class="line-items-total">
+            <%= number_to_currency @order.line_items_total %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">
+            Fees
+            <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+          </td>
+          <td class="fee-total">
+            <%= number_to_currency @order.fee_total %>
+          </td>
+        </tr>
+
+          <tr>
+            <td class="text-right">
+              Donation
+                <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!' } %>
+            </td>
+            <td class="donation-total">
+              <%= number_to_currency @order.donation_total %>
+            </td>
+          </tr>
+      </table>
+    </div>
+    <div class="text-center">
+      <p>
+        <strong><%= icon("question-circle", "Need help?") %></strong>
+        <br>
+        Check out our <%= link_to "FAQ", help_faqs_path %> page or <%= link_to "open a support request", account_help_support_requests_path %>.
+      </p>
+    </div>
+
+  </div>
+</div>

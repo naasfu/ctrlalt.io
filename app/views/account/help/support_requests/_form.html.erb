@@ -1,0 +1,11 @@
+<%= simple_form_for [:account, :help, @support_request] do |f| %>
+  <%= f.error_notification %>
+  
+  <%= f.input :subject, label: false, placeholder: "(No subject)" %>
+  <%= f.input :content, label: false, input_html: { rows: 10 } %>
+
+  <div class="text-right">
+    <%= f.submit "Open", class: "btn btn-success-o" %>
+  </div>
+
+<% end %>

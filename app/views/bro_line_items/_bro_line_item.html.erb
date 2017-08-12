@@ -1,0 +1,23 @@
+<%= content_tag_for :tr, bro_line_item do %>
+  <td>
+    <div class="media">
+      <div class="pull-left">
+        <%= image_tag bro_line_item.image_url(:sm), width: 50, class: "media-object" %>
+      </div>
+      <div class="media-body">
+        <p class="media-heading">
+          <strong><%= bro_line_item.product_name %> (<%= bro_line_item.bro_sale_name %>)</strong>
+          <br>
+          <small>&mdash; <%= bro_line_item.variant_name %></small>
+          <% if bro_line_item.color.present? %>
+            <br>
+            <small>&mdash; <%= bro_line_item.color %></small>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </td>
+  <td class="price">
+    <%= number_to_currency bro_line_item.unit_price %>
+  </td>
+<% end %>

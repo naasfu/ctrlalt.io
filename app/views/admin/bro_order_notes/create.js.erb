@@ -1,0 +1,8 @@
+<% if @note.errors.any? %>
+  $('#new_bro_order_note').replaceWith('<%= j render "form" %>');
+<% else %>
+  $('.no-notes').remove();
+  $('#notes').prepend('<%= j render @note %>');
+  $('#new_bro_order_note_modal').modal('toggle');
+<% end %>
+$('#notifications').replaceWith('<%= j render "layouts/notifications" %>');

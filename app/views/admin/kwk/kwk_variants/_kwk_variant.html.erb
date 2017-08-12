@@ -1,0 +1,16 @@
+<%= content_tag :div, id: dom_id(kwk_variant), class: "list-group-item" do %>
+  <ul class="list-inline m-y-0">
+    <li>
+      <%= sortable_handle %>
+      <%= link_to kwk_variant.name, edit_admin_kwk_sale_product_variant_path(kwk_variant.kwk_sale, kwk_variant.product, kwk_variant) %>
+    </li>
+    <li>
+      <span class="price">
+        <%= number_to_currency kwk_variant.unit_price %>
+      </span>
+    </li>
+    <li>
+      <%= link_to icon("times"), admin_kwk_sale_product_variant_path(kwk_variant.kwk_sale, kwk_variant.product, kwk_variant), class: "text-danger", remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  </ul>
+<% end %>

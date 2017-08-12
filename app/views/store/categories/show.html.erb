@@ -1,0 +1,26 @@
+<% provide :meta_title, @category.name %>
+<% provide :page_title, @category.name %>
+<% provide :page_description, pluralize(@products.size, 'product') %>
+
+<% provide :page_subtitle do %>
+  <ul class="list-inline m-y-0">
+    <li><strong>Browse by category:</strong></li>
+    <% @store_categories.each do |category| %>
+      <li><%= link_to category.name, store_category_path(category) %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="row">
+  <% if @products.any? %>
+    <%= render @products %>
+  <% else %>
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body text-muted text-center">
+          Our store is a bit empty right now, please check back later.
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

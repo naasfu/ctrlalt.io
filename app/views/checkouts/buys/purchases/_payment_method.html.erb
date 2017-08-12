@@ -1,0 +1,43 @@
+<% if @credit_card %>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <strong>Pay with card</strong>
+      <small><%= link_to "Change", new_checkouts_buys_payments_card_path, remote: true %></small>
+      <p>
+        <%= @credit_card.name %>
+        <br>
+        <%= CreditCardLogoPresenter.call(@credit_card.brand) %>
+        <%= @credit_card.brand %> ending in <%= @credit_card.last4 %>
+        
+      </p>
+      
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <strong>Billing address</strong>
+      <small><%= link_to "Change", edit_checkouts_buys_payments_billing_address_path(@billing_address), remote: true %></small>
+      <div id="checkout_billing_address">
+        <% if @billing_address.present? %>
+          <%= render "addresses/billing_address", billing_address: @billing_address %>
+        <% else %>
+          <p>
+            No billing address provided.
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+
+  <p>
+    <%= link_to icon("plus fa-fw", "Add credit card"), new_checkouts_buys_payments_card_path, remote: true, class: "btn btn-primary-o" %>
+  </p>
+
+  <p>
+    We accept all major credit and debit cards including Visa, MasterCard, American Express, Discover, JCB and Diner’s Club.
+  </p>
+
+  <%= link_to image_tag("pbs.png", height: 26), "https://stripe.com", target: :_blank %>
+
+<% end %>

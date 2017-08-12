@@ -1,0 +1,47 @@
+// Labels
+// 
+
+// Gray labels
+.label-incomplete,
+.label-preparing,
+.label-default,
+.label-submitted,
+.label-closed { 
+  color: $text-color; 
+  background: mix($body-bg, $text-color, 80%); 
+}
+
+// Green labels
+.label-success,
+.label-winner,
+.label-paid,
+.label-resolved { 
+  color: $state-success-text; 
+  background: $state-success-bg; 
+}
+
+.label-shipping,
+.label-in_transit,
+.label-open { 
+  color: $state-info-text; 
+  background: $state-info-bg; 
+}
+
+.label-on_hold { 
+  color: $state-warning-text; 
+  background: $state-warning-bg; 
+}
+
+.label-shipped { 
+  color: $brand-primary; 
+  background: mix($body-bg, $brand-primary, 80%); 
+}
+
+
+.label-refunded,
+.label-canceled { 
+  color: $state-danger-text; 
+  background: $state-danger-bg; 
+}
+
+// Blue labels

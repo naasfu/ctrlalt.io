@@ -1,0 +1,15 @@
+// Navbar
+//==
+.navbar {
+  margin-bottom: $spacer;
+
+  .navbar-logo {
+    float: left;
+    font-size: 24px;
+    line-height: $navbar-height;
+    color: $brand-primary;
+    font-style: italic;
+
+    a { text-decoration: none; }
+  }
+}

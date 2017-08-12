@@ -1,0 +1,10 @@
+// Badges
+// 
+
+.badge {
+
+  color: $brand-primary;
+  border: 2px solid $panel-bg;
+  background: mix($brand-primary, $body-bg, 3%)
+
+}

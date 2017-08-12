@@ -1,0 +1,13 @@
+<%= content_tag_for :tr, user do %>
+  <td>
+    <%= link_to user.email, admin_user_path(user) %>
+    <%= "(#{user.username})" if user.username.present? %>
+  </td>
+  <td>
+    <%= local_time user.created_at %>
+  </td>
+  <td>
+    <%= link_to icon('pencil', 'Details'), edit_admin_user_path(user), class: 'btn btn-xs btn-default' %>
+    <%= link_to icon('inbox', 'Orders'), admin_user_path(user), class: 'btn btn-xs btn-default' %>
+  </td>
+<% end %>

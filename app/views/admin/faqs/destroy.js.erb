@@ -1,0 +1,4 @@
+<% if @faq.destroyed? %>
+  $('#faq_<%= @faq.id %>').remove();
+<% end %>
+$('#notifications').html('<%= j render "layouts/notifications" %>');

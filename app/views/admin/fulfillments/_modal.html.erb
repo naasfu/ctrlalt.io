@@ -1,0 +1,65 @@
+<div class="modal fade" id="new_fulfillment_modal">
+  <div class="modal-dialog">
+    <%= simple_form_for [:admin, @order, @fulfillment], remote: true do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">New fulfillment</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <table class="table m-y-0">
+              <thead>
+                <tr>
+                  <th width="60%">Product</th>
+                  <th width="20%">Price</th>
+                  <th width="20%">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "line_items/line_item", collection: @line_items, as: :line_item %>
+              </tbody>
+            </table>
+            <div class="panel-footer">
+              <%= pluralize @fulfillment.line_items.size, 'item' %>
+              (x<%= @fulfillment.item_count %>)
+              &mdash;
+              <%= @fulfillment.total_weight_in_oz %>oz
+            </div>
+          </div>
+          <%= hidden_field_tag :line_item_ids, @fulfillment.line_item_ids %>
+          <%= f.input :rate_id, collection: @rates.radio_options, as: :radio_buttons, label: "Select service rate" %>
+          <%= f.input :notes, input_html: { rows: 3 }, label: "Tracking notes to customer" %>
+          
+          <strong>Print</strong>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="checkbox">
+                <label>
+                  <%= check_box_tag "print_label", true, checked: :checked %> Shipping label
+                  <p class="text-muted"><%= ENV['label_printer'] %></p>
+                </label>
+              </div>
+              
+            </div>
+            <div class="col-xs-6">
+              <div class="checkbox">
+                <label>
+                  <%= check_box_tag "print_invoice", true %> Fulfillment invoice
+                  <p class="text-muted"><%= ENV['invoice_printer'] %></p>
+                </label>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          
+          <%= f.submit 'Purchase', class: 'btn btn-primary-o', data: { 'loading-text' => 'Purchasing...', toggle: :loading } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

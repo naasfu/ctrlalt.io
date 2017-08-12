@@ -1,0 +1,29 @@
+<% provide :meta_title, 'Variants' %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Group Buys', admin_group_buys_path %></li>
+  <li><%= link_to @group_buy.name, admin_group_buy_path(@group_buy) %></li>
+  <li><%= link_to 'Products', admin_group_buy_products_path(@group_buy) %></li>
+  <li><%= link_to @product.name, edit_admin_group_buy_product_path(@group_buy, @product) %></li>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to icon('plus', 'New Variant'), new_admin_group_buy_product_variant_path(@group_buy, @product), class: 'btn btn-primary-o' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="35%">Name</th>
+          <th width="25%">Price</th>
+          <th width="40%">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="sortable-table" data-update-url="<%= admin_sort_path(class_name: 'variant') %>">
+        <%= render @variants %>
+      </tbody>
+    </table>
+  </div>
+</div>

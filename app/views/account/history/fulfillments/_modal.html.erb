@@ -1,0 +1,54 @@
+<div class="modal fade" id="fulfillment_<%= @fulfillment.id %>_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">
+          Fulfillment #<%= @fulfillment.guid %>
+        </h4>
+        <%= workflow_label @fulfillment %>
+        <%= local_time @fulfillment.shipped_at %>
+      </div>
+
+      <div class="modal-body">
+        <% if @fulfillment.notes.present? %>
+          <strong>Notes</strong>
+          <%= simple_format @fulfillment.notes %>
+        <% end %>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Tracking</strong>
+            <p>
+              <%= link_to @fulfillment.tracking_number, "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{@fulfillment.tracking_number}", target: :_blank, class: "text-mono" %>
+            </p>
+            
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <strong>Service</strong>
+            <p>
+              <%= @fulfillment.shipment_service %>
+            </p>
+            
+          </div>
+        </div>
+        <p>
+          <strong>Items included in this shipment</strong>
+        </p>
+        <div class="panel panel-default m-y-0">
+          <table class="table m-y-0">
+            <thead>
+              <tr>
+                <th width="60%">Product</th>
+                <th width="20%">Price</th>
+                <th width="20%">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "line_items/line_item", collection: @line_items, as: :line_item %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

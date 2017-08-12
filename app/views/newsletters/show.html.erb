@@ -1,0 +1,20 @@
+<% provide :meta_title, "Newsletter for #{l @newsletter.last_sent_at, format: :readable_date}" %>
+<% provide :page_subtitle, link_to(icon('angle-double-left', 'Back to Newsletters'), newsletters_path) %>
+
+<% cache @newsletter do %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="newsletter-preview">
+        <p>
+          <small style="color: #999">
+            <%= local_time @newsletter.last_sent_at, format: :readable_date %>
+          </small>
+        </p>
+
+        <h4 style="margin: 0; line-height: 45px;"><%= @newsletter.subject %></h4>
+
+        <%= simple_format @newsletter.content %>
+      </div>
+    </div>
+  </div>
+<% end %>

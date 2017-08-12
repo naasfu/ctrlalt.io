@@ -1,0 +1,30 @@
+// Buttons
+//==
+// input[type="submit"][class$="-o"],
+// input[type="submit"][class*="-o "] { background: transparent; }
+
+.btn { border-width: 2px; }
+
+
+.btn-default-o {
+  @include button-variant-o($btn-default-bg, mix($btn-default-bg, $body-bg, 3%));
+}
+.btn-primary-o {
+  @include button-variant-o($btn-primary-bg, mix($btn-primary-bg, $body-bg, 3%));
+}
+// Success appears as green
+.btn-success-o {
+  @include button-variant-o($btn-success-bg, mix($btn-success-bg, $body-bg, 3%));
+}
+// Info appears as blue-green
+.btn-info-o {
+  @include button-variant-o($btn-info-bg, mix($btn-info-bg, $body-bg, 3%));
+}
+// Warning appears as orange
+.btn-warning-o {
+  @include button-variant-o($btn-warning-bg, mix($btn-warning-bg, $body-bg, 3%));
+}
+// Danger and error appear as red
+.btn-danger-o {
+  @include button-variant-o($btn-danger-bg, mix($btn-danger-bg, $body-bg, 3%));
+}

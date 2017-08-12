@@ -1,0 +1,102 @@
+<%= content_tag_for :div, fulfillment do %>
+  <div class="panel panel-default panel-<%= fulfillment.current_state.to_s %>">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <%= "##{fulfillment.guid}" %>
+      </h4>
+      <%= workflow_label fulfillment %>
+      <%= local_time (fulfillment.shipped_at || fulfillment.created_at) %> 
+    </div>
+
+    <% if fulfillment.notes.present? %>
+      <div class="panel-body">
+        <%= simple_format fulfillment.notes %>
+      </div>
+    <% end %>
+
+    <div class="panel-body">
+      <%= link_to icon("barcode", "Label"), fulfillment.label_url, class: "btn btn-default-o fancybox", rel: "fulfillment_labels" %>
+      <%= link_to icon("file", "Invoice"), admin_order_fulfillment_path(fulfillment.order, fulfillment, format: :pdf), class: "btn btn-default-o" %>
+
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-info-o dropdown-toggle" data-toggle="dropdown">
+          <%= icon "print", "Print" %>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <%= link_to print_admin_order_fulfillment_path(fulfillment.order, fulfillment, label: true), remote: true do %>
+              Label <small class="text-muted">(<%= ENV['label_printer'] %>)</small>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to print_admin_order_fulfillment_path(fulfillment.order, fulfillment, invoice: true), remote: true do %>
+              Invoice <small class="text-muted">(<%= ENV['invoice_printer'] %>)</small>
+            <% end %>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li><%= link_to "Both", print_admin_order_fulfillment_path(fulfillment.order, fulfillment, label: true, invoice: true), remote: true %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <strong>Weight:</strong>
+          <%= fulfillment.weight %>oz
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <strong>Service:</strong>
+          <%= fulfillment.shipment_service %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <strong>Cost:</strong>
+          <%= number_to_currency fulfillment.cost %>
+
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <strong>Tracking:</strong>
+          <%= link_to fulfillment.tracking_number, "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=#{fulfillment.tracking_number}", target: :_blank, class: "text-mono" %>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <strong>Shipment #</strong>
+      <p>
+        <%= fulfillment.shipment_id %>
+      </p>
+
+      <strong>Rate #</strong>
+      <p>
+        <%= fulfillment.rate_id %>
+      </p>
+
+
+      <div class="panel panel-default m-y-0">
+        <div class="panel-heading">
+          <%= link_to icon("chevron-down fa-lg"), "#fulfillment_#{fulfillment.id}_line_items", class: "pull-right", data: { toggle: 'collapse' } %>
+          <h4 class="panel-title">
+            <%= pluralize fulfillment.line_items.size, 'item' %>
+            (x<%= fulfillment.item_count %>)
+          </h4>
+        </div>
+        <div class="table-responsive collapse" id="fulfillment_<%= fulfillment.id %>_line_items">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="60%">Product</th>
+                <th width="20%">Price</th>
+                <th width="20%">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "line_items/line_item", collection: @line_items, as: :line_item %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <%= link_to image_tag(bro_sale.logo_url(:md), class: "img-responsive img-rounded"), admin_bro_sale_path(bro_sale) %>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <h4 class="m-y-0">
+          <%= link_to bro_sale.name, admin_bro_sale_path(bro_sale) %>
+        </h4>
+        <p>
+          <%= content_tag :span, timeago(bro_sale.deadline), class: (bro_sale.ongoing? ? 'text-success' : 'text-danger') %>
+        </p>
+        <ul class="list-inline">
+          <li><%= link_to icon('trophy', 'Winners'), winners_admin_bro_sale_path(bro_sale), class: "btn btn-sm btn-success-o" %></li>
+          <li><%= link_to icon('bar-chart', 'Stats'), admin_bro_sale_path(bro_sale), class: "btn btn-sm btn-info-o" %></li>
+          <li><%= link_to icon('inbox', 'Orders'), admin_bro_sale_orders_path(bro_sale), class: "btn btn-sm btn-warning-o" %></li>
+        </ul>
+        <ul class="m-b-0 list-inline">
+          <li><%= link_to icon('pencil', 'Details'), edit_admin_bro_sale_path(bro_sale), class: "btn btn-sm btn-default-o" %></li>
+          <li><%= link_to icon('tags', 'Products'), admin_bro_sale_products_path(bro_sale), class: "btn btn-sm btn-default-o" %></li>
+          <li><%= link_to icon('picture-o', 'Images'), admin_bro_sale_images_path(bro_sale), class: "btn btn-sm btn-default-o" %></li>
+          <li><%= link_to icon('eye', 'Preview'), bro_sale_path(bro_sale), class: "btn btn-sm btn-default-o" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

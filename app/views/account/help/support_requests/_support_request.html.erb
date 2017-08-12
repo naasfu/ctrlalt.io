@@ -1,0 +1,10 @@
+<div class="list-group-item">
+  <div class="pull-right text-right">
+    <%= timeago support_request.created_at %>
+    <br>
+    <%= workflow_label support_request %>
+  </div>
+  <%= link_to support_request.subject, account_help_support_request_path(support_request) %>
+  <br>
+    <%= truncate support_request.content, length: 70, omission: "...", separator: " "  %>
+</div>

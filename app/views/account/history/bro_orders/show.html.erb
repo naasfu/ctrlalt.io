@@ -1,0 +1,225 @@
+<% provide :meta_title, "Ticket ##{@bro_order.guid}" %>
+
+<% provide :page_title do %>
+  Ticket #<%= @bro_order.guid %>
+<% end %>
+
+<% provide :page_description do %>
+  <%= workflow_label(@bro_order) %>
+  <%= local_time(@bro_order.submitted_at || @bro_order.created_at) %>
+<% end %>
+
+<% provide :page_subtitle, link_to(icon("angle-double-left", "Back to Bro Caps"), account_history_bro_orders_path) %>
+
+
+<% provide :page_scripts do %>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.js'></script>
+  <style>
+    #map { 
+      height: 250px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    $(function() {
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY29keWVhdHdvcmxkIiwiYSI6ImNpamE3Zms2YzAwNWZ1bWx4bjJpZHhvZG0ifQ.alYL4sUGvCwHzyAQXB8RYQ';
+
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/dark-v8', //hosted style id
+        center: [<%= @shipping_address.longitude %>, <%= @shipping_address.latitude.to_f + 0.00100 %>], // starting position
+        zoom: 12, // starting zoom,
+        zoomControl: false,
+        interactive: false
+      });
+
+      var tooltip = new mapboxgl.Popup({closeOnClick: false})
+        .setLngLat([<%= @shipping_address.longitude %>, <%= @shipping_address.latitude %>])
+        .setHTML('<h6 class="m-y-0">Shipping address</h6><strong><%= @shipping_address.city %>, <%= @shipping_address.state %> <%= @shipping_address.zip %>')
+        .addTo(map);
+
+      // Disable tap handler, if present.
+      if (map.tap) map.tap.disable();
+    });
+  </script>
+<% end %>
+
+
+    <% if @bro_order.winner? %>
+      <div class="alert alert-success">
+        Congratulations! You've won <%= pluralize @approved_line_items.size, 'bro' %>! 
+        Your payment is due within 24 hours.
+      </div>
+    <% elsif @bro_order.payment_failed? %>
+      <div class="alert alert-danger">
+        There was a problem with your payment, it has been flagged for manual review!
+        <br>  
+        Please <%= link_to 'contact us', contact_path, class: 'alert-link' %> to resolve this issue.
+      </div>
+    <% end %>
+<div class="row">
+  <div class="col-xs-12 col-sm-7">
+
+    <% if @line_items.any? %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link_to icon("chevron-down fa-lg"), "#submitted_bros", class: "pull-right", data: { toggle: 'collapse' } %>
+          <h4 class="panel-title">
+            Submitted
+          </h4>
+        </div>
+        <div class="table-responsive collapse <%= "in" unless @approved_line_items.any? %>" id="submitted_bros">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="78%">Product</th>
+                <th width="20%">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "bro_line_items/bro_line_item", collection: @line_items, as: :bro_line_item %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div id="map"></div>
+      
+      
+      <% if @bro_order.user_notes.present? && @bro_order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <strong>Notes</strong>
+              <%= simple_format @bro_order.user_notes %>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <strong>geekhack.org</strong>
+              <p><%= @bro_order.geekhack_username %></p>
+            </div>
+          </div>
+        </div>
+
+      <% elsif @bro_order.user_notes.present? %>
+
+        <div class="panel-body">
+          <strong>Notes</strong>
+          <%= simple_format @bro_order.user_notes %>
+        </div>
+
+      <% elsif @bro_order.geekhack_username.present? %>
+
+        <div class="panel-body">
+          <strong>geekhack.org</strong>
+          <p><%= @bro_order.geekhack_username %></p>
+        </div>
+
+      <% end %>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <strong>Ship to</strong>
+            <%= render "addresses/shipping_address", shipping_address: @bro_order.shipping_address %>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <strong>Shipping service</strong>
+            <% if @shipping_address.country == 'US' %>
+              <p>USPS Priority</p>
+            <% else %>
+              <p>USPS First Class International</p>
+            <% end %>
+            <strong>Payment method</strong>
+            <p><%= icon "paypal", "PayPal" %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="col-xs-12 col-sm-5">
+    <div class="panel panel-default">
+        
+      <div class="panel-heading text-center">
+        <h4 class="panel-title">You would like up to <%= pluralize @bro_order.bro_count, 'bro' %></h4>
+      </div>
+
+      <% if @approved_line_items.any? %>
+        <div class="list-group">
+          <%= render partial: "bro_line_items/list_group_line_item", collection: @approved_line_items, as: :bro_line_item %>
+        </div>
+      <% end %>
+
+      <div class="panel-body text-center">
+        <span class="text-muted">Total amount due</span>
+        <br>
+        <span id="order_grand_total" class="price price-xl">
+          <%= number_to_currency (@bro_order.is_winner? ? @bro_order.grand_total : 0) %>
+        </span>
+      </div>
+      <% if @bro_order.is_winner? %>
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <tr>
+              <td class="text-right" width="60%">Shipping</td>
+              <td class="shipping-total" width="40%">
+                <%= number_to_currency @bro_order.shipping_total %>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">Subtotal</td>
+              <td class="line-items-total">
+                <%= number_to_currency @bro_order.line_items_total %>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">
+                Fees
+                <%= link_to icon('info-circle fa-fw'), '#/', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'We add on a 5% + 50 cents (USD) fee to cover the transaction fees and handling.'} %>
+              </td>
+              <td class="fee-total">
+                <%= number_to_currency @bro_order.fee_total %>
+              </td>
+            </tr>
+
+            <% if @bro_order.donated? %>
+              <tr>
+                <td class="text-right">
+                  Donation
+                  <% if @bro_order.donation_total >= 3 %>
+                    <%= link_to icon('heart fa-fw'), '#/', class: 'text-danger', rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'You are awesome! Thank you!'} %>
+                  <% end %>
+                </td>
+                <td class="donation-total">
+                  <%= number_to_currency @bro_order.donation_total %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+
+
+      <% if @bro_order.winner? %>
+        <div class="panel-footer text-right">
+          <%= form_tag ENV['paypal_url'] do %>
+            <%= hidden_field_tag :cmd, "_s-xclick" %>
+            <%= hidden_field_tag :encrypted, @bro_order.paypal_encrypted(account_history_bro_order_url(@bro_order), paypal_ipn_receiver_url(secret: ENV['paypal_secret'])) %>
+            <%= submit_tag "Pay with PayPal", class: 'btn btn-block btn-success-o' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <p class="text-center">
+      <strong><%= icon("question-circle", "Need help?") %></strong>
+      <br>
+      Check out our <%= link_to "FAQ", help_faqs_path %> page or <%= link_to "open a support request", account_help_support_requests_path %>.
+    </p>
+  </div>
+</div>

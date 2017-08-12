@@ -1,0 +1,4 @@
+<% line_items.each do |line_item| %>
+<%= "x#{sprintf '%02d', line_item.quantity} #{line_item.product_name} (#{line_item.group_buy_name})" %><% unless line_item.variant_name == line_item.product_name %> - <%= line_item.variant_name %><% end %>
+    <%= number_to_currency line_item.unit_price %>
+<% end %>

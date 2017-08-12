@@ -1,0 +1,7 @@
+<% provide :meta_title, @bro_sale.name %>
+
+<% provide :breadcrumbs do %>
+  <li><%= link_to 'Sales', admin_bro_sales_path %></li>
+<% end %>
+
+<%= render 'form' %>

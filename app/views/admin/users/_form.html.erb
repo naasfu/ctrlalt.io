@@ -1,0 +1,69 @@
+<%= simple_form_for [:admin, @user] do |f| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'Cancel', admin_users_path, class: 'btn btn-default' %>
+      <%= f.submit 'Update', class: 'btn btn-primary-o pull-right' %>
+    </div>
+    <div class="panel-body">
+      <%= f.error_notification %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <h4 class="title">Email</h4>
+          <p>Update your email address.</p>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <%= f.input :email %>
+        </div>
+      </div>
+      
+      <div class="panel-divider"></div> 
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <h4 class="title">Password</h4>
+          <p>Change your password.</p>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <%= f.input :password %>
+          <%= f.input :password_confirmation %>
+        </div>
+      </div>
+      
+      <div class="panel-divider"></div>
+      
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <h4 class="title">Details</h4>
+          <p>Update profile details.</p>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <%= f.input :username %>
+          <%= f.input :headline %>
+          <%= f.input :about, as: :text, input_html: { rows: 5 } %>
+        </div>
+      </div>
+
+      <div class="panel-divider"></div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <h4 class="title">Avatar</h4>
+          <p>Upload an avatar.</p>
+          <div class="form-group">
+            <%= f.check_box :remove_avatar, label: 'Remove avatar' if @user.avatar? %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <%= f.input :avatar, as: :file, label: 'Upload an image' %>
+          <%= f.hidden_field :avatar_cache %>
+          <%= content_tag(:p, image_tag(@user.avatar_url(:avatar), class: "img-responsive")) if @user.avatar? %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel-footer">
+      <%= link_to 'Cancel', admin_users_path, class: 'btn btn-default' %>
+      <%= f.submit 'Update', class: 'btn btn-primary-o pull-right' %>
+    </div>
+  </div>
+<% end %>
